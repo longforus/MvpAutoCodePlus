@@ -1,11 +1,11 @@
 <idea-plugin>
-    <id>com.longforus.mvpaotucodeplus</id>
+  <id>com.longforus.mvpautocodeplus</id>
     <name>MvpAutoCodePlus</name>
+  <version>0.0.1</version>
     <vendor email="yxq.longforus@gmail.com" url="https://github.com/longforus">longforus</vendor>
 
     <description><![CDATA[
     is a mvp code maker.<br>
-    <em>most HTML tags may be used</em>
     ]]></description>
 
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
@@ -15,10 +15,21 @@
     -->
 
     <extensions defaultExtensionNs="com.intellij">
-        <!-- Add your extensions here -->
+      <applicationConfigurable instance="com.longforus.mvpautocodeplus.config.ConfigComponent"/>
     </extensions>
 
+  <application-components>
+    <!--<component>-->
+    <!--<implementation-class>com.longforus.mvpautocodeplus.config.ConfigComponent</implementation-class>-->
+    <!--</component>-->
+  </application-components>
     <actions>
         <!-- Add your actions here -->
+
+      <group description="auto make mvp code" id="mvpMaker" text="Generate MVP Code">
+        <add-to-group anchor="first" group-id="NewGroup"/>
+        <action class="com.longforus.mvpautocodeplus.MainAction" description="auto make mvp code" id="mvpMaker.make" text="Generate MVP Code"/>
+      </group>
+
     </actions>
 </idea-plugin>
