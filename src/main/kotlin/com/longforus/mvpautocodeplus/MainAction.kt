@@ -1,6 +1,7 @@
 package com.longforus.mvpautocodeplus
 
 import com.intellij.CommonBundle
+import com.intellij.ide.actions.CreateFileFromTemplateDialog
 import com.intellij.ide.util.PropertiesComponent
 import com.intellij.openapi.actionSystem.*
 import com.intellij.openapi.application.WriteActionAware
@@ -8,12 +9,12 @@ import com.intellij.openapi.diagnostic.Logger
 import com.intellij.openapi.fileEditor.FileDocumentManager
 import com.intellij.openapi.fileEditor.FileEditorManager
 import com.intellij.openapi.project.Project
+import com.intellij.openapi.ui.InputValidator
 import com.intellij.openapi.util.Ref
 import com.intellij.psi.PsiDirectory
 import com.intellij.psi.PsiFile
 import com.intellij.psi.PsiNameIdentifierOwner
 import com.intellij.util.PlatformIcons
-import com.longforus.mvpautocodeplus.ui.CreateFileDialog
 
 /**
  * Created by XQ Yang on 2018/6/25  13:43.
@@ -30,8 +31,24 @@ class MainAction : AnAction("main", "auto make mvp code", PlatformIcons.CLASS_IC
         return "create mvp file"
     }
 
-    private fun buildDialog(project: Project?, directory: PsiDirectory?, builder: CreateFileDialog.Builder?) {
+    private fun buildDialog(project: Project?, directory: PsiDirectory?, builder: CreateFileFromTemplateDialog.Builder?) {
         builder?.setTitle(directory?.name)
+        builder?.addKind("java interface", PlatformIcons.JAVA_OUTSIDE_SOURCE_ICON, "1")
+        builder?.addKind("java interface+activity", PlatformIcons.JAVA_OUTSIDE_SOURCE_ICON, "2")
+        builder?.addKind("java interface+fragment", PlatformIcons.JAVA_OUTSIDE_SOURCE_ICON, "3")
+        builder?.addKind("kotlin interface", PlatformIcons.JAVA_OUTSIDE_SOURCE_ICON, "4")
+        builder?.addKind("kotlin interface+activity", PlatformIcons.JAVA_OUTSIDE_SOURCE_ICON, "5")
+        builder?.addKind("kotlin interface+fragment", PlatformIcons.JAVA_OUTSIDE_SOURCE_ICON, "6")
+        builder?.setValidator(object : InputValidator {
+            override fun checkInput(inputString: String?): Boolean {
+                return !inputString.isNullOrEmpty()
+            }
+
+            override fun canClose(inputString: String?): Boolean {
+                return false
+            }
+
+        })
     }
 
 
@@ -60,10 +77,10 @@ class MainAction : AnAction("main", "auto make mvp code", PlatformIcons.CLASS_IC
         val dir = view.orChooseDirectory
         if (dir == null || project == null) return
 
-        val builder = CreateFileDialog.createDialog(project)
+        val builder = CreateFileFromTemplateDialog.createDialog(project)
         buildDialog(project, dir, builder)
         val selectedTemplateName = Ref.create<String>(null)
-        val createdElement = builder.show<PsiFile>(getErrorTitle(), getDefaultTemplateName(dir), object : CreateFileDialog.FileCreator<PsiFile> {
+        val createdElement = builder.show<PsiFile>(getErrorTitle(), getDefaultTemplateName(dir), object : CreateFileFromTemplateDialog.FileCreator<PsiFile> {
 
             override fun createFile(name: String, templateName: String): PsiFile? {
                 selectedTemplateName.set(templateName)

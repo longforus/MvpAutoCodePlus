@@ -19,9 +19,9 @@
     </extensions>
 
   <application-components>
-    <!--<component>-->
-    <!--<implementation-class>com.longforus.mvpautocodeplus.config.ConfigComponent</implementation-class>-->
-    <!--</component>-->
+    <component>
+      <implementation-class>com.longforus.mvpautocodeplus.config.PersistentState</implementation-class>
+    </component>
   </application-components>
     <actions>
         <!-- Add your actions here -->
