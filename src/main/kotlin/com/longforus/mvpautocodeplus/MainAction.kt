@@ -14,7 +14,10 @@ import com.intellij.openapi.util.Ref
 import com.intellij.psi.PsiDirectory
 import com.intellij.psi.PsiFile
 import com.intellij.psi.PsiNameIdentifierOwner
+import com.intellij.psi.PsiPackage
+import com.intellij.psi.util.PsiTreeUtil
 import com.intellij.util.PlatformIcons
+import com.longforus.mvpautocodeplus.maker.make
 
 /**
  * Created by XQ Yang on 2018/6/25  13:43.
@@ -22,9 +25,12 @@ import com.intellij.util.PlatformIcons
  */
 
 class MainAction : AnAction("main", "auto make mvp code", PlatformIcons.CLASS_ICON), WriteActionAware {
+    var project: Project? = null
 
-    fun createFile(name: String?, templateName: String?, dir: PsiDirectory?): PsiFile? {
-        return dir?.createFile(name!!)
+
+    fun createFile(name: String, templateName: String, dir: PsiDirectory): PsiFile? {
+        log.info("name = $name  template = $templateName  dir = $dir")
+        return make(name, templateName, dir, project)
     }
 
     fun getActionName(directory: PsiDirectory?, newName: String?, templateName: String?): String {
@@ -45,7 +51,7 @@ class MainAction : AnAction("main", "auto make mvp code", PlatformIcons.CLASS_IC
             }
 
             override fun canClose(inputString: String?): Boolean {
-                return false
+                return true
             }
 
         })
@@ -64,20 +70,19 @@ class MainAction : AnAction("main", "auto make mvp code", PlatformIcons.CLASS_IC
 //
 //    }
 
-    protected val LOG = Logger.getInstance("#com.intellij.ide.actions.CreateFromTemplateAction")
+    protected val log = Logger.getInstance("#com.intellij.ide.actions.CreateFromTemplateAction")
+
 
 
     override fun actionPerformed(e: AnActionEvent) {
         val dataContext = e.dataContext
-
         val view = LangDataKeys.IDE_VIEW.getData(dataContext) ?: return
-
-        val project = CommonDataKeys.PROJECT.getData(dataContext)
-
+        project = CommonDataKeys.PROJECT.getData(dataContext)
+        val psiFile = e.getData(LangDataKeys.PSI_FILE)
         val dir = view.orChooseDirectory
         if (dir == null || project == null) return
-
-        val builder = CreateFileFromTemplateDialog.createDialog(project)
+        val builder = CreateFileFromTemplateDialog.createDialog(project!!)
+        val psiPackage = PsiTreeUtil.getParentOfType(dir, PsiPackage::class.java)
         buildDialog(project, dir, builder)
         val selectedTemplateName = Ref.create<String>(null)
         val createdElement = builder.show<PsiFile>(getErrorTitle(), getDefaultTemplateName(dir), object : CreateFileFromTemplateDialog.FileCreator<PsiFile> {

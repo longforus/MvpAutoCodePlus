@@ -1,35 +1,35 @@
 <idea-plugin>
   <id>com.longforus.mvpautocodeplus</id>
-    <name>MvpAutoCodePlus</name>
-  <version>0.0.1</version>
-    <vendor email="yxq.longforus@gmail.com" url="https://github.com/longforus">longforus</vendor>
+  <name>MvpAutoCodePlus</name>
 
-    <description><![CDATA[
+  <version>0.0.1</version>
+  <vendor email="yxq.longforus@gmail.com" url="https://github.com/longforus">longforus</vendor>
+
+  <description><![CDATA[
     is a mvp code maker.<br>
     ]]></description>
 
-    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
-         on how to target different products -->
-    <!-- uncomment to enable plugin in all products
-    <depends>com.intellij.modules.lang</depends>
-    -->
+  <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+       on how to target different products -->
+  <!-- uncomment to enable plugin in all products
+  <depends>com.intellij.modules.lang</depends>
+  -->
 
-    <extensions defaultExtensionNs="com.intellij">
-      <applicationConfigurable instance="com.longforus.mvpautocodeplus.config.ConfigComponent"/>
-    </extensions>
+  <extensions defaultExtensionNs="com.intellij">
+    <applicationConfigurable instance="com.longforus.mvpautocodeplus.config.ConfigComponent"/>
+  </extensions>
 
   <application-components>
     <component>
       <implementation-class>com.longforus.mvpautocodeplus.config.PersistentState</implementation-class>
     </component>
   </application-components>
-    <actions>
-        <!-- Add your actions here -->
+  <actions>
+    <!-- Add your actions here -->
 
-      <group description="auto make mvp code" id="mvpMaker" text="Generate MVP Code">
-        <add-to-group anchor="first" group-id="NewGroup"/>
-        <action class="com.longforus.mvpautocodeplus.MainAction" description="auto make mvp code" id="mvpMaker.make" text="Generate MVP Code"/>
-      </group>
-
-    </actions>
+    <group description="auto make mvp code" id="mvpMaker" text="Generate MVP Code">
+      <add-to-group anchor="first" group-id="NewGroup"/>
+      <action class="com.longforus.mvpautocodeplus.MainAction" description="auto make mvp code" id="mvpMaker.make" text="Generate MVP Code"/>
+    </group>
+  </actions>
 </idea-plugin>

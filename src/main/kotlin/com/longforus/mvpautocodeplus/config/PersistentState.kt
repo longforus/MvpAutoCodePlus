@@ -16,7 +16,7 @@ import java.util.*
 
 /**
  * Created by XQ Yang on 2018/6/26  10:46.
- * Description :
+ * Description : 保存配置项
  */
 @State(name = "mvpAutoCodePlus", storages = [(Storage("$APP_CONFIG$/mvpAutoCodePlus.xml"))])
 class PersistentState : PropertiesComponent(), PersistentStateComponent<Element> {
