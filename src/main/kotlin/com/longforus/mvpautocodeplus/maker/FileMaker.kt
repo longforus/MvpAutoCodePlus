@@ -48,12 +48,12 @@ fun javaNoImpl(createName: String, dir: PsiDirectory, project: Project?): PsiFil
     val pClassName = createTypeName(state.getValue(SUPER_PRESENTER), packageName, createName)
     val mClassName = createTypeName(state.getValue(SUPER_MODEL), packageName, createName)
 
-    val viewType = TypeSpec.interfaceBuilder(getViewInfName(createName)).addModifiers(Modifier.PUBLIC, Modifier.STATIC)
+    val viewType = TypeSpec.interfaceBuilder("View").addModifiers(Modifier.PUBLIC, Modifier.STATIC)
         .addSuperinterface(vClassName).build()
-    val presenterType = TypeSpec.interfaceBuilder(getPresenterInfName(createName)).addModifiers(Modifier
+    val presenterType = TypeSpec.interfaceBuilder("Presenter").addModifiers(Modifier
         .PUBLIC, Modifier.STATIC)
         .addSuperinterface(pClassName).build()
-    val mType = TypeSpec.interfaceBuilder(getModelInfName(createName)).addModifiers(Modifier.PUBLIC, Modifier.STATIC).addSuperinterface(mClassName).build()
+    val mType = TypeSpec.interfaceBuilder("Model").addModifiers(Modifier.PUBLIC, Modifier.STATIC).addSuperinterface(mClassName).build()
     val contract = TypeSpec.interfaceBuilder(getContractName(createName)).addModifiers(Modifier.PUBLIC).addType(viewType).addType(presenterType)
         .addType(mType)
         .build()
@@ -86,9 +86,9 @@ private fun createTypeName(spValue: String?, curPackageName: String, createName:
         val types = typeName.split(",")
         for (s in types) {
             typeClassNames.add(when (s) {
-                "V" -> ClassName.get(curPackageName, "${getContractName(createName)}.${getViewInfName(createName)}")
-                "P" -> ClassName.get(curPackageName, "${getContractName(createName)}.${getPresenterInfName(createName)}")
-                "M" -> ClassName.get(curPackageName, "${getContractName(createName)}.${getModelInfName(createName)}")
+                "V" -> ClassName.get(curPackageName, "${getContractName(createName)}.View")
+                "P" -> ClassName.get(curPackageName, "${getContractName(createName)}.Presenter")
+                "M" -> ClassName.get(curPackageName, "${getContractName(createName)}.Model")
                 else -> throw IllegalArgumentException("$s is not support type")
             })
         }
