@@ -6,11 +6,11 @@ import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiDirectory
 import com.intellij.psi.PsiFile
 import com.intellij.psi.PsiFileFactory
+import com.longforus.mvpautocodeplus.SUPER_MODEL
+import com.longforus.mvpautocodeplus.SUPER_PRESENTER
+import com.longforus.mvpautocodeplus.SUPER_VIEW
 import com.longforus.mvpautocodeplus.config.PersistentState
-import com.squareup.javapoet.ClassName
-import com.squareup.javapoet.JavaFile
-import com.squareup.javapoet.ParameterizedTypeName
-import com.squareup.javapoet.TypeSpec
+import com.squareup.javapoet.*
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.lang.model.element.Modifier
@@ -34,32 +34,68 @@ fun make(name: String, type: String, dir: PsiDirectory, project: Project?): PsiF
     }
 }
 
-fun javaNoImpl(name: String, dir: PsiDirectory, project: Project?): PsiFile? {
-    val fileName = "${getContractName(name)}.java"
+fun javaNoImpl(createName: String, dir: PsiDirectory, project: Project?): PsiFile? {
+    val fileName = "${getContractName(createName)}.java"
     val file = dir.findFile(fileName)
     if (file != null) {
         return null
     }
+    val path = dir.virtualFile.path
+    val packageName = path.substring(path.indexOf("com"), path.length).replace("/", ".")
+
     val state = ServiceManager.getService(PersistentState::class.java)
-    TODO("修改实现细节")
-//    val superV = Class.forName(state.getValue(SUPER_VIEW),true,project?.javaClass?.classLoader)
-//    val superP = ParameterizedTypeName.get(ClassName.get(Class.forName(state.getValue(SUPER_PRESENTER))), TypeName.get(Class.forName(getViewInfName(name))))
-    val superP = ParameterizedTypeName.get(ClassName.get("com.fec.core.inf", "IPresenter"), ClassName.get("com.fec.core.inf", "IPresenter"))
-//    val superM = Class.forName(state.getValue(SUPER_MODEL))
-    val viewType = TypeSpec.interfaceBuilder(getViewInfName(name)).addModifiers(Modifier.PUBLIC, Modifier.STATIC)
-        .addSuperinterface(ClassName.get("com.fec.core.inf", "IView")).build()
-    val presenterType = TypeSpec.interfaceBuilder(getPresenterInfName(name)).addModifiers(Modifier
+    val vClassName = createTypeName(state.getValue(SUPER_VIEW), packageName, createName)
+    val pClassName = createTypeName(state.getValue(SUPER_PRESENTER), packageName, createName)
+    val mClassName = createTypeName(state.getValue(SUPER_MODEL), packageName, createName)
+
+    val viewType = TypeSpec.interfaceBuilder(getViewInfName(createName)).addModifiers(Modifier.PUBLIC, Modifier.STATIC)
+        .addSuperinterface(vClassName).build()
+    val presenterType = TypeSpec.interfaceBuilder(getPresenterInfName(createName)).addModifiers(Modifier
         .PUBLIC, Modifier.STATIC)
-        .addSuperinterface(superP).build()
-    val mType = TypeSpec.interfaceBuilder(getModelInfName(name)).addModifiers(Modifier.PUBLIC, Modifier.STATIC).addSuperinterface(
-        ClassName.get("com.fec.core.inf", "IModel")).build()
-    val contract = TypeSpec.interfaceBuilder(name).addModifiers(Modifier.PUBLIC).addType(viewType).addType(presenterType)
+        .addSuperinterface(pClassName).build()
+    val mType = TypeSpec.interfaceBuilder(getModelInfName(createName)).addModifiers(Modifier.PUBLIC, Modifier.STATIC).addSuperinterface(mClassName).build()
+    val contract = TypeSpec.interfaceBuilder(getContractName(createName)).addModifiers(Modifier.PUBLIC).addType(viewType).addType(presenterType)
         .addType(mType)
         .build()
-    val javaFile = JavaFile.builder("com.fec.core", contract).addFileComment("This class generate by mvpAutoCodePlus .  - " + mDateFormat.format(Date())).build()
+    val javaFile = JavaFile.builder(packageName, contract).addFileComment("This class generate by mvpAutoCodePlus .  Void Young  - " + mDateFormat.format(Date())).build()
     val sb = StringBuilder()
     javaFile.writeTo(sb)
     val result = PsiFileFactory.getInstance(project).createFileFromText(fileName, JavaLanguage.INSTANCE, sb.toString(), true, false, true)
     dir.add(result)
     return result
 }
+
+
+private fun createTypeName(spValue: String?, curPackageName: String, createName: String): TypeName {
+    if (spValue.isNullOrEmpty()) {
+        throw IllegalArgumentException("Super Interface name is null !")
+    }
+    val indexOf = spValue!!.lastIndexOf(".")
+    var spName = spValue.substring(indexOf + 1, spValue.length)
+    var sPPackageName = spValue.substring(0, indexOf)
+    var typeName = ""
+    if (spName.contains("<")) {
+        val endIndex = spName.indexOf("<")
+        typeName = spName.substring(endIndex + 1, spName.indexOf(">"))
+        spName = spName.substring(0, endIndex)
+    }
+
+    var pClassName: TypeName = ClassName.get(sPPackageName, spName)
+    val typeClassNames = mutableListOf<ClassName>()
+    if (typeName.isNotEmpty()) {
+        val types = typeName.split(",")
+        for (s in types) {
+            typeClassNames.add(when (s) {
+                "V" -> ClassName.get(curPackageName, "${getContractName(createName)}.${getViewInfName(createName)}")
+                "P" -> ClassName.get(curPackageName, "${getContractName(createName)}.${getPresenterInfName(createName)}")
+                "M" -> ClassName.get(curPackageName, "${getContractName(createName)}.${getModelInfName(createName)}")
+                else -> throw IllegalArgumentException("$s is not support type")
+            })
+        }
+        if (typeClassNames.isNotEmpty()) {
+            pClassName = ParameterizedTypeName.get(pClassName as ClassName, typeClassNames as List<TypeName>?)
+        }
+    }
+    return pClassName
+}
+

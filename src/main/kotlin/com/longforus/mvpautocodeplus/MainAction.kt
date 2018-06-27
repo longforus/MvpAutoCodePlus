@@ -14,8 +14,6 @@ import com.intellij.openapi.util.Ref
 import com.intellij.psi.PsiDirectory
 import com.intellij.psi.PsiFile
 import com.intellij.psi.PsiNameIdentifierOwner
-import com.intellij.psi.PsiPackage
-import com.intellij.psi.util.PsiTreeUtil
 import com.intellij.util.PlatformIcons
 import com.longforus.mvpautocodeplus.maker.make
 
@@ -78,11 +76,9 @@ class MainAction : AnAction("main", "auto make mvp code", PlatformIcons.CLASS_IC
         val dataContext = e.dataContext
         val view = LangDataKeys.IDE_VIEW.getData(dataContext) ?: return
         project = CommonDataKeys.PROJECT.getData(dataContext)
-        val psiFile = e.getData(LangDataKeys.PSI_FILE)
         val dir = view.orChooseDirectory
         if (dir == null || project == null) return
         val builder = CreateFileFromTemplateDialog.createDialog(project!!)
-        val psiPackage = PsiTreeUtil.getParentOfType(dir, PsiPackage::class.java)
         buildDialog(project, dir, builder)
         val selectedTemplateName = Ref.create<String>(null)
         val createdElement = builder.show<PsiFile>(getErrorTitle(), getDefaultTemplateName(dir), object : CreateFileFromTemplateDialog.FileCreator<PsiFile> {
@@ -133,7 +129,7 @@ class MainAction : AnAction("main", "auto make mvp code", PlatformIcons.CLASS_IC
     protected fun isAvailable(dataContext: DataContext): Boolean {
         val project = CommonDataKeys.PROJECT.getData(dataContext)
         val view = LangDataKeys.IDE_VIEW.getData(dataContext)
-        return project != null && view != null && view.directories.size != 0
+        return project != null && view != null && view.directories.isNotEmpty()
     }
 
 

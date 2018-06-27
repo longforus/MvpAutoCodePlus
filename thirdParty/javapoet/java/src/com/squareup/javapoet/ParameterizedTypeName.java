@@ -55,6 +55,11 @@ public final class ParameterizedTypeName extends TypeName {
     }
 
     /** Returns a parameterized type, applying {@code typeArguments} to {@code rawType}. */
+    public static ParameterizedTypeName get(ClassName rawType, List<TypeName> typeArguments) {
+        return new ParameterizedTypeName(null, rawType, typeArguments);
+    }
+
+    /** Returns a parameterized type, applying {@code typeArguments} to {@code rawType}. */
     public static ParameterizedTypeName get(Class<?> rawType, Type... typeArguments) {
         return new ParameterizedTypeName(null, ClassName.get(rawType), list(typeArguments));
     }
