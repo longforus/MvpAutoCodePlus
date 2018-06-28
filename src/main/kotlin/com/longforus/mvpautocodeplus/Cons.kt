@@ -8,3 +8,4 @@ package com.longforus.mvpautocodeplus
 const val SUPER_VIEW = "super_view"
 const val SUPER_PRESENTER = "super_presenter"
 const val SUPER_MODEL = "super_model"
+const val CONTRACT_TP_NAME_JAVA = "JavaMvpAutoCodePlusContract"

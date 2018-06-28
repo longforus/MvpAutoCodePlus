@@ -15,7 +15,9 @@ import com.intellij.psi.PsiDirectory
 import com.intellij.psi.PsiFile
 import com.intellij.psi.PsiNameIdentifierOwner
 import com.intellij.util.PlatformIcons
-import com.longforus.mvpautocodeplus.maker.make
+import com.longforus.mvpautocodeplus.maker.TemplateMaker
+import com.longforus.mvpautocodeplus.maker.TemplateParamFactory
+import com.longforus.mvpautocodeplus.maker.createFileFromTemplate
 
 /**
  * Created by XQ Yang on 2018/6/25  13:43.
@@ -28,8 +30,15 @@ class MainAction : AnAction("main", "auto make mvp code", PlatformIcons.CLASS_IC
 
     fun createFile(name: String, templateName: String, dir: PsiDirectory): PsiFile? {
         log.info("name = $name  template = $templateName  dir = $dir")
-        return make(name, templateName, dir, project)
+        val template = TemplateMaker.getTemplate(templateName, project!!)
+
+
+        val psiFile = createFileFromTemplate(name, template, dir, null, true, TemplateParamFactory.getParam4TemplateName(templateName))
+//        return make(name, templateName, dir, project)
+//        return make4Template(name, templateName, dir, project!!)
+        return psiFile
     }
+
 
     fun getActionName(directory: PsiDirectory?, newName: String?, templateName: String?): String {
         return "create mvp file"
@@ -37,12 +46,12 @@ class MainAction : AnAction("main", "auto make mvp code", PlatformIcons.CLASS_IC
 
     private fun buildDialog(project: Project?, directory: PsiDirectory?, builder: CreateFileFromTemplateDialog.Builder?) {
         builder?.setTitle(directory?.name)
-        builder?.addKind("java interface", PlatformIcons.JAVA_OUTSIDE_SOURCE_ICON, "1")
-        builder?.addKind("java interface+activity", PlatformIcons.JAVA_OUTSIDE_SOURCE_ICON, "2")
-        builder?.addKind("java interface+fragment", PlatformIcons.JAVA_OUTSIDE_SOURCE_ICON, "3")
-        builder?.addKind("kotlin interface", PlatformIcons.JAVA_OUTSIDE_SOURCE_ICON, "4")
-        builder?.addKind("kotlin interface+activity", PlatformIcons.JAVA_OUTSIDE_SOURCE_ICON, "5")
-        builder?.addKind("kotlin interface+fragment", PlatformIcons.JAVA_OUTSIDE_SOURCE_ICON, "6")
+        builder?.addKind("Java Contract", com.intellij.icons.AllIcons.Nodes.Interface, CONTRACT_TP_NAME_JAVA)
+        builder?.addKind("Java Contract+activity", PlatformIcons.JAVA_OUTSIDE_SOURCE_ICON, "2")
+        builder?.addKind("Java Contract+fragment", PlatformIcons.JAVA_OUTSIDE_SOURCE_ICON, "3")
+        builder?.addKind("Kotlin Contract", PlatformIcons.JAVA_OUTSIDE_SOURCE_ICON, "4")
+        builder?.addKind("Kotlin Contract+activity", PlatformIcons.JAVA_OUTSIDE_SOURCE_ICON, "5")
+        builder?.addKind("Kotlin Contract+fragment", PlatformIcons.JAVA_OUTSIDE_SOURCE_ICON, "6")
         builder?.setValidator(object : InputValidator {
             override fun checkInput(inputString: String?): Boolean {
                 return !inputString.isNullOrEmpty()
@@ -77,6 +86,7 @@ class MainAction : AnAction("main", "auto make mvp code", PlatformIcons.CLASS_IC
         val view = LangDataKeys.IDE_VIEW.getData(dataContext) ?: return
         project = CommonDataKeys.PROJECT.getData(dataContext)
         val dir = view.orChooseDirectory
+
         if (dir == null || project == null) return
         val builder = CreateFileFromTemplateDialog.createDialog(project!!)
         buildDialog(project, dir, builder)
