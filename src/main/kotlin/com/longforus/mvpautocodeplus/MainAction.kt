@@ -10,7 +10,6 @@ import com.intellij.openapi.fileEditor.FileDocumentManager
 import com.intellij.openapi.fileEditor.FileEditorManager
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.InputValidator
-import com.intellij.openapi.util.Ref
 import com.intellij.psi.PsiDirectory
 import com.intellij.psi.PsiFile
 import com.intellij.psi.PsiNameIdentifierOwner
@@ -18,6 +17,8 @@ import com.intellij.util.PlatformIcons
 import com.longforus.mvpautocodeplus.maker.TemplateMaker
 import com.longforus.mvpautocodeplus.maker.TemplateParamFactory
 import com.longforus.mvpautocodeplus.maker.createFileFromTemplate
+import com.longforus.mvpautocodeplus.maker.getContractName
+import com.longforus.mvpautocodeplus.ui.EnterKeywordDialog
 
 /**
  * Created by XQ Yang on 2018/6/25  13:43.
@@ -88,28 +89,38 @@ class MainAction : AnAction("main", "auto make mvp code", PlatformIcons.CLASS_IC
         val dir = view.orChooseDirectory
 
         if (dir == null || project == null) return
-        val builder = CreateFileFromTemplateDialog.createDialog(project!!)
-        buildDialog(project, dir, builder)
-        val selectedTemplateName = Ref.create<String>(null)
-        val createdElement = builder.show<PsiFile>(getErrorTitle(), getDefaultTemplateName(dir), object : CreateFileFromTemplateDialog.FileCreator<PsiFile> {
 
-            override fun createFile(name: String, templateName: String): PsiFile? {
-                selectedTemplateName.set(templateName)
-                return this@MainAction.createFile(name, templateName, dir)
+        EnterKeywordDialog.getDialog {
+            if (it.isJava) {
+                createFile(it.name, CONTRACT_TP_NAME_JAVA, dir)
+            } else {
+                createFile(getContractName(it.name), CONTRACT_TP_NAME_KOTLIN, dir)
             }
 
-            override fun startInWriteAction(): Boolean {
-                return this@MainAction.startInWriteAction()
-            }
-
-            override fun getActionName(name: String, templateName: String): String {
-                return this@MainAction.getActionName(dir, name, templateName)
-            }
-        })
-        if (createdElement != null) {
-            view.selectElement(createdElement)
-            postProcess(createdElement, selectedTemplateName.get(), builder.customProperties)
         }
+
+//        val builder = CreateFileFromTemplateDialog.createDialog(project!!)
+//        buildDialog(project, dir, builder)
+//        val selectedTemplateName = Ref.create<String>(null)
+//        val createdElement = builder.show<PsiFile>(getErrorTitle(), getDefaultTemplateName(dir), object : CreateFileFromTemplateDialog.FileCreator<PsiFile> {
+//
+//            override fun createFile(name: String, templateName: String): PsiFile? {
+//                selectedTemplateName.set(templateName)
+//                return this@MainAction.createFile(name, templateName, dir)
+//            }
+//
+//            override fun startInWriteAction(): Boolean {
+//                return this@MainAction.startInWriteAction()
+//            }
+//
+//            override fun getActionName(name: String, templateName: String): String {
+//                return this@MainAction.getActionName(dir, name, templateName)
+//            }
+//        })
+//        if (createdElement != null) {
+//            view.selectElement(createdElement)
+//            postProcess(createdElement, selectedTemplateName.get(), builder.customProperties)
+//        }
     }
 
     protected fun postProcess(createdElement: PsiFile, templateName: String, customProperties: Map<String, String>?) {

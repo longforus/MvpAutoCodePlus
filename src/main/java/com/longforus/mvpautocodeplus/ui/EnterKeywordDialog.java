@@ -5,6 +5,7 @@ import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
 import com.longforus.mvpautocodeplus.Utils;
+import com.longforus.mvpautocodeplus.config.ItemConfigBean;
 import java.awt.Dimension;
 import java.awt.Insets;
 import java.awt.Toolkit;
@@ -14,17 +15,34 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.KeyStroke;
+import kotlin.Triple;
 
 public class EnterKeywordDialog extends JDialog {
+    private static final String NAME_CHECK_STR = "[a-zA-Z]+[0-9a-zA-Z_]";
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
+    private JTextField et_name;
+    private JRadioButton mJavaRadioButton;
+    private JRadioButton mKotlinRadioButton;
+    private JRadioButton mAcitivyRadioButton;
+    private JRadioButton mFragmentRadioButton;
+    private JCheckBox mViewCheckBox;
+    private JCheckBox mPresenterCheckBox;
+    private JCheckBox mModelCheckBox;
+    private JComboBox mComboBox1;
+    private JComboBox mComboBox2;
+    private JComboBox mComboBox3;
     private JTextArea et_keyword;
     private OnOkListener onOkListener;
 
@@ -78,6 +96,7 @@ public class EnterKeywordDialog extends JDialog {
         Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
         int x = (int) screensize.getWidth() / 2 - dialog.getWidth() / 2;
         int y = (int) screensize.getHeight() / 2 - dialog.getHeight() / 2;
+        dialog.setTitle("MvpAutoCodePlus");
         dialog.setLocation(x, y);
         dialog.onOkListener = onOkListener;
         dialog.pack();
@@ -86,15 +105,20 @@ public class EnterKeywordDialog extends JDialog {
     }
 
     private void onOK() {
-        String key = et_keyword.getText();
+        String key = et_name.getText();
         if (Utils.isEmpty(key)) {
-            Messages.showErrorDialog("Keyword not allow empty!", "Error");
-        } else {
-            if (onOkListener != null) {
-                onOkListener.onOk(key);
-            }
-            dispose();
+            Messages.showErrorDialog("Name not allow empty!", "Error");
+            return;
         }
+        if (!key.matches(NAME_CHECK_STR)) {
+            Messages.showErrorDialog("An illegal name!", "Error");
+            return;
+        }
+        if (onOkListener != null) {
+            onOkListener.onOk(new ItemConfigBean(key, mJavaRadioButton.isSelected(), mAcitivyRadioButton.isSelected(),
+                new Triple<>(mViewCheckBox.isSelected(), mPresenterCheckBox.isSelected(), mModelCheckBox.isSelected())));
+        }
+        dispose();
     }
 
     private void onCancel() {
@@ -156,6 +180,6 @@ public class EnterKeywordDialog extends JDialog {
 
     @FunctionalInterface
     public interface OnOkListener {
-        void onOk(String str);
+        void onOk(ItemConfigBean str);
     }
 }

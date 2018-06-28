@@ -20,6 +20,8 @@ import javax.lang.model.element.Modifier
  * Created by XQ Yang on 2018/6/26  13:55.
  * Description :
  */
+@Deprecated("使用模版方式生成更简单")
+
 val mDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
 
 fun getViewInfName(name: String) = "I${name}View"

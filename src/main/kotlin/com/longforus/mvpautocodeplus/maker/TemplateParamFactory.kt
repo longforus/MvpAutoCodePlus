@@ -1,10 +1,7 @@
 package com.longforus.mvpautocodeplus.maker
 
 import com.intellij.openapi.components.ServiceManager
-import com.longforus.mvpautocodeplus.CONTRACT_TP_NAME_JAVA
-import com.longforus.mvpautocodeplus.SUPER_MODEL
-import com.longforus.mvpautocodeplus.SUPER_PRESENTER
-import com.longforus.mvpautocodeplus.SUPER_VIEW
+import com.longforus.mvpautocodeplus.*
 import com.longforus.mvpautocodeplus.config.PersistentState
 
 /**
@@ -19,7 +16,7 @@ object TemplateParamFactory {
     fun getParam4TemplateName(templateName: String): Map<String, String?> {
         val liveTemplateParam = HashMap<String, String?>()
         when (templateName) {
-            CONTRACT_TP_NAME_JAVA -> {
+            CONTRACT_TP_NAME_JAVA, CONTRACT_TP_NAME_KOTLIN -> {
                 val (superVNameNoGeneric, superVGenericValue) = getNameAndGenericType(SUPER_VIEW)
                 val (superPNameNoGeneric, superPGenericValue) = getNameAndGenericType(SUPER_PRESENTER)
                 val (superMNameNoGeneric, superMGenericValue) = getNameAndGenericType(SUPER_MODEL)

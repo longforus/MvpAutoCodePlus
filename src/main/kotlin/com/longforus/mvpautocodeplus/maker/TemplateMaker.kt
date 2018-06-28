@@ -6,6 +6,7 @@ import com.intellij.ide.fileTemplates.FileTemplateUtil
 import com.intellij.ide.fileTemplates.impl.FileTemplateManagerImpl
 import com.intellij.openapi.project.Project
 import com.longforus.mvpautocodeplus.CONTRACT_TP_NAME_JAVA
+import com.longforus.mvpautocodeplus.CONTRACT_TP_NAME_KOTLIN
 import com.longforus.mvpautocodeplus.TemplateCons
 
 /**
@@ -37,6 +38,7 @@ object TemplateMaker {
 
         when (templateName) {
             CONTRACT_TP_NAME_JAVA -> createContractTemplate(CONTRACT_TP_NAME_JAVA, "java", TemplateCons.CONTRACT_TP_CONTENT_JAVA)
+            CONTRACT_TP_NAME_KOTLIN -> createContractTemplate(CONTRACT_TP_NAME_KOTLIN, "kt", TemplateCons.CONTRACT_TP_CONTENT_KOTLIN)
         }
 
         return cacheTemplate[templateName] as FileTemplate
