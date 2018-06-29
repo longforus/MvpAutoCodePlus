@@ -17,4 +17,9 @@ public interface TemplateCons {
         "#if (${PACKAGE_NAME} != \"\")package ${PACKAGE_NAME}#end\n" + "\n" + "import ${V}\n" + "import ${P}\n" + "import ${M}\n" + "/**\n" + " * Description : \n" +
             " * @author  ${USER}\n" + " * @date ${DATE}  ${TIME}\n" + " * \t\t\t\t\t\t\t\t - generic by MvpAutoCodePlus plugin.\n" + " */\n" + "\n" + "interface ${NAME} {\n" +
             "    interface View : IView${VG}{}\n" + "    interface Presenter : IPresenter${PG}{}\n" + "    interface Model : IModel${MG}{}\n" + "}\n";
+
+    String VIEW_IMPL_TP_CONTENT_ACTIVITY_JAVA =
+        "#if (${PACKAGE_NAME} != \"\")package ${PACKAGE_NAME};#end\n" + "\n" + "import ${A_IMPL};\n" + "\n" + "/**\n" + " * Description :" + " \n" + " * @author  ${USER}\n" +
+            " * @date ${DATE}  ${TIME}\n" + " * \t\t\t\t\t\t\t\t - generic by MvpAutoCodePlus plugin.\n" + " */\n" + "\n" +
+            "public class ${NAME}Activity extends ${A_IMPL}${VG} implements I${NAME}Contract.View {\n" + "\n" + "}\n" + "\n";
 }

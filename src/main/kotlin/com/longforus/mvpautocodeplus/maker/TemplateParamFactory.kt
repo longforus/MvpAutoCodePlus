@@ -1,6 +1,7 @@
 package com.longforus.mvpautocodeplus.maker
 
 import com.intellij.openapi.components.ServiceManager
+import com.intellij.openapi.ui.Messages
 import com.longforus.mvpautocodeplus.*
 import com.longforus.mvpautocodeplus.config.PersistentState
 
@@ -13,7 +14,7 @@ object TemplateParamFactory {
     private val state: PersistentState = ServiceManager.getService(PersistentState::class.java)
 
 
-    fun getParam4TemplateName(templateName: String): Map<String, String?> {
+    fun getParam4TemplateName(templateName: String, name: String, superImplName: String): Map<String, String?> {
         val liveTemplateParam = HashMap<String, String?>()
         when (templateName) {
             CONTRACT_TP_NAME_JAVA, CONTRACT_TP_NAME_KOTLIN -> {
@@ -27,25 +28,32 @@ object TemplateParamFactory {
                 liveTemplateParam["PG"] = superPGenericValue
                 liveTemplateParam["MG"] = superMGenericValue
             }
+            VIEW_IMPL_TP_ACTIVITY_JAVA -> {
+                val (noGSuperName, superMGenericValue) = getNameAndGenericType(SUPER_VIEW_ACTIVITY, false, name, superImplName)
+                liveTemplateParam["A_IMPL"] = noGSuperName
+                liveTemplateParam["VG"] = superMGenericValue
+            }
+//                <I${NAME}Contract.View,I${NAME}Contract.Presenter>
         }
         return liveTemplateParam
     }
 
 
-    fun getNameAndGenericType(type: String): Pair<String?, String> {
-        val name = state.getValue(type)
-        if (name.isNullOrEmpty()) {
+    fun getNameAndGenericType(type: String, isContract: Boolean = true, enterName: String = "", selectedValue: String = ""): Pair<String?, String> {
+        val setValue = if (selectedValue.isNotEmpty()) selectedValue else state.getValue(type)
+        if (setValue.isNullOrEmpty()) {
+            Messages.showErrorDialog("Super Interface name is null !", "Error")
             throw IllegalArgumentException("Super Interface name is null !")
         }
-        val indexOf = name?.indexOf("<") ?: -1
+        val indexOf = setValue?.indexOf("<") ?: -1
         var generic = ""
-        var resultName = name
+        var resultName = setValue
         if (indexOf > -1) {
-            resultName = name?.substring(0, indexOf)
-            var g = name?.substring(indexOf, name.length)
-            g = g?.replace("V", "View")
-            g = g?.replace("P", "Presenter")
-            g = g?.replace("M", "Model")
+            resultName = setValue?.substring(0, indexOf)
+            var g = setValue?.substring(indexOf, setValue.length)
+            g = g?.replace("V", if (isContract) "View" else "${getContractName(enterName)}.View")
+            g = g?.replace("P", if (isContract) "Presenter" else "${getContractName(enterName)}.Presenter")
+            g = g?.replace("M", if (isContract) "Model" else "${getContractName(enterName)}.Model")
             generic = g ?: ""
         }
         return resultName to generic

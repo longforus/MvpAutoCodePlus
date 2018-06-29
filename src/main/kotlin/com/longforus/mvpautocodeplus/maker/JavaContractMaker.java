@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
  * Created by XQ Yang on 2018/6/26  14:12.
  * Description :
  */
-
+@Deprecated
 class JavaContractMaker implements IMakeContract {
 
     @NotNull

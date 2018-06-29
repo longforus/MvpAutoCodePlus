@@ -27,16 +27,42 @@ import com.longforus.mvpautocodeplus.ui.EnterKeywordDialog
 
 class MainAction : AnAction("main", "auto make mvp code", PlatformIcons.CLASS_ICON), WriteActionAware {
     var project: Project? = null
+//    val createQueue = LinkedList<CreateTask>()
 
-
-    fun createFile(name: String, templateName: String, dir: PsiDirectory): PsiFile? {
-        log.info("name = $name  template = $templateName  dir = $dir")
+    fun createFile(enterName: String, templateName: String, dir: PsiDirectory, superImplName: String): PsiFile? {
+        log.info("enterName = $enterName  template = $templateName  dir = $dir")
         val template = TemplateMaker.getTemplate(templateName, project!!)
 
+//        ImplementAbstractClassMethodsFix()
 
-        val psiFile = createFileFromTemplate(name, template, dir, null, true, TemplateParamFactory.getParam4TemplateName(templateName))
-//        return make(name, templateName, dir, project)
-//        return make4Template(name, templateName, dir, project!!)
+//        object : WriteCommandAction(project, file) {
+//            @Throws(Throwable::class)
+//            protected override fun run(result: Result<*>) {
+//                var newExpression = JavaPsiFacade.getElementFactory(project).createExpressionFromText(startElement.getText() + "{}", startElement) as PsiNewExpression
+//                newExpression = startElement.replace(newExpression)
+//                val psiClass = newExpression.anonymousClass ?: return
+//                val subst = HashMap<PsiClass, PsiSubstitutor>()
+//                for (selectedElement in selectedElements) {
+//                    val baseClass = selectedElement.getElement().getContainingClass()
+//                    if (baseClass != null) {
+//                        var substitutor: PsiSubstitutor? = subst[baseClass]
+//                        if (substitutor == null) {
+//                            substitutor = TypeConversionUtil.getSuperClassSubstitutor(baseClass!!, psiClass, PsiSubstitutor.EMPTY)
+//                            subst[baseClass] = substitutor
+//                        }
+//                        selectedElement.setSubstitutor(substitutor)
+//                    }
+//                }
+//                OverrideImplementUtil.overrideOrImplementMethodsInRightPlace(editor, psiClass, selectedElements, false,
+//                    true)
+//            }
+//        }.execute()
+
+
+//        OverrideImplementUtil.overrideOrImplementMethods()
+        val psiFile = createFileFromTemplate(enterName, template, dir, null, true, TemplateParamFactory.getParam4TemplateName(templateName, enterName, superImplName))
+//        return make(enterName, templateName, dir, project)
+//        return make4Template(enterName, templateName, dir, project!!)
         return psiFile
     }
 
@@ -92,11 +118,37 @@ class MainAction : AnAction("main", "auto make mvp code", PlatformIcons.CLASS_IC
 
         EnterKeywordDialog.getDialog {
             if (it.isJava) {
-                createFile(it.name, CONTRACT_TP_NAME_JAVA, dir)
-            } else {
-                createFile(getContractName(it.name), CONTRACT_TP_NAME_KOTLIN, dir)
-            }
+                createFile(it.name, CONTRACT_TP_NAME_JAVA, dir, "")
+                if (!it.vImpl.isEmpty()) {
+                    if (it.isActivity) {
+                        createFile(it.name, VIEW_IMPL_TP_ACTIVITY_JAVA, dir, it.vImpl)
+                    } else {
+                        createFile(it.name, VIEW_IMPL_TP_FRAGMENT_JAVA, dir, it.vImpl)
+                    }
+                }
+                if (!it.pImpl.isEmpty()) {
+                    createFile(it.name, PRESENTER_IMPL_TP_JAVA, dir, it.pImpl)
+                }
+                if (!it.mImpl.isEmpty()) {
+                    createFile(it.name, MODEL_IMPL_TP_JAVA, dir, it.mImpl)
+                }
 
+            } else {
+                createFile(getContractName(it.name), CONTRACT_TP_NAME_KOTLIN, dir, "")
+                if (!it.vImpl.isEmpty()) {
+                    if (it.isActivity) {
+                        createFile(it.name, VIEW_IMPL_TP_ACTIVITY_KOTLIN, dir, it.vImpl)
+                    } else {
+                        createFile(it.name, VIEW_IMPL_TP_FRAGMENT_KOTLIN, dir, it.vImpl)
+                    }
+                }
+                if (!it.pImpl.isEmpty()) {
+                    createFile(it.name, PRESENTER_IMPL_TP_KOTLIN, dir, it.pImpl)
+                }
+                if (!it.mImpl.isEmpty()) {
+                    createFile(it.name, MODEL_IMPL_TP_KOTLIN, dir, it.mImpl)
+                }
+            }
         }
 
 //        val builder = CreateFileFromTemplateDialog.createDialog(project!!)
