@@ -54,11 +54,17 @@ object TemplateParamFactory {
         var resultName = setValue
         if (indexOf > -1) {
             resultName = setValue?.substring(0, indexOf)
-            var g = setValue?.substring(indexOf, setValue.length)
-            g = g?.replace("V", if (isContract) "View" else "${getContractName(enterName)}.View")
-            g = g?.replace("P", if (isContract) "Presenter" else "${getContractName(enterName)}.Presenter")
-            g = g?.replace("M", if (isContract) "Model" else "${getContractName(enterName)}.Model")
-            generic = g ?: ""
+            val g = setValue?.substring(indexOf, setValue.length)
+            val sb = StringBuilder()
+            g?.forEach {
+                when (it) {
+                    "V"[0] -> sb.append(if (isContract) "View" else "${getContractName(enterName)}.View")
+                    "P"[0] -> sb.append(if (isContract) "Presenter" else "${getContractName(enterName)}.Presenter")
+                    "M"[0] -> sb.append(if (isContract) "Model" else "${getContractName(enterName)}.Model")
+                    else -> sb.append(it)
+                }
+            }
+            generic = sb.toString()
         }
         return resultName to generic
     }

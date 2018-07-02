@@ -30,7 +30,7 @@ object TemplateMaker {
         cacheTemplate[name] = template
     }
 
-    fun getTemplate(templateName: String, project: Project): FileTemplate {
+    fun getTemplate(templateName: String, project: Project): FileTemplate? {
         if (cacheTemplate.contains(templateName)) {
             return cacheTemplate[templateName] as FileTemplate
         } else if (tpManager == null) {
@@ -43,7 +43,7 @@ object TemplateMaker {
             VIEW_IMPL_TP_ACTIVITY_JAVA -> createContractTemplate(VIEW_IMPL_TP_ACTIVITY_JAVA, "java", TemplateCons.VIEW_IMPL_TP_CONTENT_ACTIVITY_JAVA)
         }
 
-        return cacheTemplate[templateName] as FileTemplate
+        return if (cacheTemplate.containsKey(templateName)) cacheTemplate[templateName] as FileTemplate else null
     }
 
 

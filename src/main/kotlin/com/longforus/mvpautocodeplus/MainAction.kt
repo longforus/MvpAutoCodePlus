@@ -1,6 +1,8 @@
 package com.longforus.mvpautocodeplus
 
 import com.intellij.CommonBundle
+import com.intellij.featureStatistics.FeatureUsageTracker
+import com.intellij.featureStatistics.ProductivityFeatureNames
 import com.intellij.ide.actions.CreateFileFromTemplateDialog
 import com.intellij.ide.util.PackageUtil
 import com.intellij.ide.util.PropertiesComponent
@@ -9,6 +11,7 @@ import com.intellij.openapi.application.WriteActionAware
 import com.intellij.openapi.diagnostic.Logger
 import com.intellij.openapi.fileEditor.FileDocumentManager
 import com.intellij.openapi.fileEditor.FileEditorManager
+import com.intellij.openapi.fileEditor.TextEditor
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.InputValidator
 import com.intellij.psi.PsiDirectory
@@ -16,10 +19,7 @@ import com.intellij.psi.PsiFile
 import com.intellij.psi.PsiJavaFile
 import com.intellij.psi.PsiNameIdentifierOwner
 import com.intellij.util.PlatformIcons
-import com.longforus.mvpautocodeplus.maker.TemplateMaker
-import com.longforus.mvpautocodeplus.maker.TemplateParamFactory
-import com.longforus.mvpautocodeplus.maker.createFileFromTemplate
-import com.longforus.mvpautocodeplus.maker.getContractName
+import com.longforus.mvpautocodeplus.maker.*
 import com.longforus.mvpautocodeplus.ui.EnterKeywordDialog
 
 
@@ -34,10 +34,9 @@ class MainAction : AnAction("main", "auto make mvp code", PlatformIcons.CLASS_IC
 
     fun createFile(enterName: String, templateName: String, dir: PsiDirectory, superImplName: String, contract: PsiFile? = null): PsiFile? {
         log.info("enterName = $enterName  template = $templateName  dir = $dir")
-        val template = TemplateMaker.getTemplate(templateName, project!!)
-
-//        ImplementAbstractClassMethodsFix()
-
+        val template = TemplateMaker.getTemplate(templateName, project!!) ?: return null
+        //        ImplementAbstractClassMethodsFix()
+//
 //        object : WriteCommandAction(project, file) {
 //            @Throws(Throwable::class)
 //            protected override fun run(result: Result<*>) {
@@ -66,6 +65,13 @@ class MainAction : AnAction("main", "auto make mvp code", PlatformIcons.CLASS_IC
         val psiFile = createFileFromTemplate(enterName, template, dir, null, true, TemplateParamFactory.getParam4TemplateName(templateName, enterName, superImplName, contract))
 //        return make(enterName, templateName, dir, project)
 //        return make4Template(enterName, templateName, dir, project!!)
+        if (templateName != CONTRACT_TP_NAME_JAVA && templateName != CONTRACT_TP_NAME_KOTLIN) {
+            val openFile = FileEditorManager.getInstance(project!!).openFile(psiFile!!.virtualFile, false)
+            val textEditor = openFile[0] as TextEditor
+            val javaFile = psiFile as PsiJavaFile
+            FeatureUsageTracker.getInstance().triggerFeatureUsed(ProductivityFeatureNames.CODEASSISTS_OVERRIDE_IMPLEMENT)
+            chooseAndOverrideOrImplementMethods(project!!, textEditor.editor, javaFile.classes[0], true)
+        }
         return psiFile
     }
 
