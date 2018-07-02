@@ -5,7 +5,13 @@ package com.longforus.mvpautocodeplus
  * Description :
  */
 
-val IS_NOT_SET = "Is not set"
+const val IS_NOT_SET = "Is not set"
+
+
+const val CONTRACT = "contract"
+const val VIEW = "view"
+const val PRESENTER = "presenter"
+const val MODEL = "model"
 
 
 const val SUPER_VIEW = "super_view"

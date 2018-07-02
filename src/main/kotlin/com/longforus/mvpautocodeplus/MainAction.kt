@@ -22,6 +22,7 @@ import com.longforus.mvpautocodeplus.maker.createFileFromTemplate
 import com.longforus.mvpautocodeplus.maker.getContractName
 import com.longforus.mvpautocodeplus.ui.EnterKeywordDialog
 
+
 /**
  * Created by XQ Yang on 2018/6/25  13:43.
  * Description :
@@ -31,7 +32,7 @@ class MainAction : AnAction("main", "auto make mvp code", PlatformIcons.CLASS_IC
     var project: Project? = null
 //    val createQueue = LinkedList<CreateTask>()
 
-    fun createFile(enterName: String, templateName: String, dir: PsiDirectory, superImplName: String): PsiFile? {
+    fun createFile(enterName: String, templateName: String, dir: PsiDirectory, superImplName: String, contract: PsiFile? = null): PsiFile? {
         log.info("enterName = $enterName  template = $templateName  dir = $dir")
         val template = TemplateMaker.getTemplate(templateName, project!!)
 
@@ -62,7 +63,7 @@ class MainAction : AnAction("main", "auto make mvp code", PlatformIcons.CLASS_IC
 
 
 //        OverrideImplementUtil.overrideOrImplementMethods()
-        val psiFile = createFileFromTemplate(enterName, template, dir, null, true, TemplateParamFactory.getParam4TemplateName(templateName, enterName, superImplName))
+        val psiFile = createFileFromTemplate(enterName, template, dir, null, true, TemplateParamFactory.getParam4TemplateName(templateName, enterName, superImplName, contract))
 //        return make(enterName, templateName, dir, project)
 //        return make4Template(enterName, templateName, dir, project!!)
         return psiFile
@@ -120,46 +121,46 @@ class MainAction : AnAction("main", "auto make mvp code", PlatformIcons.CLASS_IC
 
         if (dir == null || project == null) return
 
-        val contract = getSubDir(dir, "contract")
+        val contract = getSubDir(dir, CONTRACT)
 
         EnterKeywordDialog.getDialog {
             if (it.isJava) {
                 val contractJ = createFile(it.name, CONTRACT_TP_NAME_JAVA, contract, "") as PsiJavaFile
 
                 if (!it.vImpl.isEmpty() && it.vImpl != IS_NOT_SET) {
-                    val sdV = getSubDir(dir, "view")
+                    val sdV = getSubDir(dir, VIEW)
                     if (it.isActivity) {
-                        createFile(it.name, VIEW_IMPL_TP_ACTIVITY_JAVA, sdV, it.vImpl)
+                        createFile(it.name, VIEW_IMPL_TP_ACTIVITY_JAVA, sdV, it.vImpl, contractJ)
                     } else {
-                        createFile(it.name, VIEW_IMPL_TP_FRAGMENT_JAVA, sdV, it.vImpl)
+                        createFile(it.name, VIEW_IMPL_TP_FRAGMENT_JAVA, sdV, it.vImpl, contractJ)
                     }
                 }
                 if (!it.pImpl.isEmpty() && it.pImpl != IS_NOT_SET) {
-                    val sdP = getSubDir(dir, "presenter")
-                    createFile(it.name, PRESENTER_IMPL_TP_JAVA, sdP, it.pImpl)
+                    val sdP = getSubDir(dir, PRESENTER)
+                    createFile(it.name, PRESENTER_IMPL_TP_JAVA, sdP, it.pImpl, contractJ)
                 }
                 if (!it.mImpl.isEmpty() && it.mImpl != IS_NOT_SET) {
-                    val sdM = getSubDir(dir, "model")
-                    createFile(it.name, MODEL_IMPL_TP_JAVA, sdM, it.mImpl)
+                    val sdM = getSubDir(dir, MODEL)
+                    createFile(it.name, MODEL_IMPL_TP_JAVA, sdM, it.mImpl, contractJ)
                 }
 
             } else {
                 val contractK = createFile(getContractName(it.name), CONTRACT_TP_NAME_KOTLIN, contract, "")
                 if (!it.vImpl.isEmpty() && it.vImpl != IS_NOT_SET) {
-                    val sdV = getSubDir(dir, "view")
+                    val sdV = getSubDir(dir, VIEW)
                     if (it.isActivity) {
-                        createFile(it.name, VIEW_IMPL_TP_ACTIVITY_KOTLIN, sdV, it.vImpl)
+                        createFile(it.name, VIEW_IMPL_TP_ACTIVITY_KOTLIN, sdV, it.vImpl, contractK)
                     } else {
-                        createFile(it.name, VIEW_IMPL_TP_FRAGMENT_KOTLIN, sdV, it.vImpl)
+                        createFile(it.name, VIEW_IMPL_TP_FRAGMENT_KOTLIN, sdV, it.vImpl, contractK)
                     }
                 }
                 if (!it.pImpl.isEmpty() && it.pImpl != IS_NOT_SET) {
-                    val sdP = getSubDir(dir, "presenter")
-                    createFile(it.name, PRESENTER_IMPL_TP_KOTLIN, sdP, it.pImpl)
+                    val sdP = getSubDir(dir, PRESENTER)
+                    createFile(it.name, PRESENTER_IMPL_TP_KOTLIN, sdP, it.pImpl, contractK)
                 }
                 if (!it.mImpl.isEmpty() && it.mImpl != IS_NOT_SET) {
-                    val sdM = getSubDir(dir, "model")
-                    createFile(it.name, MODEL_IMPL_TP_KOTLIN, sdM, it.mImpl)
+                    val sdM = getSubDir(dir, MODEL)
+                    createFile(it.name, MODEL_IMPL_TP_KOTLIN, sdM, it.mImpl, contractK)
                 }
             }
         }
@@ -189,8 +190,12 @@ class MainAction : AnAction("main", "auto make mvp code", PlatformIcons.CLASS_IC
     }
 
     fun getSubDir(dir: PsiDirectory, dirName: String): PsiDirectory {
-        return if (dir.name == dirName) {
-            dir
+        return if (dir.name == CONTRACT) {
+            if (dirName == CONTRACT) {
+                dir
+            } else {
+                PackageUtil.findOrCreateSubdirectory(dir.parentDirectory!!, dirName)
+            }
         } else {
             PackageUtil.findOrCreateSubdirectory(dir, dirName)
         }

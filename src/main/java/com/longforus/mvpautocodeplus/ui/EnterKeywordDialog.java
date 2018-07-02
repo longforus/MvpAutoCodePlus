@@ -116,7 +116,7 @@ public class EnterKeywordDialog extends JDialog {
 
     private static void setSuperClass(JComboBox<String> cob, String value, JCheckBox jcb) {
         if (TextUtils.isEmpty(value)) {
-            value = ConsKt.getIS_NOT_SET();
+            value = ConsKt.IS_NOT_SET;
             jcb.setSelected(false);
         } else {
             jcb.setSelected(true);
@@ -168,7 +168,7 @@ public class EnterKeywordDialog extends JDialog {
     private boolean checkImplementInValid(JCheckBox cb, JComboBox<String> cob, String item) {
         if (cb.isSelected()) {
             String value = (String) cob.getSelectedItem();
-            if (TextUtils.isEmpty(value) || ConsKt.getIS_NOT_SET().equals(value)) {
+            if (TextUtils.isEmpty(value) || ConsKt.IS_NOT_SET.equals(value)) {
                 Messages.showErrorDialog(item + " implement is invalid ", "Error");
                 return true;
             }

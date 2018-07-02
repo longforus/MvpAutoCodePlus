@@ -2,6 +2,8 @@ package com.longforus.mvpautocodeplus.maker
 
 import com.intellij.openapi.components.ServiceManager
 import com.intellij.openapi.ui.Messages
+import com.intellij.psi.PsiFile
+import com.intellij.psi.PsiJavaFile
 import com.longforus.mvpautocodeplus.*
 import com.longforus.mvpautocodeplus.config.PersistentState
 
@@ -14,7 +16,7 @@ object TemplateParamFactory {
     private val state: PersistentState = ServiceManager.getService(PersistentState::class.java)
 
 
-    fun getParam4TemplateName(templateName: String, name: String, superImplName: String): Map<String, String?> {
+    fun getParam4TemplateName(templateName: String, name: String, superImplName: String, contract: PsiFile?): Map<String, String?> {
         val liveTemplateParam = HashMap<String, String?>()
         when (templateName) {
             CONTRACT_TP_NAME_JAVA, CONTRACT_TP_NAME_KOTLIN -> {
@@ -30,6 +32,8 @@ object TemplateParamFactory {
             }
             VIEW_IMPL_TP_ACTIVITY_JAVA -> {
                 val (noGSuperName, superMGenericValue) = getNameAndGenericType(SUPER_VIEW_ACTIVITY, false, name, superImplName)
+                val javaFile = contract as PsiJavaFile
+                liveTemplateParam["CONTRACT"] = "${javaFile.packageName}.${getContractName(name)}"
                 liveTemplateParam["A_IMPL"] = noGSuperName
                 liveTemplateParam["VG"] = superMGenericValue
             }
