@@ -22,6 +22,7 @@ import javax.swing.JTextField;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+@Deprecated
 public class CreateFileDialog extends DialogWrapper {
     private JTextField myNameField;
     private TemplateKindCombo myKindCombo;
@@ -35,7 +36,6 @@ public class CreateFileDialog extends DialogWrapper {
 
     protected CreateFileDialog(@NotNull Project project) {
         super(project, true);
-        // TODO: 2018/6/25 报空
         myKindLabel.setLabelFor(myKindCombo);
         myKindCombo.registerUpDownHint(myNameField);
         myUpDownHint.setIcon(PlatformIcons.UP_DOWN_ARROWS);

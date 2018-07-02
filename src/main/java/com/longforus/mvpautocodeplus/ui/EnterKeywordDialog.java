@@ -12,8 +12,6 @@ import com.longforus.mvpautocodeplus.config.ItemConfigBean;
 import com.longforus.mvpautocodeplus.config.PersistentState;
 import java.awt.Dimension;
 import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -25,14 +23,12 @@ import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import org.apache.http.util.TextUtils;
 
 public class EnterKeywordDialog extends JDialog {
     private static final String NAME_CHECK_STR = "[a-zA-Z]+[0-9a-zA-Z_]";
-    public static final String IS_NOT_SET = "Is not set";
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
@@ -47,7 +43,6 @@ public class EnterKeywordDialog extends JDialog {
     private JComboBox<String> cob_v;
     private JComboBox<String> cob_p;
     private JComboBox<String> cob_m;
-    private JTextArea et_keyword;
     private OnOkListener onOkListener;
 
     private EnterKeywordDialog() {
@@ -55,17 +50,9 @@ public class EnterKeywordDialog extends JDialog {
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
 
-        buttonOK.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onOK();
-            }
-        });
+        buttonOK.addActionListener(e -> onOK());
 
-        buttonCancel.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
-            }
-        });
+        buttonCancel.addActionListener(e -> onCancel());
 
         // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -76,11 +63,7 @@ public class EnterKeywordDialog extends JDialog {
         });
 
         // call onCancel() on ESCAPE
-        contentPane.registerKeyboardAction(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
-            }
-        }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+        contentPane.registerKeyboardAction(e -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
 
     public static void main(String[] args) {
@@ -133,7 +116,7 @@ public class EnterKeywordDialog extends JDialog {
 
     private static void setSuperClass(JComboBox<String> cob, String value, JCheckBox jcb) {
         if (TextUtils.isEmpty(value)) {
-            value = IS_NOT_SET;
+            value = ConsKt.getIS_NOT_SET();
             jcb.setSelected(false);
         } else {
             jcb.setSelected(true);
@@ -185,7 +168,7 @@ public class EnterKeywordDialog extends JDialog {
     private boolean checkImplementInValid(JCheckBox cb, JComboBox<String> cob, String item) {
         if (cb.isSelected()) {
             String value = (String) cob.getSelectedItem();
-            if (TextUtils.isEmpty(value) || IS_NOT_SET.equals(value)) {
+            if (TextUtils.isEmpty(value) || ConsKt.getIS_NOT_SET().equals(value)) {
                 Messages.showErrorDialog(item + " implement is invalid ", "Error");
                 return true;
             }

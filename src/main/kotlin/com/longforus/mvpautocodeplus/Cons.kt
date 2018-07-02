@@ -5,6 +5,9 @@ package com.longforus.mvpautocodeplus
  * Description :
  */
 
+val IS_NOT_SET = "Is not set"
+
+
 const val SUPER_VIEW = "super_view"
 const val SUPER_PRESENTER = "super_presenter"
 const val SUPER_MODEL = "super_model"

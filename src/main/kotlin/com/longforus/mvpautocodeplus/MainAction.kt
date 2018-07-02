@@ -2,6 +2,7 @@ package com.longforus.mvpautocodeplus
 
 import com.intellij.CommonBundle
 import com.intellij.ide.actions.CreateFileFromTemplateDialog
+import com.intellij.ide.util.PackageUtil
 import com.intellij.ide.util.PropertiesComponent
 import com.intellij.openapi.actionSystem.*
 import com.intellij.openapi.application.WriteActionAware
@@ -12,6 +13,7 @@ import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.InputValidator
 import com.intellij.psi.PsiDirectory
 import com.intellij.psi.PsiFile
+import com.intellij.psi.PsiJavaFile
 import com.intellij.psi.PsiNameIdentifierOwner
 import com.intellij.util.PlatformIcons
 import com.longforus.mvpautocodeplus.maker.TemplateMaker
@@ -114,39 +116,50 @@ class MainAction : AnAction("main", "auto make mvp code", PlatformIcons.CLASS_IC
         project = CommonDataKeys.PROJECT.getData(dataContext)
         val dir = view.orChooseDirectory
 
+
+
         if (dir == null || project == null) return
+
+        val contract = getSubDir(dir, "contract")
 
         EnterKeywordDialog.getDialog {
             if (it.isJava) {
-                createFile(it.name, CONTRACT_TP_NAME_JAVA, dir, "")
-                if (!it.vImpl.isEmpty()) {
+                val contractJ = createFile(it.name, CONTRACT_TP_NAME_JAVA, contract, "") as PsiJavaFile
+
+                if (!it.vImpl.isEmpty() && it.vImpl != IS_NOT_SET) {
+                    val sdV = getSubDir(dir, "view")
                     if (it.isActivity) {
-                        createFile(it.name, VIEW_IMPL_TP_ACTIVITY_JAVA, dir, it.vImpl)
+                        createFile(it.name, VIEW_IMPL_TP_ACTIVITY_JAVA, sdV, it.vImpl)
                     } else {
-                        createFile(it.name, VIEW_IMPL_TP_FRAGMENT_JAVA, dir, it.vImpl)
+                        createFile(it.name, VIEW_IMPL_TP_FRAGMENT_JAVA, sdV, it.vImpl)
                     }
                 }
-                if (!it.pImpl.isEmpty()) {
-                    createFile(it.name, PRESENTER_IMPL_TP_JAVA, dir, it.pImpl)
+                if (!it.pImpl.isEmpty() && it.pImpl != IS_NOT_SET) {
+                    val sdP = getSubDir(dir, "presenter")
+                    createFile(it.name, PRESENTER_IMPL_TP_JAVA, sdP, it.pImpl)
                 }
-                if (!it.mImpl.isEmpty()) {
-                    createFile(it.name, MODEL_IMPL_TP_JAVA, dir, it.mImpl)
+                if (!it.mImpl.isEmpty() && it.mImpl != IS_NOT_SET) {
+                    val sdM = getSubDir(dir, "model")
+                    createFile(it.name, MODEL_IMPL_TP_JAVA, sdM, it.mImpl)
                 }
 
             } else {
-                createFile(getContractName(it.name), CONTRACT_TP_NAME_KOTLIN, dir, "")
-                if (!it.vImpl.isEmpty()) {
+                val contractK = createFile(getContractName(it.name), CONTRACT_TP_NAME_KOTLIN, contract, "")
+                if (!it.vImpl.isEmpty() && it.vImpl != IS_NOT_SET) {
+                    val sdV = getSubDir(dir, "view")
                     if (it.isActivity) {
-                        createFile(it.name, VIEW_IMPL_TP_ACTIVITY_KOTLIN, dir, it.vImpl)
+                        createFile(it.name, VIEW_IMPL_TP_ACTIVITY_KOTLIN, sdV, it.vImpl)
                     } else {
-                        createFile(it.name, VIEW_IMPL_TP_FRAGMENT_KOTLIN, dir, it.vImpl)
+                        createFile(it.name, VIEW_IMPL_TP_FRAGMENT_KOTLIN, sdV, it.vImpl)
                     }
                 }
-                if (!it.pImpl.isEmpty()) {
-                    createFile(it.name, PRESENTER_IMPL_TP_KOTLIN, dir, it.pImpl)
+                if (!it.pImpl.isEmpty() && it.pImpl != IS_NOT_SET) {
+                    val sdP = getSubDir(dir, "presenter")
+                    createFile(it.name, PRESENTER_IMPL_TP_KOTLIN, sdP, it.pImpl)
                 }
-                if (!it.mImpl.isEmpty()) {
-                    createFile(it.name, MODEL_IMPL_TP_KOTLIN, dir, it.mImpl)
+                if (!it.mImpl.isEmpty() && it.mImpl != IS_NOT_SET) {
+                    val sdM = getSubDir(dir, "model")
+                    createFile(it.name, MODEL_IMPL_TP_KOTLIN, sdM, it.mImpl)
                 }
             }
         }
@@ -173,6 +186,14 @@ class MainAction : AnAction("main", "auto make mvp code", PlatformIcons.CLASS_IC
 //            view.selectElement(createdElement)
 //            postProcess(createdElement, selectedTemplateName.get(), builder.customProperties)
 //        }
+    }
+
+    fun getSubDir(dir: PsiDirectory, dirName: String): PsiDirectory {
+        return if (dir.name == dirName) {
+            dir
+        } else {
+            PackageUtil.findOrCreateSubdirectory(dir, dirName)
+        }
     }
 
     protected fun postProcess(createdElement: PsiFile, templateName: String, customProperties: Map<String, String>?) {
