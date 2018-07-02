@@ -2,6 +2,7 @@ package com.longforus.mvpautocodeplus.ui;
 
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
+import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -20,6 +21,13 @@ public class ConfigForm {
     public JTextField tv_presenter_impl;
     public JTextField tv_view_activity;
     public JTextField tv_view_fragment;
+    public JButton btn_view_select;
+    public JButton btn_view_a_select;
+    public JButton btn_view_f_select;
+    public JButton btn_p_select;
+    public JButton btn_pi_select;
+    public JButton btn_m_select;
+    public JButton btn_mi_select;
 
     private void createUIComponents() {
         // TODO: place custom component creation code here

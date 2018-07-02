@@ -23,6 +23,7 @@
               <gridbag weightx="1.0" weighty="1.0"/>
             </constraints>
             <properties>
+              <minimumSize width="-1" height="-1"/>
               <text value="Super IView Name:  "/>
             </properties>
           </component>
@@ -35,6 +36,15 @@
             </constraints>
             <properties>
               <toolTipText value="base IView Name"/>
+            </properties>
+          </component>
+          <component id="778c5" class="javax.swing.JButton" binding="btn_view_select">
+            <constraints>
+              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <text value="..."/>
             </properties>
           </component>
         </children>
@@ -68,6 +78,15 @@
               <toolTipText value="base IView Name"/>
             </properties>
           </component>
+          <component id="77551" class="javax.swing.JButton" binding="btn_p_select">
+            <constraints>
+              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <text value="..."/>
+            </properties>
+          </component>
         </children>
       </grid>
       <grid id="314dc" layout-manager="GridBagLayout">
@@ -99,6 +118,15 @@
               <toolTipText value="base IView Name"/>
             </properties>
           </component>
+          <component id="cbedd" class="javax.swing.JButton" binding="btn_m_select">
+            <constraints>
+              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <text value="..."/>
+            </properties>
+          </component>
         </children>
       </grid>
       <grid id="50860" layout-manager="GridBagLayout">
@@ -127,6 +155,15 @@
               <gridbag weightx="4.0" weighty="1.0"/>
             </constraints>
             <properties/>
+          </component>
+          <component id="579c4" class="javax.swing.JButton" binding="btn_mi_select">
+            <constraints>
+              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <text value="..."/>
+            </properties>
           </component>
         </children>
       </grid>
@@ -160,6 +197,15 @@
             </constraints>
             <properties/>
           </component>
+          <component id="9f2b2" class="javax.swing.JButton" binding="btn_pi_select">
+            <constraints>
+              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <text value="..."/>
+            </properties>
+          </component>
         </children>
       </grid>
       <grid id="92526" layout-manager="GridBagLayout">
@@ -187,6 +233,15 @@
             </constraints>
             <properties/>
           </component>
+          <component id="91ed9" class="javax.swing.JButton" binding="btn_view_a_select">
+            <constraints>
+              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <text value="..."/>
+            </properties>
+          </component>
         </children>
       </grid>
       <grid id="79ac7" layout-manager="GridBagLayout">
@@ -213,6 +268,15 @@
               <gridbag weightx="4.0" weighty="1.0"/>
             </constraints>
             <properties/>
+          </component>
+          <component id="23e88" class="javax.swing.JButton" binding="btn_view_f_select">
+            <constraints>
+              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.0" weighty="0.0"/>
+            </constraints>
+            <properties>
+              <text value="..."/>
+            </properties>
           </component>
         </children>
       </grid>

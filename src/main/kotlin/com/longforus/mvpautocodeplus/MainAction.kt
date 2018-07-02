@@ -35,33 +35,6 @@ class MainAction : AnAction("main", "auto make mvp code", PlatformIcons.CLASS_IC
     fun createFile(enterName: String, templateName: String, dir: PsiDirectory, superImplName: String, contract: PsiFile? = null): PsiFile? {
         log.info("enterName = $enterName  template = $templateName  dir = $dir")
         val template = TemplateMaker.getTemplate(templateName, project!!) ?: return null
-        //        ImplementAbstractClassMethodsFix()
-//
-//        object : WriteCommandAction(project, file) {
-//            @Throws(Throwable::class)
-//            protected override fun run(result: Result<*>) {
-//                var newExpression = JavaPsiFacade.getElementFactory(project).createExpressionFromText(startElement.getText() + "{}", startElement) as PsiNewExpression
-//                newExpression = startElement.replace(newExpression)
-//                val psiClass = newExpression.anonymousClass ?: return
-//                val subst = HashMap<PsiClass, PsiSubstitutor>()
-//                for (selectedElement in selectedElements) {
-//                    val baseClass = selectedElement.getElement().getContainingClass()
-//                    if (baseClass != null) {
-//                        var substitutor: PsiSubstitutor? = subst[baseClass]
-//                        if (substitutor == null) {
-//                            substitutor = TypeConversionUtil.getSuperClassSubstitutor(baseClass!!, psiClass, PsiSubstitutor.EMPTY)
-//                            subst[baseClass] = substitutor
-//                        }
-//                        selectedElement.setSubstitutor(substitutor)
-//                    }
-//                }
-//                OverrideImplementUtil.overrideOrImplementMethodsInRightPlace(editor, psiClass, selectedElements, false,
-//                    true)
-//            }
-//        }.execute()
-
-
-//        OverrideImplementUtil.overrideOrImplementMethods()
         val psiFile = createFileFromTemplate(enterName, template, dir, null, true, TemplateParamFactory.getParam4TemplateName(templateName, enterName, superImplName, contract))
 //        return make(enterName, templateName, dir, project)
 //        return make4Template(enterName, templateName, dir, project!!)

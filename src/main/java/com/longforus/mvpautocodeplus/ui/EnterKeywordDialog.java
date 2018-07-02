@@ -50,7 +50,10 @@ public class EnterKeywordDialog extends JDialog {
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
 
-        buttonOK.addActionListener(e -> onOK());
+        buttonOK.addActionListener(e -> {
+            onOK();
+            buttonOK.setEnabled(false);
+        });
 
         buttonCancel.addActionListener(e -> onCancel());
 

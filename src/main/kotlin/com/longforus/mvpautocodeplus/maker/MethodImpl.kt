@@ -1,6 +1,5 @@
 package com.longforus.mvpautocodeplus.maker
 
-import com.intellij.codeInsight.FileModificationService
 import com.intellij.codeInsight.generation.GenerateMembersUtil
 import com.intellij.codeInsight.generation.OverrideImplementExploreUtil
 import com.intellij.codeInsight.generation.OverrideImplementUtil.*
@@ -20,7 +19,7 @@ import com.intellij.util.containers.ContainerUtil
 
 /**
  * Created by XQ Yang on 2018/7/2  15:53.
- * Description :
+ * Description : 实现抽象方法
  */
 
 fun chooseAndOverrideOrImplementMethods(project: Project,
@@ -28,13 +27,6 @@ fun chooseAndOverrideOrImplementMethods(project: Project,
     aClass: PsiClass,
     toImplement: Boolean) {
     ApplicationManager.getApplication().assertReadAccessAllowed()
-    val prepareFileForWrite = FileModificationService.getInstance().prepareFileForWrite(aClass.containingFile)
-
-    if (!prepareFileForWrite) {
-        println("还没有准备好")
-    }
-
-
     val candidates = OverrideImplementExploreUtil.getMethodsToOverrideImplement(aClass, toImplement)
     val secondary = if (toImplement || aClass.isInterface)
         ContainerUtil.newArrayList()
