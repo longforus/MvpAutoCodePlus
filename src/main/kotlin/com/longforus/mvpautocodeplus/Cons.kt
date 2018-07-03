@@ -5,6 +5,12 @@ package com.longforus.mvpautocodeplus
  * Description :
  */
 
+fun getContractName(name: String) = "I${name}Contract"
+
+fun getViewInfName(name: String) = "I${name}View"
+fun getPresenterInfName(name: String) = "I${name}Presenter"
+fun getModelInfName(name: String) = "I${name}Model"
+
 const val IS_NOT_SET = "Is not set"
 
 

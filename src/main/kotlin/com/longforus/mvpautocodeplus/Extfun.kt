@@ -13,3 +13,5 @@ fun <E> MutableSet<E>.eAdd(vararg e: E): Set<E> {
     }
     return this
 }
+
+fun String.lastDotContent() = this.substring(this.lastIndexOf(".") + 1, this.length)

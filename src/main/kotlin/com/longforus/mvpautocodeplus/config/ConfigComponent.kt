@@ -1,10 +1,12 @@
 package com.longforus.mvpautocodeplus.config
 
+import com.intellij.icons.AllIcons
 import com.intellij.openapi.components.ServiceManager
 import com.intellij.openapi.fileChooser.FileChooserDescriptor
 import com.intellij.openapi.options.SearchableConfigurable
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.project.ProjectManager
+import com.intellij.openapi.ui.Messages
 import com.longforus.mvpautocodeplus.*
 import com.longforus.mvpautocodeplus.ui.ConfigForm
 import javax.swing.JComponent
@@ -56,10 +58,10 @@ class ConfigComponent : SearchableConfigurable {
 //        val dialogImpl = FileChooserDialogImpl(fcd, project)
 //        val split = value?.split(";")
 //        project.projectFile.findChild()
-//        mCp.btn_view_select.addActionListener {
+        mCp.btn_view_select.addActionListener {
 //            val choose = dialogImpl.choose(project, null)
-//
-//        }
+            Messages.showMessageDialog("还没有找到合适的方法来实现class的选择", "待开发", AllIcons.General.ErrorDialog)
+        }
         mCp.tv_p_name.text = state.getValue(SUPER_PRESENTER)
         mCp.tv_m_name.text = state.getValue(SUPER_MODEL)
         mCp.tv_view_activity.text = state.getValue(SUPER_VIEW_ACTIVITY)

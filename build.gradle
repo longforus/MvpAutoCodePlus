@@ -1,8 +1,8 @@
 buildscript {
-    ext.kotlin_version = '1.2.30'
+    ext.kotlin_version = '1.2.50'
 
     repositories {
-        maven { url "http://192.168.2.105:8908/repository/maven-public/" }
+//        maven { url "http://192.168.2.105:8908/repository/maven-public/" }
         mavenCentral()
     }
     dependencies {
@@ -23,22 +23,22 @@ apply plugin: 'org.jetbrains.intellij'
 
 sourceCompatibility = 1.8
 
-sourceSets {
-    main {
-        java {
-            srcDir "${project.rootDir.absolutePath}/thirdParty/javapoet/java/src"
-        }
-    }
-}
+//sourceSets {
+//    main {
+//        java {
+//            srcDir "${project.rootDir.absolutePath}/thirdParty/javapoet/java/src"
+//        }
+//    }
+//}
 
 repositories {
-    maven { url "http://192.168.2.105:8908/repository/maven-public/" }
+//    maven { url "http://192.168.2.105:8908/repository/maven-public/" }
     mavenCentral()
 }
 
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-//    compile 'com.squareup:javapoet:1.11.0'
+    //    compile 'com.squareup:javapoet:1.11.0'
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
 
@@ -50,6 +50,7 @@ compileTestKotlin {
 }
 intellij {
     version '2018.1'
+    plugins 'org.jetbrains.kotlin:1.2.50-release-IJ2018.1-1' //here
 }
 
 
@@ -59,7 +60,7 @@ tasks.withType(JavaCompile){
 }
 
 patchPluginXml {
-    changeNotes """
-      init first version.<br>
-      <em>most HTML tags may be used</em>"""
+    changeNotes """<h1>第一版盛大发布</h1>
+init first version.<br>
+      """
 }

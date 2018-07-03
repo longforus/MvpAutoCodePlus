@@ -1,19 +1,6 @@
 package com.longforus.mvpautocodeplus.maker
 
-import com.intellij.lang.java.JavaLanguage
-import com.intellij.openapi.components.ServiceManager
-import com.intellij.openapi.project.Project
-import com.intellij.psi.PsiDirectory
-import com.intellij.psi.PsiFile
-import com.intellij.psi.PsiFileFactory
-import com.longforus.mvpautocodeplus.SUPER_MODEL
-import com.longforus.mvpautocodeplus.SUPER_PRESENTER
-import com.longforus.mvpautocodeplus.SUPER_VIEW
-import com.longforus.mvpautocodeplus.config.PersistentState
-import com.squareup.javapoet.*
 import java.text.SimpleDateFormat
-import java.util.*
-import javax.lang.model.element.Modifier
 
 
 /**
@@ -21,14 +8,10 @@ import javax.lang.model.element.Modifier
  * Description :
  */
 @Deprecated("使用模版方式生成更简单")
-
 val mDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
 
-fun getViewInfName(name: String) = "I${name}View"
-fun getPresenterInfName(name: String) = "I${name}Presenter"
-fun getModelInfName(name: String) = "I${name}Model"
-fun getContractName(name: String) = "I${name}Contract"
 
+/*
 fun make(name: String, type: String, dir: PsiDirectory, project: Project?): PsiFile? {
     return when (type) {
         "1" -> javaNoImpl(name, dir, project)
@@ -100,4 +83,5 @@ private fun createTypeName(spValue: String?, curPackageName: String, createName:
     }
     return pClassName
 }
+*/
 

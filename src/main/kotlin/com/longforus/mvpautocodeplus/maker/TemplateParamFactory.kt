@@ -6,6 +6,7 @@ import com.intellij.psi.PsiFile
 import com.intellij.psi.PsiJavaFile
 import com.longforus.mvpautocodeplus.*
 import com.longforus.mvpautocodeplus.config.PersistentState
+import java.util.*
 
 /**
  * Created by XQ Yang on 2018/6/28  14:18.
@@ -16,7 +17,7 @@ object TemplateParamFactory {
     private val state: PersistentState = ServiceManager.getService(PersistentState::class.java)
 
 
-    fun getParam4TemplateName(templateName: String, name: String, superImplName: String, contract: PsiFile?): Map<String, String?> {
+    fun getParam4TemplateName(templateName: String, enterName: String, superImplName: String, contract: PsiFile?): Map<String, String?> {
         val liveTemplateParam = HashMap<String, String?>()
         when (templateName) {
             CONTRACT_TP_NAME_JAVA, CONTRACT_TP_NAME_KOTLIN -> {
@@ -30,16 +31,51 @@ object TemplateParamFactory {
                 liveTemplateParam["PG"] = superPGenericValue
                 liveTemplateParam["MG"] = superMGenericValue
             }
-            VIEW_IMPL_TP_ACTIVITY_JAVA -> {
-                val (noGSuperName, superMGenericValue) = getNameAndGenericType(SUPER_VIEW_ACTIVITY, false, name, superImplName)
-                val javaFile = contract as PsiJavaFile
-                liveTemplateParam["CONTRACT"] = "${javaFile.packageName}.${getContractName(name)}"
-                liveTemplateParam["A_IMPL"] = noGSuperName
-                liveTemplateParam["VG"] = superMGenericValue
+            VIEW_IMPL_TP_ACTIVITY_JAVA, VIEW_IMPL_TP_ACTIVITY_KOTLIN -> {
+                setCommonParam(enterName, superImplName, contract, liveTemplateParam, templateName)
+                liveTemplateParam["IMPL_TYPE"] = "Activity"
+                liveTemplateParam["TYPE"] = "View"
+            }
+            VIEW_IMPL_TP_FRAGMENT_JAVA, VIEW_IMPL_TP_FRAGMENT_KOTLIN -> {
+                setCommonParam(enterName, superImplName, contract, liveTemplateParam, templateName)
+                liveTemplateParam["IMPL_TYPE"] = "Fragment"
+                liveTemplateParam["TYPE"] = "View"
+            }
+            PRESENTER_IMPL_TP_JAVA, PRESENTER_IMPL_TP_KOTLIN -> {
+                setCommonParam(enterName, superImplName, contract, liveTemplateParam, templateName)
+                liveTemplateParam["IMPL_TYPE"] = "Presenter"
+                liveTemplateParam["TYPE"] = "Presenter"
+            }
+            MODEL_IMPL_TP_JAVA, MODEL_IMPL_TP_KOTLIN -> {
+                setCommonParam(enterName, superImplName, contract, liveTemplateParam, templateName)
+                liveTemplateParam["IMPL_TYPE"] = "Model"
+                liveTemplateParam["TYPE"] = "Model"
             }
 //                <I${NAME}Contract.View,I${NAME}Contract.Presenter>
         }
         return liveTemplateParam
+    }
+
+
+    private fun setCommonParam(name: String, superImplName: String, contract: PsiFile?,
+        liveTemplateParam: HashMap<String, String?>,
+        templateName: String) {
+        val (noGSuperName, superMGenericValue) = getNameAndGenericType("", false, name, superImplName)
+        var packageName = ""
+        if (contract is PsiJavaFile) {
+            packageName = contract.packageName
+        } else if (contract is org.jetbrains.kotlin.psi.KtFile) {
+            packageName = contract.packageFqName.asString()
+        }
+
+        liveTemplateParam["CONTRACT"] = "$packageName.${getContractName(name)}"
+        liveTemplateParam["IMPL"] = noGSuperName
+        liveTemplateParam["VG"] = superMGenericValue
+
+        if (templateName.startsWith("Kotlin")) {
+            liveTemplateParam["IMPL_NP"] = liveTemplateParam["IMPL"]?.lastDotContent()
+            liveTemplateParam["CONTRACT_NP"] = liveTemplateParam["CONTRACT"]?.lastDotContent()
+        }
     }
 
 

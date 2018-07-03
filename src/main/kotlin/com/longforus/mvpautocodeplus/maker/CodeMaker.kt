@@ -18,13 +18,13 @@ import org.apache.velocity.runtime.parser.ParseException
  * Description :
  */
 
-fun createFileFromTemplate(n: String?,
+fun createFileFromTemplate(fileName: String?,
     template: FileTemplate,
     d: PsiDirectory,
     defaultTemplateProperty: String?,
     openFile: Boolean,
     liveTemplateDefaultValues: Map<String, String?>): PsiFile? {
-    var name = n
+    var name = fileName
     var dir = d
     if (name != null) {
         val mkdirs = CreateFileAction.MkDirs(name, dir)
