@@ -16,6 +16,7 @@ import com.intellij.psi.PsiMethod
 import com.intellij.psi.PsiModifier
 import com.intellij.util.IncorrectOperationException
 import com.intellij.util.containers.ContainerUtil
+import org.jetbrains.kotlin.asJava.classes.KtLightClass
 
 /**
  * Created by XQ Yang on 2018/7/2  15:53.
@@ -56,7 +57,12 @@ fun chooseAndOverrideOrImplementMethods(project: Project,
     object : WriteCommandAction<Any?>(project, aClass.containingFile) {
         @Throws()
         override fun run(result: Result<Any?>) {
-            overrideOrImplementMethodsInRightPlace(editor, aClass, allList, false, true)
+            if (aClass is KtLightClass) {
+                //todo 使用kotlin的方式生成
+//                OverrideImplementMembersHandler
+            } else {
+                overrideOrImplementMethodsInRightPlace(editor, aClass, allList, false, true)
+            }
         }
     }.executeSilently()
 }

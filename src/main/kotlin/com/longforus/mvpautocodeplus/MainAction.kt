@@ -9,6 +9,7 @@ import com.intellij.openapi.diagnostic.Logger
 import com.intellij.openapi.fileEditor.FileEditorManager
 import com.intellij.openapi.fileEditor.TextEditor
 import com.intellij.openapi.project.Project
+import com.intellij.psi.PsiClass
 import com.intellij.psi.PsiDirectory
 import com.intellij.psi.PsiFile
 import com.intellij.psi.PsiJavaFile
@@ -18,6 +19,7 @@ import com.longforus.mvpautocodeplus.maker.TemplateParamFactory
 import com.longforus.mvpautocodeplus.maker.chooseAndOverrideOrImplementMethods
 import com.longforus.mvpautocodeplus.maker.createFileFromTemplate
 import com.longforus.mvpautocodeplus.ui.EnterKeywordDialog
+import org.jetbrains.kotlin.psi.KtFile
 
 
 /**
@@ -37,12 +39,17 @@ class MainAction : AnAction("main", "auto make mvp code", PlatformIcons.CLASS_IC
 //        return make(enterName, templateName, dir, project)
 //        return make4Template(enterName, templateName, dir, project!!)
         //TODO 还没有找到方法来自动生成kotlin父类的抽象方法
-        if (templateName != CONTRACT_TP_NAME_JAVA && !templateName.contains("Kotlin")) {
+        if (!templateName.contains("Contract")) {
             val openFile = FileEditorManager.getInstance(project!!).openFile(psiFile!!.virtualFile, false)
             val textEditor = openFile[0] as TextEditor
-            val javaFile = psiFile as PsiJavaFile
+            var clazz: PsiClass? = null
+            if (psiFile is PsiJavaFile) {
+                clazz = psiFile.classes[0]
+            } else if (psiFile is KtFile) {
+                clazz = psiFile.classes[0]
+            }
             FeatureUsageTracker.getInstance().triggerFeatureUsed(ProductivityFeatureNames.CODEASSISTS_OVERRIDE_IMPLEMENT)
-            chooseAndOverrideOrImplementMethods(project!!, textEditor.editor, javaFile.classes[0], true)
+            chooseAndOverrideOrImplementMethods(project!!, textEditor.editor, clazz!!, true)
         }
         return psiFile
     }
