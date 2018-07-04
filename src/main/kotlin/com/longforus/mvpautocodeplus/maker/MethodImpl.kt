@@ -17,16 +17,50 @@ import com.intellij.psi.PsiModifier
 import com.intellij.util.IncorrectOperationException
 import com.intellij.util.containers.ContainerUtil
 import org.jetbrains.kotlin.asJava.classes.KtLightClass
+import org.jetbrains.kotlin.idea.core.overrideImplement.ImplementMembersHandler
+import org.jetbrains.kotlin.idea.core.overrideImplement.OverrideImplementMembersHandler
 
 /**
  * Created by XQ Yang on 2018/7/2  15:53.
  * Description : 实现抽象方法
  */
+val implementMembersHandler = ImplementMembersHandler()
 
-fun chooseAndOverrideOrImplementMethods(project: Project,
+
+fun overrideOrImplementMethods(project: Project,
     editor: Editor,
     aClass: PsiClass,
     toImplement: Boolean) {
+    if (aClass is KtLightClass) {
+        kotlinDoMultiOverrideImplement(aClass, project, editor)
+    } else {
+        javaOverrideOrImplementMethods(project, editor, aClass, toImplement)
+    }
+}
+
+
+fun kotlinDoMultiOverrideImplement(aClass: KtLightClass, project: Project, editor: Editor) {
+//    val classOrObject = PsiTreeUtil.getParentOfType(aClass, KtClassOrObject::class.java)
+//        ?: error("Caret should be inside class or object")
+    val classOrObject = aClass.kotlinOrigin ?: error("Caret should be inside class or object")
+
+
+    val chooserObjects = implementMembersHandler.collectMembersToGenerate(
+        classOrObject).sortedBy { it.descriptor.name.asString() + " in " + it.immediateSuper.containingDeclaration.name.asString() }
+    object : WriteCommandAction<Any?>(project, aClass.containingFile) {
+        @Throws()
+        override fun run(result: Result<Any?>) {
+            OverrideImplementMembersHandler.generateMembers(editor, classOrObject, chooserObjects, false)
+        }
+    }.executeSilently()
+}
+
+
+fun javaOverrideOrImplementMethods(project: Project,
+    editor: Editor,
+    aClass: PsiClass,
+    toImplement: Boolean) {
+
     ApplicationManager.getApplication().assertReadAccessAllowed()
     val candidates = OverrideImplementExploreUtil.getMethodsToOverrideImplement(aClass, toImplement)
     val secondary = if (toImplement || aClass.isInterface)
@@ -57,12 +91,7 @@ fun chooseAndOverrideOrImplementMethods(project: Project,
     object : WriteCommandAction<Any?>(project, aClass.containingFile) {
         @Throws()
         override fun run(result: Result<Any?>) {
-            if (aClass is KtLightClass) {
-                //todo 使用kotlin的方式生成
-//                OverrideImplementMembersHandler
-            } else {
-                overrideOrImplementMethodsInRightPlace(editor, aClass, allList, false, true)
-            }
+            overrideOrImplementMethodsInRightPlace(editor, aClass, allList, false, true)
         }
     }.executeSilently()
 }

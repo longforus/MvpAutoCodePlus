@@ -44,7 +44,8 @@ class PersistentState : PropertiesComponent(), PersistentStateComponent<Element>
             LOG.error(reason)
         }
         myMap[key] = value
-        incModificationCount()
+        //todo 2018.1版本后可开启
+//        incModificationCount()
     }
 
 
@@ -120,7 +121,7 @@ class PersistentState : PropertiesComponent(), PersistentStateComponent<Element>
 
     override fun unsetValue(name: String) {
         myMap.remove(name)
-        incModificationCount()
+//        incModificationCount()
     }
 
     override fun isValueSet(name: String): Boolean {

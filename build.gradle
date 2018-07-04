@@ -49,8 +49,13 @@ compileTestKotlin {
     kotlinOptions.jvmTarget = "1.8"
 }
 intellij {
-    version '2018.1'
-    plugins 'org.jetbrains.kotlin:1.2.50-release-IJ2018.1-1' //here
+    version '2017.3'
+    plugins 'org.jetbrains.kotlin:1.2.50-release-IJ2017.3-1' //here
+}
+
+publishPlugin {
+    username publishUserName
+    password publishPassword
 }
 
 

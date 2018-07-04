@@ -10,7 +10,7 @@ import java.util.*
 
 /**
  * Created by XQ Yang on 2018/6/28  14:18.
- * Description :
+ * Description : template参数工厂
  */
 
 object TemplateParamFactory {

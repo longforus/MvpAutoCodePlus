@@ -5,19 +5,21 @@ import com.intellij.featureStatistics.ProductivityFeatureNames
 import com.intellij.ide.util.PackageUtil
 import com.intellij.openapi.actionSystem.*
 import com.intellij.openapi.application.WriteActionAware
-import com.intellij.openapi.diagnostic.Logger
+import com.intellij.openapi.components.ServiceManager
 import com.intellij.openapi.fileEditor.FileEditorManager
 import com.intellij.openapi.fileEditor.TextEditor
 import com.intellij.openapi.project.Project
+import com.intellij.openapi.ui.Messages
 import com.intellij.psi.PsiClass
 import com.intellij.psi.PsiDirectory
 import com.intellij.psi.PsiFile
 import com.intellij.psi.PsiJavaFile
 import com.intellij.util.PlatformIcons
+import com.longforus.mvpautocodeplus.config.PersistentState
 import com.longforus.mvpautocodeplus.maker.TemplateMaker
 import com.longforus.mvpautocodeplus.maker.TemplateParamFactory
-import com.longforus.mvpautocodeplus.maker.chooseAndOverrideOrImplementMethods
 import com.longforus.mvpautocodeplus.maker.createFileFromTemplate
+import com.longforus.mvpautocodeplus.maker.overrideOrImplementMethods
 import com.longforus.mvpautocodeplus.ui.EnterKeywordDialog
 import org.jetbrains.kotlin.psi.KtFile
 
@@ -29,16 +31,11 @@ import org.jetbrains.kotlin.psi.KtFile
 
 class MainAction : AnAction("main", "auto make mvp code", PlatformIcons.CLASS_ICON), WriteActionAware {
     var project: Project? = null
-//    val createQueue = LinkedList<CreateTask>()
 
     fun createFile(enterName: String, templateName: String, dir: PsiDirectory, superImplName: String, contract: PsiFile? = null, fileName: String = enterName): PsiFile? {
-        log.info("enterName = $enterName  template = $templateName  dir = $dir")
         val template = TemplateMaker.getTemplate(templateName, project!!) ?: return null
         val liveTemplateDefaultValues = TemplateParamFactory.getParam4TemplateName(templateName, enterName, superImplName, contract)
         val psiFile = createFileFromTemplate(fileName, template, dir, null, false, liveTemplateDefaultValues)
-//        return make(enterName, templateName, dir, project)
-//        return make4Template(enterName, templateName, dir, project!!)
-        //TODO 还没有找到方法来自动生成kotlin父类的抽象方法
         if (!templateName.contains("Contract")) {
             val openFile = FileEditorManager.getInstance(project!!).openFile(psiFile!!.virtualFile, false)
             val textEditor = openFile[0] as TextEditor
@@ -49,17 +46,10 @@ class MainAction : AnAction("main", "auto make mvp code", PlatformIcons.CLASS_IC
                 clazz = psiFile.classes[0]
             }
             FeatureUsageTracker.getInstance().triggerFeatureUsed(ProductivityFeatureNames.CODEASSISTS_OVERRIDE_IMPLEMENT)
-            chooseAndOverrideOrImplementMethods(project!!, textEditor.editor, clazz!!, true)
+            overrideOrImplementMethods(project!!, textEditor.editor, clazz!!, true)
         }
         return psiFile
     }
-
-
-
-
-    protected val log = Logger.getInstance("#com.intellij.ide.actions.CreateFromTemplateAction")
-
-
 
     override fun actionPerformed(e: AnActionEvent) {
         val dataContext = e.dataContext
@@ -67,9 +57,20 @@ class MainAction : AnAction("main", "auto make mvp code", PlatformIcons.CLASS_IC
         project = CommonDataKeys.PROJECT.getData(dataContext)
         val dir = view.orChooseDirectory
 
-
-
         if (dir == null || project == null) return
+        val state: PersistentState = ServiceManager.getService(PersistentState::class.java)
+        if (state.getValue(SUPER_VIEW).isNullOrEmpty()) {
+            Messages.showErrorDialog("Super View Interface name is null ! $GOTO_SETTING", "Error")
+            return
+        }
+        if (state.getValue(SUPER_PRESENTER).isNullOrEmpty()) {
+            Messages.showErrorDialog("Super Presenter Interface name is null ! $GOTO_SETTING", "Error")
+            return
+        }
+        if (state.getValue(SUPER_MODEL).isNullOrEmpty()) {
+            Messages.showErrorDialog("Super Model Interface name is null ! $GOTO_SETTING", "Error")
+            return
+        }
 
         val contract = getSubDir(dir, CONTRACT)
 
@@ -129,8 +130,6 @@ class MainAction : AnAction("main", "auto make mvp code", PlatformIcons.CLASS_IC
         }
     }
 
-
-
     override fun update(e: AnActionEvent?) {
         val dataContext = e!!.dataContext
         val presentation = e.presentation
@@ -146,7 +145,5 @@ class MainAction : AnAction("main", "auto make mvp code", PlatformIcons.CLASS_IC
         val view = LangDataKeys.IDE_VIEW.getData(dataContext)
         return project != null && view != null && view.directories.isNotEmpty()
     }
-
-
 
 }

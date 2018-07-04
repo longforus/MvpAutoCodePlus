@@ -1,6 +1,7 @@
 package com.longforus.mvpautocodeplus.config
 
 import com.intellij.icons.AllIcons
+import com.intellij.ide.BrowserUtil
 import com.intellij.openapi.components.ServiceManager
 import com.intellij.openapi.fileChooser.FileChooserDescriptor
 import com.intellij.openapi.options.SearchableConfigurable
@@ -34,7 +35,8 @@ class ConfigComponent : SearchableConfigurable {
             mCp.tv_model_impl.text != state.getValue(SUPER_MODEL_IMPL) ||
             mCp.tv_presenter_impl.text != state.getValue(SUPER_PRESENTER_IMPL) ||
             mCp.tv_view_fragment.text != state.getValue(SUPER_VIEW_FRAGMENT) ||
-            mCp.tv_view_activity.text != state.getValue(SUPER_VIEW_ACTIVITY)
+            mCp.tv_view_activity.text != state.getValue(SUPER_VIEW_ACTIVITY) ||
+            mCp.et_comment_author.text != state.getValue(COMMENT_AUTHOR)
     }
 
     override fun getDisplayName(): String {
@@ -49,6 +51,7 @@ class ConfigComponent : SearchableConfigurable {
         state.setValue(SUPER_VIEW_FRAGMENT, mCp.tv_view_fragment.text)
         state.setValue(SUPER_PRESENTER_IMPL, mCp.tv_presenter_impl.text)
         state.setValue(SUPER_MODEL_IMPL, mCp.tv_model_impl.text)
+        state.setValue(COMMENT_AUTHOR, mCp.et_comment_author.text)
     }
 
     override fun createComponent(): JComponent? {
@@ -68,6 +71,10 @@ class ConfigComponent : SearchableConfigurable {
         mCp.tv_view_fragment.text = state.getValue(SUPER_VIEW_FRAGMENT)
         mCp.tv_presenter_impl.text = state.getValue(SUPER_PRESENTER_IMPL)
         mCp.tv_model_impl.text = state.getValue(SUPER_MODEL_IMPL)
+        mCp.et_comment_author.text = state.getValue(COMMENT_AUTHOR)
+        mCp.lk_look_detail.setListener({ aSource, aLinkData ->
+            BrowserUtil.browse("https://github.com/longforus")
+        }, "https://github.com/longforus")
         return mCp.mPanel
     }
 

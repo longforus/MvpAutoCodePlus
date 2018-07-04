@@ -9,7 +9,7 @@ import com.longforus.mvpautocodeplus.*
 
 /**
  * Created by XQ Yang on 2018/6/28  10:46.
- * Description :
+ * Description : template管理类
  */
 
 object TemplateMaker {

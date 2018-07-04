@@ -6,17 +6,26 @@ import com.intellij.ide.fileTemplates.FileTemplateManager
 import com.intellij.ide.fileTemplates.FileTemplateUtil
 import com.intellij.ide.fileTemplates.actions.CreateFromTemplateActionBase
 import com.intellij.ide.util.PropertiesComponent
+import com.intellij.openapi.components.ServiceManager
 import com.intellij.openapi.fileEditor.FileEditorManager
 import com.intellij.psi.PsiDirectory
 import com.intellij.psi.PsiFile
 import com.intellij.psi.SmartPointerManager
 import com.intellij.util.IncorrectOperationException
+import com.longforus.mvpautocodeplus.COMMENT_AUTHOR
+import com.longforus.mvpautocodeplus.config.PersistentState
 import org.apache.velocity.runtime.parser.ParseException
 
 /**
  * Created by XQ Yang on 2018/6/28  15:34.
- * Description :
+ * Description : 创建对应的源文件
  */
+
+
+val author: String? by lazy {
+    val state: PersistentState = ServiceManager.getService(PersistentState::class.java)
+    state.getValue(COMMENT_AUTHOR)
+}
 
 fun createFileFromTemplate(fileName: String?,
     template: FileTemplate,
@@ -36,6 +45,9 @@ fun createFileFromTemplate(fileName: String?,
     try {
         val defaultProperties = FileTemplateManager.getInstance(dir.project).defaultProperties
         defaultProperties.putAll(liveTemplateDefaultValues)
+        if (!author.isNullOrEmpty()) {
+            defaultProperties["USER"] = author
+        }
         val psiFile = FileTemplateUtil.createFromTemplate(template, name, defaultProperties, dir)
             .containingFile
         val pointer = SmartPointerManager.getInstance(project).createSmartPsiElementPointer(psiFile)

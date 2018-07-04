@@ -1,5 +1,6 @@
 package com.longforus.mvpautocodeplus.ui;
 
+import com.intellij.ui.components.labels.LinkLabel;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import javax.swing.JButton;
@@ -28,6 +29,8 @@ public class ConfigForm {
     public JButton btn_pi_select;
     public JButton btn_m_select;
     public JButton btn_mi_select;
+    public JTextField et_comment_author;
+    public LinkLabel lk_look_detail;
 
     private void createUIComponents() {
         // TODO: place custom component creation code here

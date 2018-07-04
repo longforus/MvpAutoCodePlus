@@ -94,7 +94,7 @@ public class EnterKeywordDialog extends JDialog {
         String sp = state.getValue(ConsKt.SUPER_PRESENTER);
         String sm = state.getValue(ConsKt.SUPER_MODEL);
         if (TextUtils.isEmpty(sm) || TextUtils.isEmpty(sp) || TextUtils.isEmpty(sv)) {
-            Messages.showErrorDialog("Super interface not set,Please go to File->Settings->MvpAutoCodePlus set.", "Error");
+            Messages.showErrorDialog("Super interface not set," + ConsKt.GOTO_SETTING, "Error");
             return null;
         } else {
             setSavedSuperClass(dialog, state);
@@ -128,7 +128,7 @@ public class EnterKeywordDialog extends JDialog {
         cob.setSelectedIndex(0);
     }
 
-    public static String getSelectedContent(JComboBox<String> cob) {
+    private static String getSelectedContent(JComboBox<String> cob) {
         Object item = cob.getSelectedItem();
         if (item == null) {
             return "";

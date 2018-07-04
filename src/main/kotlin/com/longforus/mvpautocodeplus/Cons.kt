@@ -2,7 +2,7 @@ package com.longforus.mvpautocodeplus
 
 /**
  * Created by XQ Yang on 2018/6/26  11:14.
- * Description :
+ * Description : 常量
  */
 
 fun getContractName(name: String) = "I${name}Contract"
@@ -11,8 +11,8 @@ fun getViewInfName(name: String) = "I${name}View"
 fun getPresenterInfName(name: String) = "I${name}Presenter"
 fun getModelInfName(name: String) = "I${name}Model"
 
-const val IS_NOT_SET = "Is not set"
-
+const val GOTO_SETTING = "Please go to File-> Settings -> OtherSettings -> MvpAutoCodePlus set."
+const val IS_NOT_SET = "Is not set, $GOTO_SETTING"
 
 const val CONTRACT = "contract"
 const val VIEW = "view"
@@ -27,6 +27,8 @@ const val SUPER_VIEW_ACTIVITY = "super_view_activity"
 const val SUPER_VIEW_FRAGMENT = "super_view_fragment"
 const val SUPER_PRESENTER_IMPL = "super_presenter_impl"
 const val SUPER_MODEL_IMPL = "super_model_impl"
+const val COMMENT_AUTHOR = "comment_author"
+
 
 const val CONTRACT_TP_NAME_JAVA = "JavaMvpAutoCodePlusContract"
 const val CONTRACT_TP_NAME_KOTLIN = "KotlinMvpAutoCodePlusContract"
