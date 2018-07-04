@@ -1,12 +1,40 @@
 <idea-plugin>
   <id>com.longforus.mvpautocodeplus</id>
   <name>MvpAutoCodePlus</name>
-  <version>0.0.1</version>
   <vendor email="yxq.longforus@gmail.com" url="https://github.com/longforus">longforus</vendor>
 
   <description><![CDATA[
-    is a mvp code maker.<br>
+    <h1>MvpAutoCodePlus</h1>
+      <br/>
+      <p>
+      <b>
+      <a href="https://github.com/longforus/MvpAutoCodePlus">Website</a> |
+      <a href="https://github.com/longforus">GitHub</a> |
+      <a href="https://github.com/longforus/MvpAutoCodePlus/issues">Issues</a> |
+      <a href="https://blog.csdn.net/longforus">Blog</a>
+      </b>
+      </p>
+      <br/>
+      <p><b>An plugin that automatically generates an MVP template code.</b></p>
+      <br/>
+      <p><b>Features:</b>
+      <ul>
+        <li>Automatically generate Contract Interface based on the specified super Interface.</li>
+        <li>Automatically generate implements class based on the Contract Interface and specified superclass.</li>
+        <li>Supports generics(currently only have M,V,P).</li>
+        <li>Supports Java and Kotlin.</li>
+      </ul>
+      </p>
+      <br/>
+      <p><a href="https://github.com/longforus/MvpAutoCodePlus/issues">Send feedback</a></p>
     ]]></description>
+
+
+  <change-notes><![CDATA[
+      <h3>First version publish</h3>
+      <br/>
+      <a href="https://github.com/longforus/MvpAutoCodePlus/blob/master/CHANGELOG.md"><b>Full Changelog History</b></a>
+    ]]></change-notes>
 
   <depends>org.jetbrains.kotlin</depends>
   <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
