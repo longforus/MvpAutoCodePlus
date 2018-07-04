@@ -27,10 +27,10 @@ MvpAutoCodePlus
 安装
 ----
 - **使用 IDE 内置插件系统安装:**
-  - <kbd>File</kbd> ><kbd>Preferences(Settings)</kbd> > <kbd>Plugins</kbd> > <kbd>Browse repositories...</kbd> > <kbd>搜索并找到"MvpAutoCodePlus"</kbd> > <kbd>Install Plugin</kbd>
+  - <kbd>File</kbd> > <kbd>Preferences(Settings)</kbd> > <kbd>Plugins</kbd> > <kbd>Browse repositories...</kbd> > <kbd>搜索并找到"MvpAutoCodePlus"</kbd> > <kbd>Install Plugin</kbd>
 
 - **手动安装:**
-  - 下载[`最新发布的插件包`][latest-release] -> <kbd>File</kbd> ><kbd>Preferences(Settings)</kbd> > <kbd>Plugins</kbd> > <kbd>Install plugin from disk...</kbd>
+  - 下载[`最新发布的插件包`][latest-release] > <kbd>File</kbd> ><kbd>Preferences(Settings)</kbd> > <kbd>Plugins</kbd> > <kbd>Install plugin from disk...</kbd>
 
 重启**IDE**.
 
@@ -39,7 +39,7 @@ MvpAutoCodePlus
 
 1. 配置父接口:
 
-   - <kbd>Preferences(Settings)</kbd> > <kbd>Other Settings</kbd> > <kbd>MvpAutoCodePlus</kbd> > 
+   -  <kbd>File</kbd> > <kbd>Preferences(Settings)</kbd> > <kbd>Other Settings</kbd> > <kbd>MvpAutoCodePlus</kbd> > 
 
      ![settings](./images/settings.png)
 
@@ -63,7 +63,7 @@ MvpAutoCodePlus
 
 只使用了我自己目前使用的接口来开发测试,欢迎各位使用自己的接口进行测试.如需要[`我使用的接口`][my_interface] ,请下载后放入自己的项目中.
 
-##存在问题
+## 存在问题
 
 - 父接口和父类的输入比较麻烦,还没有找到能在设置界面选择项目中的class的方法,好在只用设置一次就可保存了,项目中也不会经常变动.
 - 其他未知问题,此插件是作者首次开发插件,完全从0开始,官方的文档不是很详细,英语水平更是不堪,国内的参考资料也不多,做这个纯粹是忽然想到了,就开始做了.难免有未尽之处,欢迎各位star,issue.
