@@ -49,7 +49,7 @@ MvpAutoCodePlus
 
    - 右击要生成的目标包,<kbd>New</kbd> > <kbd>Generate Mvp Code</kbd> (或选中包,按Alt+Insert),生成contract包后可以选中contract包或contract的父包.
 
-   - 输入生成的代码主名,比如要做Login功能,就输入Login,生成是ILoginContract,LoginActivity,LoginPresenter,LoginModel
+   - 输入生成的代码主名,比如要做Login功能,就输入Login,生成结果是ILoginContract,LoginActivity,LoginPresenter,LoginModel
 
    - 选择代码实现方式,可选Java或Kotlin
 
