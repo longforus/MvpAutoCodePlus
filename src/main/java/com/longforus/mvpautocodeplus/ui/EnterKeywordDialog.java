@@ -107,21 +107,23 @@ public class EnterKeywordDialog extends JDialog {
     private static void setSavedSuperClass(EnterKeywordDialog dialog, PersistentState state) {
         dialog.mActivityRadioButton.addChangeListener(e -> {
             if (dialog.mActivityRadioButton.isSelected()) {
-                setSuperClass(dialog.cob_v, state.getValue(ConsKt.SUPER_VIEW_ACTIVITY), dialog.mViewCheckBox);
+                setSuperClass(dialog.cob_v, state.getValue(ConsKt.SUPER_VIEW_ACTIVITY), dialog.mViewCheckBox, ConsKt.IS_NOT_SET + "," + ConsKt.GOTO_SETTING);
             } else {
-                setSuperClass(dialog.cob_v, state.getValue(ConsKt.SUPER_VIEW_FRAGMENT), dialog.mViewCheckBox);
+                setSuperClass(dialog.cob_v, state.getValue(ConsKt.SUPER_VIEW_FRAGMENT), dialog.mViewCheckBox, ConsKt.IS_NOT_SET + "," + ConsKt.GOTO_SETTING);
             }
         });
-        setSuperClass(dialog.cob_v, state.getValue(ConsKt.SUPER_VIEW_ACTIVITY), dialog.mViewCheckBox);
-        setSuperClass(dialog.cob_p, state.getValue(ConsKt.SUPER_PRESENTER_IMPL), dialog.mPresenterCheckBox);
-        setSuperClass(dialog.cob_m, state.getValue(ConsKt.SUPER_MODEL_IMPL), dialog.mModelCheckBox);
+        setSuperClass(dialog.cob_v, state.getValue(ConsKt.SUPER_VIEW_ACTIVITY), dialog.mViewCheckBox, ConsKt.IS_NOT_SET + "," + ConsKt.GOTO_SETTING);
+        setSuperClass(dialog.cob_p, state.getValue(ConsKt.SUPER_PRESENTER_IMPL), null, ConsKt.IS_NOT_SET + "," + ConsKt.NO_SUPER_CLASS);
+        setSuperClass(dialog.cob_m, state.getValue(ConsKt.SUPER_MODEL_IMPL), null, ConsKt.IS_NOT_SET + "," + ConsKt.NO_SUPER_CLASS);
     }
 
-    private static void setSuperClass(JComboBox<String> cob, String value, JCheckBox jcb) {
+    private static void setSuperClass(JComboBox<String> cob, String value, JCheckBox jcb, String nullShowStr) {
         if (TextUtils.isEmpty(value)) {
-            value = ConsKt.IS_NOT_SET;
-            jcb.setSelected(false);
-        } else {
+            value = nullShowStr;
+            if (jcb != null) {
+                jcb.setSelected(false);
+            }
+        } else if (jcb != null) {
             jcb.setSelected(true);
         }
         cob.setModel(new MutableCollectionComboBoxModel<String>(Arrays.asList(value.split(";"))));

@@ -93,7 +93,7 @@ object TemplateParamFactory {
 
 
     fun getNameAndGenericType(type: String, isContract: Boolean = true, enterName: String = "", selectedValue: String = ""): Pair<String?, String> {
-        if (selectedValue == IS_NOT_SET) {
+        if (selectedValue.startsWith(IS_NOT_SET)) {
             return "" to ""
         }
         val setValue = if (selectedValue.isNotEmpty()) selectedValue else state.getValue(type)
