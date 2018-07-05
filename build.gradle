@@ -15,7 +15,7 @@ plugins {
 }
 
 group 'com.longforus'
-version '1.0-beta'
+version '1.0-beta1'
 
 apply plugin: 'java'
 apply plugin: 'kotlin'
