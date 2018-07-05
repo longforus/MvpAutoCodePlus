@@ -75,4 +75,4 @@ MvpAutoCodePlus
 [latest-release]: https://plugins.jetbrains.com/plugin/10907-mvpautocodeplus
 [downloads-img]: https://img.shields.io/jetbrains/plugin/d/8579.svg?style=flat-square
 [plugin]: https://plugins.jetbrains.com/plugin/10907-mvpautocodeplus
-[my_interface]:https://github.com/longforus/MvpAutoCodePlus/blob/master/src/main/resources/MyInterface.kt
+[my_interface]:https://github.com/longforus/MVPExample

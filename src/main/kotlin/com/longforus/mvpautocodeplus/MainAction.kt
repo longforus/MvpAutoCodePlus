@@ -10,17 +10,20 @@ import com.intellij.openapi.fileEditor.FileEditorManager
 import com.intellij.openapi.fileEditor.TextEditor
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.Messages
+import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.PsiClass
 import com.intellij.psi.PsiDirectory
 import com.intellij.psi.PsiFile
 import com.intellij.psi.PsiJavaFile
 import com.intellij.util.PlatformIcons
+import com.intellij.vcsUtil.VcsFileUtil
 import com.longforus.mvpautocodeplus.config.PersistentState
 import com.longforus.mvpautocodeplus.maker.TemplateMaker
 import com.longforus.mvpautocodeplus.maker.TemplateParamFactory
 import com.longforus.mvpautocodeplus.maker.createFileFromTemplate
 import com.longforus.mvpautocodeplus.maker.overrideOrImplementMethods
 import com.longforus.mvpautocodeplus.ui.EnterKeywordDialog
+import org.jetbrains.kotlin.idea.util.application.runWriteAction
 import org.jetbrains.kotlin.psi.KtFile
 
 
@@ -75,45 +78,69 @@ class MainAction : AnAction("main", "auto make mvp code", PlatformIcons.CLASS_IC
         val contract = getSubDir(dir, CONTRACT)
 
         EnterKeywordDialog.getDialog {
-            if (it.isJava) {
-                val contractJ = createFile(it.name, CONTRACT_TP_NAME_JAVA, contract, "") as PsiJavaFile
+            val fileArray = arrayListOf<VirtualFile>()
+            runWriteAction {
+                if (it.isJava) {
+                    val contractJ = createFile(it.name, CONTRACT_TP_NAME_JAVA, contract, "") as PsiJavaFile
+                    fileArray.add(contract.virtualFile)
+                    if (!it.vImpl.isEmpty() && it.vImpl != IS_NOT_SET) {
+                        val sdV = getSubDir(dir, VIEW)
+                        if (it.isActivity) {
+                            createFile(it.name, VIEW_IMPL_TP_ACTIVITY_JAVA, sdV, it.vImpl, contractJ)?.let {
+                                fileArray.add(it.virtualFile)
+                            }
+                        } else {
+                            createFile(it.name, VIEW_IMPL_TP_FRAGMENT_JAVA, sdV, it.vImpl, contractJ)?.let {
+                                fileArray.add(it.virtualFile)
+                            }
+                        }
+                    }
+                    if (!it.pImpl.isEmpty()) {
+                        val sdP = getSubDir(dir, PRESENTER)
+                        createFile(it.name, PRESENTER_IMPL_TP_JAVA, sdP, it.pImpl, contractJ)?.let {
+                            fileArray.add(it.virtualFile)
+                        }
+                    }
+                    if (!it.mImpl.isEmpty()) {
+                        val sdM = getSubDir(dir, MODEL)
+                        createFile(it.name, MODEL_IMPL_TP_JAVA, sdM, it.mImpl, contractJ)?.let {
+                            fileArray.add(it.virtualFile)
+                        }
+                    }
 
-                if (!it.vImpl.isEmpty() && it.vImpl != IS_NOT_SET) {
-                    val sdV = getSubDir(dir, VIEW)
-                    if (it.isActivity) {
-                        createFile(it.name, VIEW_IMPL_TP_ACTIVITY_JAVA, sdV, it.vImpl, contractJ)
-                    } else {
-                        createFile(it.name, VIEW_IMPL_TP_FRAGMENT_JAVA, sdV, it.vImpl, contractJ)
+                } else {
+                    val contractK = createFile(it.name, CONTRACT_TP_NAME_KOTLIN, contract, "", fileName = getContractName(it.name))
+                    if (contractK != null) {
+                        fileArray.add(contractK.virtualFile)
+                    }
+                    if (!it.vImpl.isEmpty() && it.vImpl != IS_NOT_SET) {
+                        val sdV = getSubDir(dir, VIEW)
+                        if (it.isActivity) {
+                            createFile(it.name, VIEW_IMPL_TP_ACTIVITY_KOTLIN, sdV, it.vImpl, contractK, "${it.name}Activity")?.let {
+                                fileArray.add(it.virtualFile)
+                            }
+                        } else {
+                            createFile(it.name, VIEW_IMPL_TP_FRAGMENT_KOTLIN, sdV, it.vImpl, contractK, "${it.name}Fragment")?.let {
+                                fileArray.add(it.virtualFile)
+                            }
+                        }
+                    }
+                    if (!it.pImpl.isEmpty()) {
+                        val sdP = getSubDir(dir, PRESENTER)
+                        createFile(it.name, PRESENTER_IMPL_TP_KOTLIN, sdP, it.pImpl, contractK, "${it.name}Presenter")?.let {
+                            fileArray.add(it.virtualFile)
+                        }
+                    }
+                    if (!it.mImpl.isEmpty()) {
+                        val sdM = getSubDir(dir, MODEL)
+                        createFile(it.name, MODEL_IMPL_TP_KOTLIN, sdM, it.mImpl, contractK, "${it.name}Model")?.let {
+                            fileArray.add(it.virtualFile)
+                        }
                     }
                 }
-                if (!it.pImpl.isEmpty() && it.pImpl != IS_NOT_SET) {
-                    val sdP = getSubDir(dir, PRESENTER)
-                    createFile(it.name, PRESENTER_IMPL_TP_JAVA, sdP, it.pImpl, contractJ)
-                }
-                if (!it.mImpl.isEmpty() && it.mImpl != IS_NOT_SET) {
-                    val sdM = getSubDir(dir, MODEL)
-                    createFile(it.name, MODEL_IMPL_TP_JAVA, sdM, it.mImpl, contractJ)
-                }
-
-            } else {
-                val contractK = createFile(it.name, CONTRACT_TP_NAME_KOTLIN, contract, "", fileName = getContractName(it.name))
-                if (!it.vImpl.isEmpty() && it.vImpl != IS_NOT_SET) {
-                    val sdV = getSubDir(dir, VIEW)
-                    if (it.isActivity) {
-                        createFile(it.name, VIEW_IMPL_TP_ACTIVITY_KOTLIN, sdV, it.vImpl, contractK, "${it.name}Activity")
-                    } else {
-                        createFile(it.name, VIEW_IMPL_TP_FRAGMENT_KOTLIN, sdV, it.vImpl, contractK, "${it.name}Fragment")
-                    }
-                }
-                if (!it.pImpl.isEmpty() && it.pImpl != IS_NOT_SET) {
-                    val sdP = getSubDir(dir, PRESENTER)
-                    createFile(it.name, PRESENTER_IMPL_TP_KOTLIN, sdP, it.pImpl, contractK, "${it.name}Presenter")
-                }
-                if (!it.mImpl.isEmpty() && it.mImpl != IS_NOT_SET) {
-                    val sdM = getSubDir(dir, MODEL)
-                    createFile(it.name, MODEL_IMPL_TP_KOTLIN, sdM, it.mImpl, contractK, "${it.name}Model")
-                }
+                VcsFileUtil.addFilesToVcsWithConfirmation(project!!, fileArray)
             }
+
         }
 
     }

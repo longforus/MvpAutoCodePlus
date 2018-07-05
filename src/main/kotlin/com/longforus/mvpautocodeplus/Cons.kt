@@ -13,6 +13,7 @@ fun getModelInfName(name: String) = "I${name}Model"
 
 const val GOTO_SETTING = "Please go to File-> Settings -> OtherSettings -> MvpAutoCodePlus set."
 const val IS_NOT_SET = "Is not set, $GOTO_SETTING"
+const val NO_SUPER_CLASS = "no_super_class"
 
 const val CONTRACT = "contract"
 const val VIEW = "view"

@@ -19,11 +19,11 @@ public interface TemplateCons {
             "    interface View : IView${VG}{}\n" + "    interface Presenter : IPresenter${PG}{}\n" + "    interface Model : IModel${MG}{}\n" + "}\n";
 
     String COMMON_IMPL_TP_CONTENT_JAVA =
-        "#if (${PACKAGE_NAME} != \"\")package ${PACKAGE_NAME};#end\n" + "\n" + "import ${CONTRACT};\n" + "import ${IMPL};\n" + "\n" + "/**\n" + " * Description : \n" +
-            " * @author  ${USER}\n" + " * @date ${DATE}  ${TIME}\n" + " * \t\t\t\t\t\t\t\t - generate by MvpAutoCodePlus plugin.\n" + " */\n" + "\n" +
-            "public class ${NAME}${IMPL_TYPE} extends ${IMPL}${VG} implements I${NAME}Contract.${TYPE} {\n" + "\n" + "}\n" + "\n";
+        "#if (${PACKAGE_NAME} != \"\")package ${PACKAGE_NAME};#end\n" + "\n" + "import ${CONTRACT};\n" + "#if (${IMPL} != \"\")import ${IMPL};#end\n" + "\n" + "\n" + "/**\n" +
+            " * Description : \n" + " * @author  ${USER}\n" + " * @date ${DATE}  ${TIME}\n" + " * \t\t\t\t\t\t\t\t - generate by MvpAutoCodePlus plugin.\n" + " */\n" + "\n" +
+            "public class ${NAME}${IMPL_TYPE} #if(${IMPL}!=\"\") extends ${IMPL}${VG}#end implements I${NAME}Contract.${TYPE} {\n" + "\n" + "}\n" + "\n";
     String COMMON_IMPL_TP_CONTENT_KOTLIN =
-        "#if (${PACKAGE_NAME} != \"\")package ${PACKAGE_NAME}#end\n" + "\n" + "import ${CONTRACT}\n" + "import ${IMPL}\n" + "\n" + "/**\n" + " * Description : \n" +
-            " * @author  ${USER}\n" + " * @date ${DATE}  ${TIME}\n" + " * \t\t\t\t\t\t\t\t - generate by MvpAutoCodePlus plugin.\n" + " */\n" + "\n" +
-            "class ${NAME}${IMPL_TYPE} : ${IMPL_NP}${VG}(),${CONTRACT_NP}.${TYPE} {\n" + "\n" + "}\n" + "\n";
+        "#if (${PACKAGE_NAME} != \"\")package ${PACKAGE_NAME}#end\n" + "\n" + "import ${CONTRACT}\n" + "#if (${IMPL} != \"\")import ${IMPL}#end\n" + "\n" + "/**\n" +
+            " * Description : \n" + " * @author  ${USER}\n" + " * @date ${DATE}  ${TIME}\n" + " * \t\t\t\t\t\t\t\t - generate by MvpAutoCodePlus plugin.\n" + " */\n" + "\n" +
+            "class ${NAME}${IMPL_TYPE} :#if (${IMPL_NP} != \"\") ${IMPL_NP}${VG}(),#end ${CONTRACT_NP}.${TYPE} {\n" + "\n" + "}\n" + "\n";
 }

@@ -33,22 +33,30 @@ object TemplateParamFactory {
             }
             VIEW_IMPL_TP_ACTIVITY_JAVA, VIEW_IMPL_TP_ACTIVITY_KOTLIN -> {
                 setCommonParam(enterName, superImplName, contract, liveTemplateParam, templateName)
-                liveTemplateParam["IMPL_TYPE"] = "Activity"
+                if (templateName == VIEW_IMPL_TP_ACTIVITY_JAVA) {
+                    liveTemplateParam["IMPL_TYPE"] = "Activity"
+                }
                 liveTemplateParam["TYPE"] = "View"
             }
             VIEW_IMPL_TP_FRAGMENT_JAVA, VIEW_IMPL_TP_FRAGMENT_KOTLIN -> {
                 setCommonParam(enterName, superImplName, contract, liveTemplateParam, templateName)
-                liveTemplateParam["IMPL_TYPE"] = "Fragment"
+                if (templateName == VIEW_IMPL_TP_FRAGMENT_JAVA) {
+                    liveTemplateParam["IMPL_TYPE"] = "Fragment"
+                }
                 liveTemplateParam["TYPE"] = "View"
             }
             PRESENTER_IMPL_TP_JAVA, PRESENTER_IMPL_TP_KOTLIN -> {
                 setCommonParam(enterName, superImplName, contract, liveTemplateParam, templateName)
-                liveTemplateParam["IMPL_TYPE"] = "Presenter"
+                if (templateName == PRESENTER_IMPL_TP_JAVA) {
+                    liveTemplateParam["IMPL_TYPE"] = "Presenter"
+                }
                 liveTemplateParam["TYPE"] = "Presenter"
             }
             MODEL_IMPL_TP_JAVA, MODEL_IMPL_TP_KOTLIN -> {
                 setCommonParam(enterName, superImplName, contract, liveTemplateParam, templateName)
-                liveTemplateParam["IMPL_TYPE"] = "Model"
+                if (templateName == MODEL_IMPL_TP_JAVA) {
+                    liveTemplateParam["IMPL_TYPE"] = "Model"
+                }
                 liveTemplateParam["TYPE"] = "Model"
             }
 //                <I${NAME}Contract.View,I${NAME}Contract.Presenter>
@@ -73,13 +81,21 @@ object TemplateParamFactory {
         liveTemplateParam["VG"] = superMGenericValue
 
         if (templateName.startsWith("Kotlin")) {
-            liveTemplateParam["IMPL_NP"] = liveTemplateParam["IMPL"]?.lastDotContent()
+            if (noGSuperName.isNullOrEmpty()) {
+                liveTemplateParam["IMPL_NP"] = ""
+            } else {
+                liveTemplateParam["IMPL_NP"] = liveTemplateParam["IMPL"]?.lastDotContent()
+            }
             liveTemplateParam["CONTRACT_NP"] = liveTemplateParam["CONTRACT"]?.lastDotContent()
+
         }
     }
 
 
     fun getNameAndGenericType(type: String, isContract: Boolean = true, enterName: String = "", selectedValue: String = ""): Pair<String?, String> {
+        if (selectedValue == IS_NOT_SET) {
+            return "" to ""
+        }
         val setValue = if (selectedValue.isNotEmpty()) selectedValue else state.getValue(type)
         if (setValue.isNullOrEmpty()) {
             Messages.showErrorDialog("Super Interface name is null !", "Error")

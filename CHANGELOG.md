@@ -1,7 +1,14 @@
 # Change Log
 
 
-## [v1.0-beat](https://github.com/YiiGuxing/TranslationPlugin/tree/v1.2)(2018-7-4)
+## [v1.0-beat1](https://plugins.jetbrains.com/plugin/10907-mvpautocodeplus)(2018-7-5)
+
+- 结合新版的mvp接口做出调整
+- 修改Kotlin实现类名字错误的bug
+- 添加 P,M 无父类的生成策略实现
+
+
+## [v1.0-beat](https://plugins.jetbrains.com/plugin/10907-mvpautocodeplus)(2018-7-4)
 
 - 完成Contract的生成
 - 完成Java实现类的生成,及抽象方法的默认实现
