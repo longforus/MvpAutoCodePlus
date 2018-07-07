@@ -42,6 +42,9 @@ MvpAutoCodePlus
    -  <kbd>File</kbd> > <kbd>Preferences(Settings)</kbd> > <kbd>Other Settings</kbd> > <kbd>MvpAutoCodePlus</kbd> > 
 
      ![settings](./images/settings.png)
+     
+     基于[`这一套Java接口`][my_interface_java]的配置示例:
+     ![settings1](./images/settings1.png)
 
 2. 生成:
 
@@ -76,3 +79,4 @@ MvpAutoCodePlus
 [downloads-img]: https://img.shields.io/jetbrains/plugin/d/8579.svg?style=flat-square
 [plugin]: https://plugins.jetbrains.com/plugin/10907-mvpautocodeplus
 [my_interface]:https://github.com/longforus/MVPExample
+[my_interface_java]:https://github.com/longforus/MVPExample/tree/master/app/src/main/java/com/longforus/base/java
