@@ -27,7 +27,14 @@ class ConfigComponent : SearchableConfigurable {
     private val state: PersistentState by lazy { ServiceManager.getService(PersistentState::class.java) }
     private val fcd = FileChooserDescriptor(true, false, false, false, false, false)
 
-    private val project: Project by lazy { ProjectManager.getInstance().openProjects[0] }
+    private val project: Project by lazy {
+        if (ProjectManager.getInstance().openProjects.isNotEmpty()) {
+            ProjectManager.getInstance().openProjects[0]
+        } else {
+            ProjectManager.getInstance().defaultProject
+        }
+    }
+
     override fun isModified(): Boolean {
         return mCp.tv_v_name.text != state.getValue(SUPER_VIEW) ||
             mCp.tv_p_name.text != state.getValue(SUPER_PRESENTER) ||
@@ -57,12 +64,12 @@ class ConfigComponent : SearchableConfigurable {
     override fun createComponent(): JComponent? {
         val value = state.getValue(SUPER_VIEW)
         mCp.tv_v_name.text = value
-        // TODO: 2018/7/2  实现class选择
+        // TODO: 2018/7/2  实现class选择  http://www.jetbrains.org/intellij/sdk/docs/user_interface_components/file_and_class_choosers.html?search=File
 //        val dialogImpl = FileChooserDialogImpl(fcd, project)
 //        val split = value?.split(";")
 //        project.projectFile.findChild()
         mCp.btn_view_select.addActionListener {
-//            val choose = dialogImpl.choose(project, null)
+            //            val choose = dialogImpl.choose(project, null)
             Messages.showMessageDialog("还没有找到合适的方法来实现class的选择", "待开发", AllIcons.General.ErrorDialog)
         }
         mCp.tv_p_name.text = state.getValue(SUPER_PRESENTER)
