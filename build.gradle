@@ -15,7 +15,7 @@ plugins {
 }
 
 group 'com.longforus'
-version '1.0-beta1'
+version '1.0-beta2'
 
 apply plugin: 'java'
 apply plugin: 'kotlin'
@@ -58,12 +58,7 @@ publishPlugin {
     password publishPassword
 }
 
-//
-//patchPluginXml {
-//    changeNotes """第一版盛大发布<br>
-//init first version.
-//      """
-//}
+
 
 
 //指定编译的编码

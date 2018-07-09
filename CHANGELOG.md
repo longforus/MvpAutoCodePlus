@@ -1,6 +1,10 @@
 # Change Log
 
 
+## [v1.0-beat2](https://plugins.jetbrains.com/plugin/10907-mvpautocodeplus)(2018-7-9)
+
+- 添加配置界面的Class选择支持
+
 ## [v1.0-beat1](https://plugins.jetbrains.com/plugin/10907-mvpautocodeplus)(2018-7-5)
 
 - 结合新版的mvp接口做出调整

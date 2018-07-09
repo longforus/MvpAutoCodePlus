@@ -39,12 +39,20 @@ MvpAutoCodePlus
 
 1. 配置父接口:
 
-   -  <kbd>File</kbd> > <kbd>Preferences(Settings)</kbd> > <kbd>Other Settings</kbd> > <kbd>MvpAutoCodePlus</kbd> > 
+   - <kbd>File</kbd> > <kbd>Preferences(Settings)</kbd> > <kbd>Other Settings</kbd> > <kbd>MvpAutoCodePlus</kbd> > 
 
      ![settings](./images/settings.png)
-     
+
      基于[`这一套Java接口`][my_interface_java]的配置示例:
      ![settings1](./images/settings1.png)
+
+     项目内的Class已经在V1.0beta2支持选择,但是如果有泛型限定的话,泛型还是需要手动添加,比如选择的类签名为:**com.longforus.base.java.BasePresenterJv<V extends IView,M extends IModel>**
+
+     ![use3](./images/use3.png)
+
+     需要手动添加后面的泛型限定<V,M>:
+
+     ![use4](./images/use4.png)
 
 2. 生成:
 
@@ -68,7 +76,7 @@ MvpAutoCodePlus
 
 ## 存在问题
 
-- 父接口和父类的输入比较麻烦,还没有找到能在设置界面选择项目中的class的方法,好在只用设置一次就可保存了,项目中也不会经常变动.
+- 父接口和父类如果有泛型限定在选择后还需要手动输入泛型,好在只用设置一次就可保存了,项目中也不会经常变动.
 - 其他未知问题,此插件是作者首次开发插件,完全从0开始,官方的文档不是很详细,英语水平更是不堪,国内的参考资料也不多,做这个纯粹是忽然想到了,就开始做了.难免有未尽之处,欢迎各位star,issue.
 
 

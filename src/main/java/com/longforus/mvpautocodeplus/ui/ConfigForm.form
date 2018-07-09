@@ -243,7 +243,7 @@
           <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value=" 实现类支持指定多个,用 ; 隔开. class的直接选择功能还未实现,望大佬指点."/>
+          <text value=" 实现类支持指定多个,用 ; 隔开. 如果需要泛型限定,选择Class后需要手动添加."/>
         </properties>
       </component>
       <component id="8eb09" class="com.intellij.ui.components.labels.LinkLabel" binding="lk_look_detail">
