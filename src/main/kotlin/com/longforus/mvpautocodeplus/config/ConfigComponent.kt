@@ -79,7 +79,7 @@ class ConfigComponent : SearchableConfigurable {
         mCp.tv_presenter_impl.text = state.getValue(SUPER_PRESENTER_IMPL)
         mCp.tv_model_impl.text = state.getValue(SUPER_MODEL_IMPL)
         mCp.et_comment_author.text = state.getValue(COMMENT_AUTHOR)
-        mCp.lk_look_detail.setListener({ aSource, aLinkData ->
+        mCp.lk_look_detail.setListener({ _, _ ->
             BrowserUtil.browse("https://github.com/longforus/MvpAutoCodePlus/blob/master/README.md")
         }, "https://github.com/longforus")
         return mCp.mPanel
