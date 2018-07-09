@@ -30,8 +30,7 @@ hs_err_pid*
 cmake-build-debug/
 cmake-build-release/
 
-# Mongo Explorer plugin:
-.idea/**/mongoSettings.xml
+
 
 ## File-based project format:
 *.iws
