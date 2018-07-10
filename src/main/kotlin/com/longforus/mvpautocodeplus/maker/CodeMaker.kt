@@ -6,14 +6,11 @@ import com.intellij.ide.fileTemplates.FileTemplateManager
 import com.intellij.ide.fileTemplates.FileTemplateUtil
 import com.intellij.ide.fileTemplates.actions.CreateFromTemplateActionBase
 import com.intellij.ide.util.PropertiesComponent
-import com.intellij.openapi.components.ServiceManager
 import com.intellij.openapi.fileEditor.FileEditorManager
 import com.intellij.psi.PsiDirectory
 import com.intellij.psi.PsiFile
 import com.intellij.psi.SmartPointerManager
 import com.intellij.util.IncorrectOperationException
-import com.longforus.mvpautocodeplus.COMMENT_AUTHOR
-import com.longforus.mvpautocodeplus.config.PersistentState
 import org.apache.velocity.runtime.parser.ParseException
 
 /**
@@ -22,17 +19,15 @@ import org.apache.velocity.runtime.parser.ParseException
  */
 
 
-val author: String? by lazy {
-    val state: PersistentState = ServiceManager.getService(PersistentState::class.java)
-    state.getValue(COMMENT_AUTHOR)
-}
+
 
 fun createFileFromTemplate(fileName: String?,
     template: FileTemplate,
     d: PsiDirectory,
     defaultTemplateProperty: String?,
     openFile: Boolean,
-    liveTemplateDefaultValues: Map<String, String?>): PsiFile? {
+    liveTemplateDefaultValues: Map<String, String?>,
+    author: String?): PsiFile? {
     var name = fileName
     var dir = d
     if (name != null) {

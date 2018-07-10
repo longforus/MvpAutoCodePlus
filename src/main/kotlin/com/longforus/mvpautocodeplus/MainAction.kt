@@ -3,19 +3,17 @@ package com.longforus.mvpautocodeplus
 import com.intellij.featureStatistics.FeatureUsageTracker
 import com.intellij.featureStatistics.ProductivityFeatureNames
 import com.intellij.ide.util.PackageUtil
+import com.intellij.ide.util.PropertiesComponent
 import com.intellij.openapi.actionSystem.*
 import com.intellij.openapi.application.WriteActionAware
-import com.intellij.openapi.components.ServiceManager
 import com.intellij.openapi.fileEditor.FileEditorManager
 import com.intellij.openapi.fileEditor.TextEditor
 import com.intellij.openapi.project.Project
-import com.intellij.openapi.ui.Messages
 import com.intellij.psi.PsiClass
 import com.intellij.psi.PsiDirectory
 import com.intellij.psi.PsiFile
 import com.intellij.psi.PsiJavaFile
 import com.intellij.util.PlatformIcons
-import com.longforus.mvpautocodeplus.config.PersistentState
 import com.longforus.mvpautocodeplus.maker.TemplateMaker
 import com.longforus.mvpautocodeplus.maker.TemplateParamFactory
 import com.longforus.mvpautocodeplus.maker.createFileFromTemplate
@@ -32,11 +30,12 @@ import org.jetbrains.kotlin.psi.KtFile
 
 class MainAction : AnAction("main", "auto make mvp code", PlatformIcons.CLASS_ICON), WriteActionAware {
     var project: Project? = null
-
-    fun createFile(enterName: String, templateName: String, dir: PsiDirectory, superImplName: String, contract: PsiFile? = null, fileName: String = enterName): PsiFile? {
+    lateinit var mSelectedState: PropertiesComponent
+    fun createFile(enterName: String, templateName: String, dir: PsiDirectory, superImplName: String, contract: PsiFile? = null, fileName: String = enterName):
+        PsiFile? {
         val template = TemplateMaker.getTemplate(templateName, project!!) ?: return null
-        val liveTemplateDefaultValues = TemplateParamFactory.getParam4TemplateName(templateName, enterName, superImplName, contract)
-        val psiFile = createFileFromTemplate(fileName, template, dir, null, false, liveTemplateDefaultValues)
+        val liveTemplateDefaultValues = TemplateParamFactory.getParam4TemplateName(templateName, enterName, superImplName, contract, mSelectedState)
+        val psiFile = createFileFromTemplate(fileName, template, dir, null, false, liveTemplateDefaultValues, mSelectedState.getValue(COMMENT_AUTHOR))
         if (!templateName.contains("Contract")) {
             val openFile = FileEditorManager.getInstance(project!!).openFile(psiFile!!.virtualFile, false)
             val textEditor = openFile[0] as TextEditor
@@ -59,17 +58,19 @@ class MainAction : AnAction("main", "auto make mvp code", PlatformIcons.CLASS_IC
         val dir = view.orChooseDirectory
 
         if (dir == null || project == null) return
-        val state: PersistentState = ServiceManager.getService(PersistentState::class.java)
-        if (state.getValue(SUPER_VIEW).isNullOrEmpty()) {
-            Messages.showErrorDialog("Super View Interface name is null ! $GOTO_SETTING", "Error")
-            return
-        }
-        val contract = getSubDir(dir, CONTRACT)
-
-        EnterKeywordDialog.getDialog {
+//        var state: PropertiesComponent = PropertiesComponent.getInstance(project)
+//        if (!state.getBoolean(USE_PROJECT_CONFIG,false)) {
+//            state  = PropertiesComponent.getInstance()
+//        }
+//        if (state.getValue(SUPER_VIEW).isNullOrEmpty()) {
+//            Messages.showErrorDialog("Super IView Interface name is null ! $GOTO_SETTING", "Error")
+//            return
+//        }
+        EnterKeywordDialog.getDialog(project) {
+            mSelectedState = it.state
             runWriteAction {
                 if (it.isJava) {
-                    val contractJ = createFile(it.name, CONTRACT_TP_NAME_JAVA, contract, "") as PsiJavaFile
+                    val contractJ = createFile(it.name, CONTRACT_TP_NAME_JAVA, getSubDir(dir, CONTRACT), "") as PsiJavaFile
                     if (!it.vImpl.isEmpty() && !it.vImpl.startsWith(IS_NOT_SET)) {
                         val sdV = getSubDir(dir, VIEW)
                         if (it.isActivity) {
@@ -88,7 +89,7 @@ class MainAction : AnAction("main", "auto make mvp code", PlatformIcons.CLASS_IC
                     }
 
                 } else {
-                    val contractK = createFile(it.name, CONTRACT_TP_NAME_KOTLIN, contract, "", fileName = getContractName(it.name))
+                    val contractK = createFile(it.name, CONTRACT_TP_NAME_KOTLIN, getSubDir(dir, CONTRACT), "", fileName = getContractName(it.name))
 
                     if (!it.vImpl.isEmpty() && !it.vImpl.startsWith(IS_NOT_SET)) {
                         val sdV = getSubDir(dir, VIEW)

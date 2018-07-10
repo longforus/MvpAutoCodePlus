@@ -1,11 +1,10 @@
 package com.longforus.mvpautocodeplus.maker
 
-import com.intellij.openapi.components.ServiceManager
+import com.intellij.ide.util.PropertiesComponent
 import com.intellij.openapi.ui.Messages
 import com.intellij.psi.PsiFile
 import com.intellij.psi.PsiJavaFile
 import com.longforus.mvpautocodeplus.*
-import com.longforus.mvpautocodeplus.config.PersistentState
 import java.util.*
 
 /**
@@ -14,10 +13,12 @@ import java.util.*
  */
 
 object TemplateParamFactory {
-    private val state: PersistentState = ServiceManager.getService(PersistentState::class.java)
 
+    private var state: PropertiesComponent? = null
 
-    fun getParam4TemplateName(templateName: String, enterName: String, superImplName: String, contract: PsiFile?): Map<String, String?> {
+    fun getParam4TemplateName(templateName: String, enterName: String, superImplName: String, contract: PsiFile?,
+        mSelectedState: PropertiesComponent): Map<String, String?> {
+        this.state = mSelectedState
         val liveTemplateParam = HashMap<String, String?>()
         when (templateName) {
             CONTRACT_TP_NAME_JAVA, CONTRACT_TP_NAME_KOTLIN -> {
@@ -96,7 +97,7 @@ object TemplateParamFactory {
         if (selectedValue.startsWith(IS_NOT_SET)) {
             return "" to ""
         }
-        val setValue = if (selectedValue.isNotEmpty()) selectedValue else state.getValue(type)
+        val setValue = if (selectedValue.isNotEmpty()) selectedValue else state?.getValue(type)
         if (setValue.isNullOrEmpty()) {
             Messages.showErrorDialog("Super Interface name is null !", "Error")
             throw IllegalArgumentException("Super Interface name is null !")

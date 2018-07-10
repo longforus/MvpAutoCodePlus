@@ -11,6 +11,7 @@ fun getViewInfName(name: String) = "I${name}View"
 fun getPresenterInfName(name: String) = "I${name}Presenter"
 fun getModelInfName(name: String) = "I${name}Model"
 
+const val USE_PROJECT_CONFIG = "use_project_config"
 const val GOTO_SETTING = "Please go to File-> Settings -> OtherSettings -> MvpAutoCodePlus set."
 const val IS_NOT_SET = "Is not set"
 const val NO_SUPER_CLASS = "The implementation class will have no superclass"

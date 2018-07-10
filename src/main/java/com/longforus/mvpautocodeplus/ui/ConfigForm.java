@@ -5,6 +5,7 @@ import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 /**
@@ -31,6 +32,8 @@ public class ConfigForm {
     public JButton btn_mi_select;
     public JTextField et_comment_author;
     public LinkLabel lk_look_detail;
+    public JRadioButton mGlobalRadioButton;
+    public JRadioButton mCurrentProjectRadioButton;
 
     private void createUIComponents() {
         // TODO: place custom component creation code here

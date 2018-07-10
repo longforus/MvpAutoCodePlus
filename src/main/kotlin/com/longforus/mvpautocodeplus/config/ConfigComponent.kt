@@ -1,13 +1,14 @@
 package com.longforus.mvpautocodeplus.config
 
 import com.intellij.ide.BrowserUtil
+import com.intellij.ide.util.PropertiesComponent
 import com.intellij.ide.util.TreeClassChooserFactory
-import com.intellij.openapi.components.ServiceManager
 import com.intellij.openapi.options.SearchableConfigurable
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.project.ProjectManager
 import com.longforus.mvpautocodeplus.*
 import com.longforus.mvpautocodeplus.ui.ConfigForm
+import java.awt.event.ItemEvent
 import javax.swing.JButton
 import javax.swing.JComponent
 import javax.swing.JTextField
@@ -24,7 +25,7 @@ class ConfigComponent : SearchableConfigurable {
     }
 
     private val mCp: ConfigForm by lazy { ConfigForm() }
-    private val state: PersistentState by lazy { ServiceManager.getService(PersistentState::class.java) }
+    lateinit var state: PropertiesComponent
 
     private val mProject: Project by lazy {
         if (ProjectManager.getInstance().openProjects.isNotEmpty()) {
@@ -63,6 +64,31 @@ class ConfigComponent : SearchableConfigurable {
 
 
     override fun createComponent(): JComponent? {
+        state = PropertiesComponent.getInstance(mProject)
+        if (state.getBoolean(USE_PROJECT_CONFIG, false)) {
+            mCp.mCurrentProjectRadioButton.isSelected = true
+        } else {
+            state = PropertiesComponent.getInstance()
+        }
+        loadValues()
+        mCp.mGlobalRadioButton.addItemListener {
+            if (it.id != ItemEvent.ITEM_STATE_CHANGED) {
+                return@addItemListener
+            }
+            state = if (mCp.mGlobalRadioButton.isSelected) {
+                PropertiesComponent.getInstance()
+            } else {
+                PropertiesComponent.getInstance(mProject)
+            }
+            loadValues()
+        }
+        mCp.lk_look_detail.setListener({ _, _ ->
+            BrowserUtil.browse("https://github.com/longforus/MvpAutoCodePlus/blob/master/README.md")
+        }, "https://github.com/longforus")
+        return mCp.mPanel
+    }
+
+    private fun loadValues() {
         mCp.tv_v_name.text = state.getValue(SUPER_VIEW)
         setClassChooser(mCp.btn_view_select, "Select Super View Interface", mCp.tv_v_name)
         mCp.tv_p_name.text = state.getValue(SUPER_PRESENTER)
@@ -78,13 +104,12 @@ class ConfigComponent : SearchableConfigurable {
         mCp.tv_model_impl.text = state.getValue(SUPER_MODEL_IMPL)
         setClassChooser(mCp.btn_mi_select, "Select Model extends super Class", mCp.tv_model_impl, true)
         mCp.et_comment_author.text = state.getValue(COMMENT_AUTHOR)
-        mCp.lk_look_detail.setListener({ _, _ ->
-            BrowserUtil.browse("https://github.com/longforus/MvpAutoCodePlus/blob/master/README.md")
-        }, "https://github.com/longforus")
-        return mCp.mPanel
     }
 
     private fun setClassChooser(jButton: JButton?, title: String, tv: JTextField?, append: Boolean = false) {
+        if (jButton?.actionListeners?.isNotEmpty() == true) {
+            return
+        }
         jButton?.addActionListener {
             val projectScopeChooser = classChooserFactory.createProjectScopeChooser(title)
             projectScopeChooser.showDialog()

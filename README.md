@@ -28,6 +28,7 @@ MvpAutoCodePlus
 ----
 - **使用 IDE 内置插件系统安装:**
   - <kbd>File</kbd> > <kbd>Preferences(Settings)</kbd> > <kbd>Plugins</kbd> > <kbd>Browse repositories...</kbd> > <kbd>搜索并找到"MvpAutoCodePlus"</kbd> > <kbd>Install Plugin</kbd>
+  ![install](./images/install1.png)
 
 - **手动安装:**
   - 下载[`最新发布的插件包`][latest-release] > <kbd>File</kbd> ><kbd>Preferences(Settings)</kbd> > <kbd>Plugins</kbd> > <kbd>Install plugin from disk...</kbd>
@@ -53,6 +54,8 @@ MvpAutoCodePlus
      需要手动添加后面的泛型限定<V,M>:
 
      ![use4](./images/use4.png)
+
+     现在还支持全局和当前项目模式,全局模式中配置的接口可在所有项目中使用,当前项目中配置的接口只在当前项目中起效,方便有多个不相同工程时的无缝切换.
 
 2. 生成:
 

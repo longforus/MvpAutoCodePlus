@@ -8,7 +8,7 @@
       <br/>
       <p>
       <b>
-      <a href="https://github.com/longforus/MvpAutoCodePlus">Website</a> |
+      <a href="https://plugins.jetbrains.com/plugin/10907-mvpautocodeplus">Website</a> |
       <a href="https://github.com/longforus">GitHub</a> |
       <a href="https://github.com/longforus/MvpAutoCodePlus/issues">Issues</a> |
       <a href="https://blog.csdn.net/longforus">Blog</a>
@@ -31,7 +31,9 @@
 
 
   <change-notes><![CDATA[
-      <h3>First version publish</h3>
+      <h3>Add class selection</h3>
+      <br/>
+      <h3>Configuration add global and current project patterns</h3>
       <br/>
       <a href="https://github.com/longforus/MvpAutoCodePlus/blob/master/CHANGELOG.md"><b>Full Changelog History</b></a>
     ]]></change-notes>
@@ -48,9 +50,6 @@
   </extensions>
 
   <application-components>
-    <component>
-      <implementation-class>com.longforus.mvpautocodeplus.config.PersistentState</implementation-class>
-    </component>
   </application-components>
   <actions>
     <!-- Add your actions here -->
