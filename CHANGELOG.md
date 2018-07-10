@@ -1,7 +1,7 @@
 # Change Log
 
 
-## [v1.0-beat2](https://plugins.jetbrains.com/plugin/10907-mvpautocodeplus)(2018-7-9)
+## [v1.0-beat2](https://plugins.jetbrains.com/plugin/10907-mvpautocodeplus)(2018-7-10)
 
 - 添加配置界面的Class选择支持
 - 配置文件增加全局和当前项目模式,可随意选择使用全局配置或当前项目配置.
