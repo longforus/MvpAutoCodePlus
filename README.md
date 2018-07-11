@@ -20,15 +20,18 @@ MvpAutoCodePlus
 - 支持Java和Kotlin语言
 
 支持的 IDE:
-- Android Studio
+- Android Studio(从3.1.3(173.3727—173.* )开始支持)
 - IntelliJ IDEA
 - IntelliJ IDEA Community Edition
 
 安装
 ----
+
 - **使用 IDE 内置插件系统安装:**
   - <kbd>File</kbd> > <kbd>Preferences(Settings)</kbd> > <kbd>Plugins</kbd> > <kbd>Browse repositories...</kbd> > <kbd>搜索并找到"MvpAutoCodePlus"</kbd> > <kbd>Install Plugin</kbd>
-  ![install](./images/install1.png)
+
+    
+   ![install](./images/install1.png)
 
 - **手动安装:**
   - 下载[`最新发布的插件包`][latest-release] > <kbd>File</kbd> ><kbd>Preferences(Settings)</kbd> > <kbd>Plugins</kbd> > <kbd>Install plugin from disk...</kbd>
@@ -42,10 +45,11 @@ MvpAutoCodePlus
 
    - <kbd>File</kbd> > <kbd>Preferences(Settings)</kbd> > <kbd>Other Settings</kbd> > <kbd>MvpAutoCodePlus</kbd> > 
 
-     ![settings](./images/settings.png)
+    ![settings](./images/settings.png)
 
-     基于[`这一套Java接口`][my_interface_java]的配置示例:
-     ![settings1](./images/settings1.png)
+    基于[`这一套Java接口`][my_interface_java]的配置示例:
+
+    ![settings1](./images/settings1.png)
 
      项目内的Class已经在V1.0beta2支持选择,但是如果有泛型限定的话,泛型还是需要手动添加,比如选择的类签名为:**com.longforus.base.java.BasePresenterJv<V extends IView,M extends IModel>**
 
