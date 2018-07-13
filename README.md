@@ -20,7 +20,7 @@ MvpAutoCodePlus
 - 支持Java和Kotlin语言
 
 支持的 IDE:
-- Android Studio(从3.1.3(173.3727—173.* )开始支持)
+- Android Studio(从3.1(173.3727—173.* )开始支持)
 - IntelliJ IDEA
 - IntelliJ IDEA Community Edition
 
