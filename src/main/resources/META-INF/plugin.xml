@@ -20,9 +20,18 @@
       <p><b>Features:</b>
       <ul>
         <li>Automatically generate Contract Interface based on the specified super Interface.</li>
-        <li>Automatically generate implements class based on the Contract Interface and specified superclass.</li>
+        <li>Automatically generate implements class based on the Contract Interface and specified superclass.Add the default implementation of the abstract method.</li>
         <li>Supports generics(currently only have M,V,P).</li>
         <li>Supports Java and Kotlin.</li>
+      </ul>
+      </p>
+        <p>
+      <b>特征:</b>
+      <ul>
+        <li>根据指定的父接口生成Mvp Contract接口.</li>
+        <li>根据生成的Contract接口和指定的父类生成接口的实现类,并生成抽象方法的默认实现.</li>
+        <li>支持接口泛型.</li>
+        <li>支持Java和Kotlin语言.</li>
       </ul>
       </p>
       <br/>

@@ -12,7 +12,7 @@ MvpAutoCodePlus
 特征
 ----
 - 根据指定的父接口生成MVP Contract接口类.
-- 可选的根据生成的MVP Contract和指定的父类生成MVP实现类.
+- 可选的根据生成的MVP Contract和指定的父类生成MVP实现类,并添加抽象方法默认实现.
   - 支持Activity
   - 支持Fragment
   - 支持Presenter
