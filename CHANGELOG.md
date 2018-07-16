@@ -1,6 +1,10 @@
 # Change Log
 
 
+## [v1.0](https://plugins.jetbrains.com/plugin/10907-mvpautocodeplus)(2018-7-16)
+
+- 添加兼容性配置,正式版发布.
+
 ## [v1.0-beat2](https://plugins.jetbrains.com/plugin/10907-mvpautocodeplus)(2018-7-10)
 
 - 添加配置界面的Class选择支持
