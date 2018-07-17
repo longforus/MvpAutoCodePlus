@@ -89,7 +89,7 @@ MvpAutoCodePlus
 
 [完整的更新历史记录](./CHANGELOG.md)
 
-[`鸿阳公众号插件广告文`][ad_link] ,感谢大神给予机会.插件的开发,推荐大家查看鸿洋的开发教程,要是插件不符合你的要求.可以issue,也可以fork自行修改.感谢你的关注.
+[`鸿洋公众号插件广告文`][ad_link] ,感谢大神给予机会.插件的开发,推荐大家查看鸿洋的开发教程,要是插件不符合你的要求.可以issue,也可以fork自行修改.感谢你的关注.
 
 [latest-release]: https://plugins.jetbrains.com/plugin/10907-mvpautocodeplus
 [downloads-img]: https://img.shields.io/jetbrains/plugin/d/8579.svg?style=flat-square
