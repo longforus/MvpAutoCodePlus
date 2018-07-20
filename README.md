@@ -87,12 +87,13 @@ MvpAutoCodePlus
 - 还没有研究生成View对应的布局文件,要是也能生成默认的,会更方便一些.
 - 其他未知问题,此插件是作者首次开发插件,完全从0开始,官方的文档不是很详细,英语水平更是不堪,国内的参考资料也不多,做这个纯粹是忽然想到了,就开始做了.难免有未尽之处,欢迎各位star,issue.
 
-
 [完整的更新历史记录](./CHANGELOG.md)
 
+[`鸿洋公众号插件广告文`][ad_link] ,感谢大神给予机会.插件的开发,推荐大家查看鸿洋的开发教程,要是插件不符合你的要求.可以issue,也可以fork自行修改.感谢你的关注.
 
 [latest-release]: https://plugins.jetbrains.com/plugin/10907-mvpautocodeplus
 [downloads-img]: https://img.shields.io/jetbrains/plugin/d/8579.svg?style=flat-square
 [plugin]: https://plugins.jetbrains.com/plugin/10907-mvpautocodeplus
 [my_interface]:https://github.com/longforus/MVPExample
 [my_interface_java]:https://github.com/longforus/MVPExample/tree/master/app/src/main/java/com/longforus/base/java
+[ad_link]:https://mp.weixin.qq.com/s?__biz=MzAxMTI4MTkwNQ==&amp;amp;mid=2650825783&amp;amp;idx=1&amp;amp;sn=0b0c2c58a729e1d9122ce9c09e31637f&amp;amp;chksm=80b7b0a9b7c039bfa92deb5c8fe51f5347ebdccf0be70078ffa047e7316baf5679a89fc788ac&amp;amp;mpshare=1&amp;amp;scene=23&amp;amp;srcid=0711IpaZwE1iGToWw6e7fix8#rd
