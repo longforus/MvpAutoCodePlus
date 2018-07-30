@@ -5,6 +5,8 @@ MvpAutoCodePlus
 
 [![Downloads][downloads-img]][plugin]
 
+[Machine translation of English documents](./README_EN.md)
+
 ### JetBrains IDEA/Android Studio MVP模版代码生成插件
 
 ![screenshots](./images/mvp.gif)
@@ -96,4 +98,4 @@ MvpAutoCodePlus
 [plugin]: https://plugins.jetbrains.com/plugin/10907-mvpautocodeplus
 [my_interface]:https://github.com/longforus/MVPExample
 [my_interface_java]:https://github.com/longforus/MVPExample/tree/master/app/src/main/java/com/longforus/base/java
-[ad_link]:https://mp.weixin.qq.com/s?__biz=MzAxMTI4MTkwNQ==&amp;amp;mid=2650825783&amp;amp;idx=1&amp;amp;sn=0b0c2c58a729e1d9122ce9c09e31637f&amp;amp;chksm=80b7b0a9b7c039bfa92deb5c8fe51f5347ebdccf0be70078ffa047e7316baf5679a89fc788ac&amp;amp;mpshare=1&amp;amp;scene=23&amp;amp;srcid=0711IpaZwE1iGToWw6e7fix8#rd
+[ad_link]:https://mp.weixin.qq.com/s?__biz=MzAxMTI4MTkwNQ==&amp;amp;amp;amp;mid=2650825783&amp;amp;amp;amp;idx=1&amp;amp;amp;amp;sn=0b0c2c58a729e1d9122ce9c09e31637f&amp;amp;amp;amp;chksm=80b7b0a9b7c039bfa92deb5c8fe51f5347ebdccf0be70078ffa047e7316baf5679a89fc788ac&amp;amp;amp;amp;mpshare=1&amp;amp;amp;amp;scene=23&amp;amp;amp;amp;srcid=0711IpaZwE1iGToWw6e7fix8#rd
