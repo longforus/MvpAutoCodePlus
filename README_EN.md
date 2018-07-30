@@ -29,10 +29,10 @@ JetBrains IDEA/Android Studio MVP template code generation plug-in
 
   - <kbd>File</kbd> > <kbd>Preferences(Settings)</kbd> > <kbd>Plugins</kbd> > <kbd>Browse repositories...</kbd> > <kbd>search and find "MvpAutoCodePlus"</kbd> > <kbd>Install Plugin</kbd>
 
-  ![install](./images/install1.PNG)
+  ![install](./images/install1.png)
 
 - **manual installation :**
-  [`download the latest release of plug-in package `][latest release] - > <kbd>File</kbd> ><kbd>Preferences(Settings)</kbd> > <kbd>Plugins</kbd> > <kbd>Install plugin from disk...</kbd>
+  [`download the latest release of plug-in package `][latest-release] - > <kbd>File</kbd> ><kbd>Preferences(Settings)</kbd> > <kbd>Plugins</kbd> > <kbd>Install plugin from disk...</kbd>
 
  - **Restart the IDE**.
  
