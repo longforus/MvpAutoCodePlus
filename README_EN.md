@@ -5,7 +5,7 @@ MvpAutoCodePlus
 
 JetBrains IDEA/Android Studio MVP template code generation plug-in
 
-![screenshots](./images/MVP.GIF)
+![screenshots](./images/mvp.gif)
 
 ##Character
 
@@ -31,23 +31,24 @@ JetBrains IDEA/Android Studio MVP template code generation plug-in
 
   ![install](./images/install1.PNG)
 
-- ** manual installation :**
+- **manual installation :**
   [`download the latest release of plug-in package `][latest release] - > <kbd>File</kbd> ><kbd>Preferences(Settings)</kbd> > <kbd>Plugins</kbd> > <kbd>Install plugin from disk...</kbd>
 
-  **Restart the IDE**.
+ - **Restart the IDE**.
+ 
 ##Usage
 
 1. Configure the parent interface:
 
   - <kbd>File</kbd> > <kbd>Preferences(Settings)</kbd> > <kbd>Other Settings</kbd> > <kbd>MvpAutoCodePlus</kbd> > 
 
-  ![Settings](./images/Settings.PNG)
+  ![settings](./images/settings.png)
   Based on [` this a set of Java interfaces `] [my_interface_java] example configuration:
-  ![settings1](./images/settings1.PNG)
-  Project in the Class has been V1.0beta2 support to choose, but if there are generic limit, generic or need to manually add, such as the choice of Class signature is: **. com.longforus.Base.Java.BasePresenterJv<V extends IView, M extends IModel>**
-  ![use3](./images/use3.PNG)
+  ![settings1](./images/settings1.png)
+  Project in the Class has been V1.0beta2 support to choose, but if there are generic limit, generic or need to manually add, such as the choice of Class signature is: **com.longforus.Base.Java.BasePresenterJv<V extends IView, M extends IModel>**
+  ![use3](./images/use3.png)
   Manually add the following generic qualifier <V,M>:
-  ![use4](./images/use4.PNG)
+  ![use4](./images/use4.png)
   Global and current project modes are also supported, and the interfaces configured in global mode can be used in all projects. The interfaces configured in the current project only work in the current project, facilitating seamless switching between multiple different projects.
 2. Generate:
 
@@ -57,7 +58,8 @@ JetBrains IDEA/Android Studio MVP template code generation plug-in
 - choose the code implementation, Java or Kotlin
 - select the implementation method of View,Activity or Fragment. If there are multiple configurations, select one of them, and remove the previous check box for the items you don't want to generate. If there are no superclasses of P and M implementation classes, the generated implementation classes of P and M will only implement the corresponding interface.
 - click Ok, wait a moment, and the code is generated. The generated package structure is as follows:
-![use2](./images/use2.PNG)
+![use2](./images/use2.png)
+
 ##About the parent interface
 
 Only use my own currently use interface to development and testing, welcome to use their own interface for testing. If need [` I use interface `][my_interface], please download it in your own project.
