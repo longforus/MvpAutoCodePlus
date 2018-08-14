@@ -1,6 +1,10 @@
 # Change Log
 
 
+## [v1.0-183](https://plugins.jetbrains.com/plugin/10907-mvpautocodeplus)(2018-8-14)
+
+- 添加IDEA 2018.2 和 AndroidStudio 3.3的支持.
+
 ## [v1.0](https://plugins.jetbrains.com/plugin/10907-mvpautocodeplus)(2018-7-16)
 
 - 添加兼容性配置,正式版发布.
