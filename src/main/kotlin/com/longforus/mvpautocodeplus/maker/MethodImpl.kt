@@ -6,8 +6,7 @@ import com.intellij.codeInsight.generation.OverrideImplementUtil.*
 import com.intellij.codeInsight.generation.PsiGenerationInfo
 import com.intellij.codeInsight.generation.PsiMethodMember
 import com.intellij.openapi.application.ApplicationManager
-import com.intellij.openapi.application.Result
-import com.intellij.openapi.command.WriteCommandAction
+import com.intellij.openapi.command.WriteCommandAction.writeCommandAction
 import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.project.Project
 import com.intellij.psi.JavaPsiFacade
@@ -47,12 +46,9 @@ fun kotlinDoMultiOverrideImplement(aClass: KtLightClass, project: Project, edito
 
     val chooserObjects = implementMembersHandler.collectMembersToGenerate(
         classOrObject).sortedBy { it.descriptor.name.asString() + " in " + it.immediateSuper.containingDeclaration.name.asString() }
-    object : WriteCommandAction<Any?>(project, aClass.containingFile) {
-        @Throws()
-        override fun run(result: Result<Any?>) {
-            OverrideImplementMembersHandler.generateMembers(editor, classOrObject, chooserObjects, false)
-        }
-    }.executeSilently()
+    writeCommandAction(project, aClass.containingFile).run<Throwable> {
+        OverrideImplementMembersHandler.generateMembers(editor, classOrObject, chooserObjects, false)
+    }
 }
 
 
@@ -88,12 +84,9 @@ fun javaOverrideOrImplementMethods(project: Project,
     for (member in onlyPrimary) {
         allList.add(member)
     }
-    object : WriteCommandAction<Any?>(project, aClass.containingFile) {
-        @Throws()
-        override fun run(result: Result<Any?>) {
-            overrideOrImplementMethodsInRightPlace(editor, aClass, allList, false, true)
-        }
-    }.executeSilently()
+    writeCommandAction(project, aClass.containingFile).run<Throwable> {
+        overrideOrImplementMethodsInRightPlace(editor, aClass, allList, false, true)
+    }
 }
 
 
