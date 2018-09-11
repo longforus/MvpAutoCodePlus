@@ -7,4 +7,4 @@ import com.intellij.ide.util.PropertiesComponent
  * Description :
  */
 data class ItemConfigBean(val name: String, val isJava: Boolean = true, val isActivity: Boolean = true, val vImpl: String, val pImpl: String, val mImpl: String,
-    val state: PropertiesComponent)
+    val state: PropertiesComponent, val generateModel: Boolean = true)

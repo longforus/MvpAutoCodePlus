@@ -21,7 +21,7 @@ object TemplateParamFactory {
         this.state = mSelectedState
         val liveTemplateParam = HashMap<String, String?>()
         when (templateName) {
-            CONTRACT_TP_NAME_JAVA, CONTRACT_TP_NAME_KOTLIN -> {
+            CONTRACT_TP_NAME_JAVA, CONTRACT_TP_NAME_KOTLIN, CONTRACT_TP_NO_MODEL_NAME_JAVA, CONTRACT_TP_NO_MODEL_NAME_KOTLIN -> {
                 val (superVNameNoGeneric, superVGenericValue) = getNameAndGenericType(SUPER_VIEW)
                 val (superPNameNoGeneric, superPGenericValue) = getNameAndGenericType(SUPER_PRESENTER)
                 val (superMNameNoGeneric, superMGenericValue) = getNameAndGenericType(SUPER_MODEL)

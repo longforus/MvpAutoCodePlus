@@ -1,8 +1,7 @@
 buildscript {
-    ext.kotlin_version = '1.2.60'
+    ext.kotlin_version = '1.2.61'
 
     repositories {
-//        maven { url "http://192.168.2.105:8908/repository/maven-public/" }
         mavenCentral()
     }
     dependencies {
@@ -14,7 +13,7 @@ plugins {
     id 'org.jetbrains.intellij' version '0.3.4'
 }
 
-version '1.0-183'
+version '1.1-182'
 group 'com.longforus'
 
 
@@ -32,7 +31,6 @@ sourceCompatibility = 1.8
 //}
 
 repositories {
-//    maven { url "http://192.168.2.105:8908/repository/maven-public/" }
     mavenCentral()
 }
 
@@ -48,13 +46,15 @@ compileKotlin {
 compileTestKotlin {
     kotlinOptions.jvmTarget = "1.8"
 }
+
+
 intellij {
     version '2018.2'
-    plugins 'org.jetbrains.kotlin:1.2.60-release-IJ2018.2-1' //here
+    plugins 'org.jetbrains.kotlin:1.2.61-release-IJ2018.2-1' //here
 //    version '2018.1'
-//    plugins 'org.jetbrains.kotlin:1.2.51-release-IJ2018.1-1' //here
+//    plugins 'org.jetbrains.kotlin:1.2.61-release-IJ2018.1-1' //here
 //    version '2017.3'
-//    plugins 'org.jetbrains.kotlin:1.2.50-release-IJ2017.3-1' //here
+//    plugins 'org.jetbrains.kotlin:1.2.61-release-IJ2017.3-1' //here
 }
 
 publishPlugin {

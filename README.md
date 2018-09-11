@@ -32,10 +32,10 @@ MvpAutoCodePlus
 - **使用 IDE 内置插件系统安装:**
   - <kbd>File</kbd> > <kbd>Preferences(Settings)</kbd> > <kbd>Plugins</kbd> > <kbd>Browse repositories...</kbd> > <kbd>搜索并找到"MvpAutoCodePlus"</kbd> > <kbd>Install Plugin</kbd>
 
-    
    ![install](./images/install1.png)
 
 - **手动安装:**
+
   - 下载[`最新发布的插件包`][latest-release] > <kbd>File</kbd> ><kbd>Preferences(Settings)</kbd> > <kbd>Plugins</kbd> > <kbd>Install plugin from disk...</kbd>
 
 重启**IDE**.
@@ -74,6 +74,8 @@ MvpAutoCodePlus
    - 选择代码实现方式,可选Java或Kotlin
 
    - 选择View的实现方式,Activity或Fragment,如果配置了多个的话,可选择其中之一,不想生成的项去掉前面的复选框.如果没有输入P和M实现类的超类,那么生成的P和M的实现类只会实现对应的接口.
+
+   - 从1.1开始支持不生成Model接口和对应的实现类,更加灵活.
 
    - 点击Ok,稍等一会儿,代码就生成了,生成的包结构如下:
 

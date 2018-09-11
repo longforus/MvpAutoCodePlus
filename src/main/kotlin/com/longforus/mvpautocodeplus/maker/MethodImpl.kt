@@ -49,6 +49,13 @@ fun kotlinDoMultiOverrideImplement(aClass: KtLightClass, project: Project, edito
     writeCommandAction(project, aClass.containingFile).run<Throwable> {
         OverrideImplementMembersHandler.generateMembers(editor, classOrObject, chooserObjects, false)
     }
+//    <182
+//    object : WriteCommandAction<Any?>(project, aClass.containingFile) {
+//        @Throws()
+//        override fun run(result: Result<Any?>) {
+//            OverrideImplementMembersHandler.generateMembers(editor, classOrObject, chooserObjects, false)
+//        }
+//    }.executeSilently()
 }
 
 
@@ -87,6 +94,13 @@ fun javaOverrideOrImplementMethods(project: Project,
     writeCommandAction(project, aClass.containingFile).run<Throwable> {
         overrideOrImplementMethodsInRightPlace(editor, aClass, allList, false, true)
     }
+//    <182
+//    object : WriteCommandAction<Any?>(project, aClass.containingFile) {
+//        @Throws()
+//        override fun run(result: Result<Any?>) {
+//            overrideOrImplementMethodsInRightPlace(editor, aClass, allList, false, true)
+//        }
+//    }.executeSilently()
 }
 
 

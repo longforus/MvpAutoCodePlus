@@ -70,7 +70,8 @@ class MainAction : AnAction("main", "auto make mvp code", PlatformIcons.CLASS_IC
             mSelectedState = it.state
             runWriteAction {
                 if (it.isJava) {
-                    val contractJ = createFile(it.name, CONTRACT_TP_NAME_JAVA, getSubDir(dir, CONTRACT), "") as PsiJavaFile
+                    val contractJ = createFile(it.name, if (it.generateModel) CONTRACT_TP_NAME_JAVA else CONTRACT_TP_NO_MODEL_NAME_JAVA, getSubDir(dir, CONTRACT),
+                        "") as PsiJavaFile
                     if (!it.vImpl.isEmpty() && !it.vImpl.startsWith(IS_NOT_SET)) {
                         val sdV = getSubDir(dir, VIEW)
                         if (it.isActivity) {
@@ -83,13 +84,15 @@ class MainAction : AnAction("main", "auto make mvp code", PlatformIcons.CLASS_IC
                         val sdP = getSubDir(dir, PRESENTER)
                         createFile(it.name, PRESENTER_IMPL_TP_JAVA, sdP, it.pImpl, contractJ)
                     }
-                    if (!it.mImpl.isEmpty()) {
+                    if (!it.mImpl.isEmpty() && it.generateModel) {
                         val sdM = getSubDir(dir, MODEL)
                         createFile(it.name, MODEL_IMPL_TP_JAVA, sdM, it.mImpl, contractJ)
                     }
 
                 } else {
-                    val contractK = createFile(it.name, CONTRACT_TP_NAME_KOTLIN, getSubDir(dir, CONTRACT), "", fileName = getContractName(it.name))
+                    val contractK = createFile(it.name, if (it.generateModel) CONTRACT_TP_NAME_KOTLIN else CONTRACT_TP_NO_MODEL_NAME_KOTLIN, getSubDir(dir, CONTRACT), "",
+                        fileName = getContractName(it
+                            .name))
 
                     if (!it.vImpl.isEmpty() && !it.vImpl.startsWith(IS_NOT_SET)) {
                         val sdV = getSubDir(dir, VIEW)
@@ -103,7 +106,7 @@ class MainAction : AnAction("main", "auto make mvp code", PlatformIcons.CLASS_IC
                         val sdP = getSubDir(dir, PRESENTER)
                         createFile(it.name, PRESENTER_IMPL_TP_KOTLIN, sdP, it.pImpl, contractK, "${it.name}Presenter")
                     }
-                    if (!it.mImpl.isEmpty()) {
+                    if (!it.mImpl.isEmpty() && it.generateModel) {
                         val sdM = getSubDir(dir, MODEL)
                         createFile(it.name, MODEL_IMPL_TP_KOTLIN, sdM, it.mImpl, contractK, "${it.name}Model")
                     }

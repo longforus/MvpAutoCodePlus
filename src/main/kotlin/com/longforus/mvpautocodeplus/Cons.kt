@@ -34,6 +34,8 @@ const val COMMENT_AUTHOR = "comment_author"
 
 const val CONTRACT_TP_NAME_JAVA = "JavaMvpAutoCodePlusContract"
 const val CONTRACT_TP_NAME_KOTLIN = "KotlinMvpAutoCodePlusContract"
+const val CONTRACT_TP_NO_MODEL_NAME_JAVA = "JavaMvpAutoCodePlusContractNoModel"
+const val CONTRACT_TP_NO_MODEL_NAME_KOTLIN = "KotlinMvpAutoCodePlusContractNoModel"
 const val VIEW_IMPL_TP_ACTIVITY_JAVA = "JavaMvpAutoCodePlusViewActivityImpl"
 const val VIEW_IMPL_TP_ACTIVITY_KOTLIN = "KotlinMvpAutoCodePlusViewActivityImpl"
 const val VIEW_IMPL_TP_FRAGMENT_JAVA = "JavaMvpAutoCodePlusViewFragmentImpl"

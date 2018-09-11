@@ -3,7 +3,15 @@ package com.longforus.mvpautocodeplus.ui;
 import com.intellij.ui.components.labels.LinkLabel;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
+import com.intellij.uiDesigner.core.Spacer;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Insets;
+import javax.swing.BorderFactory;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
@@ -54,166 +62,173 @@ public class ConfigForm {
      * @noinspection ALL
      */
     private void $$$setupUI$$$() {
-        mPanel = new javax.swing.JPanel();
-        mPanel.setLayout(new GridLayoutManager(7, 3, new java.awt.Insets(0, 0, 0, 0), 1, 3, false, true));
-        mPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(java.awt.Color.black), "MvpConfig"));
-        final javax.swing.JPanel panel1 = new javax.swing.JPanel();
-        panel1.setLayout(new java.awt.GridBagLayout());
-        mPanel.add(panel1,
-            new GridConstraints(0, 0, 1, 3, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-                GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, true));
-        final javax.swing.JLabel label1 = new javax.swing.JLabel();
-        java.awt.GridBagConstraints gbc;
-        gbc = new java.awt.GridBagConstraints();
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.weightx = 1.0;
-        gbc.weighty = 1.0;
-        gbc.anchor = java.awt.GridBagConstraints.WEST;
-        panel1.add(label1, gbc);
-        tv_v_name = new javax.swing.JTextField();
-        gbc = new java.awt.GridBagConstraints();
-        gbc.gridx = 1;
-        gbc.gridy = 0;
-        gbc.weightx = 4.0;
-        gbc.weighty = 1.0;
-        gbc.anchor = java.awt.GridBagConstraints.WEST;
-        gbc.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        panel1.add(tv_v_name, gbc);
-        final javax.swing.JPanel panel2 = new javax.swing.JPanel();
-        panel2.setLayout(new java.awt.GridBagLayout());
-        mPanel.add(panel2, new GridConstraints(3, 0, 1, 3, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_FIXED,
-            GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, new java.awt.Dimension(303, 56), null, 0, true));
-        final javax.swing.JLabel label2 = new javax.swing.JLabel();
-        gbc = new java.awt.GridBagConstraints();
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.weightx = 1.0;
-        gbc.weighty = 1.0;
-        gbc.anchor = java.awt.GridBagConstraints.WEST;
-        panel2.add(label2, gbc);
-        tv_p_name = new javax.swing.JTextField();
-        gbc = new java.awt.GridBagConstraints();
-        gbc.gridx = 1;
-        gbc.gridy = 0;
-        gbc.weightx = 4.0;
-        gbc.weighty = 1.0;
-        gbc.anchor = java.awt.GridBagConstraints.WEST;
-        gbc.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        panel2.add(tv_p_name, gbc);
-        final javax.swing.JPanel panel3 = new javax.swing.JPanel();
-        panel3.setLayout(new java.awt.GridBagLayout());
-        mPanel.add(panel3,
-            new GridConstraints(5, 0, 1, 3, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-                GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, true));
-        final javax.swing.JLabel label3 = new javax.swing.JLabel();
-        gbc = new java.awt.GridBagConstraints();
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.weightx = 1.0;
-        gbc.weighty = 1.0;
-        gbc.anchor = java.awt.GridBagConstraints.WEST;
-        panel3.add(label3, gbc);
-        tv_m_name = new javax.swing.JTextField();
-        gbc = new java.awt.GridBagConstraints();
-        gbc.gridx = 1;
-        gbc.gridy = 0;
-        gbc.weightx = 4.0;
-        gbc.weighty = 1.0;
-        gbc.anchor = java.awt.GridBagConstraints.WEST;
-        gbc.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        panel3.add(tv_m_name, gbc);
-        final javax.swing.JPanel panel4 = new javax.swing.JPanel();
-        panel4.setLayout(new java.awt.GridBagLayout());
-        mPanel.add(panel4,
-            new GridConstraints(6, 0, 1, 3, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-                GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, true));
-        final javax.swing.JLabel label4 = new javax.swing.JLabel();
-        gbc = new java.awt.GridBagConstraints();
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.weightx = 1.0;
-        gbc.weighty = 1.0;
-        gbc.anchor = java.awt.GridBagConstraints.WEST;
-        panel4.add(label4, gbc);
-        tv_model_impl = new javax.swing.JTextField();
-        gbc = new java.awt.GridBagConstraints();
-        gbc.gridx = 1;
-        gbc.gridy = 0;
-        gbc.weightx = 4.0;
-        gbc.weighty = 1.0;
-        gbc.anchor = java.awt.GridBagConstraints.WEST;
-        gbc.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        panel4.add(tv_model_impl, gbc);
-        final javax.swing.JPanel panel5 = new javax.swing.JPanel();
-        panel5.setLayout(new java.awt.GridBagLayout());
-        mPanel.add(panel5,
-            new GridConstraints(4, 0, 1, 3, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-                GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, true));
-        final javax.swing.JLabel label5 = new javax.swing.JLabel();
-        gbc = new java.awt.GridBagConstraints();
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.weightx = 1.0;
-        gbc.weighty = 1.0;
-        gbc.anchor = java.awt.GridBagConstraints.WEST;
-        panel5.add(label5, gbc);
-        tv_presenter_impl = new javax.swing.JTextField();
-        gbc = new java.awt.GridBagConstraints();
-        gbc.gridx = 1;
-        gbc.gridy = 0;
-        gbc.weightx = 4.0;
-        gbc.weighty = 1.0;
-        gbc.anchor = java.awt.GridBagConstraints.WEST;
-        gbc.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        panel5.add(tv_presenter_impl, gbc);
-        final javax.swing.JPanel panel6 = new javax.swing.JPanel();
-        panel6.setLayout(new java.awt.GridBagLayout());
-        mPanel.add(panel6,
-            new GridConstraints(1, 0, 1, 3, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-                GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, true));
-        final javax.swing.JLabel label6 = new javax.swing.JLabel();
-        gbc = new java.awt.GridBagConstraints();
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.weightx = 1.0;
-        gbc.weighty = 1.0;
-        gbc.anchor = java.awt.GridBagConstraints.WEST;
-        panel6.add(label6, gbc);
-        tv_view_activity = new javax.swing.JTextField();
-        gbc = new java.awt.GridBagConstraints();
-        gbc.gridx = 1;
-        gbc.gridy = 0;
-        gbc.weightx = 4.0;
-        gbc.weighty = 1.0;
-        gbc.anchor = java.awt.GridBagConstraints.WEST;
-        gbc.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        panel6.add(tv_view_activity, gbc);
-        final javax.swing.JPanel panel7 = new javax.swing.JPanel();
-        panel7.setLayout(new java.awt.GridBagLayout());
-        mPanel.add(panel7,
-            new GridConstraints(2, 0, 1, 3, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
-                GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, true));
-        final javax.swing.JLabel label7 = new javax.swing.JLabel();
-        gbc = new java.awt.GridBagConstraints();
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.weightx = 1.0;
-        gbc.anchor = java.awt.GridBagConstraints.WEST;
-        panel7.add(label7, gbc);
-        tv_view_fragment = new javax.swing.JTextField();
-        gbc = new java.awt.GridBagConstraints();
-        gbc.gridx = 1;
-        gbc.gridy = 0;
-        gbc.weightx = 4.0;
-        gbc.weighty = 1.0;
-        gbc.anchor = java.awt.GridBagConstraints.WEST;
-        gbc.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        panel7.add(tv_view_fragment, gbc);
+        mPanel = new JPanel();
+        mPanel.setLayout(new GridLayoutManager(12, 8, new Insets(0, 0, 0, 0), -1, -1));
+        mPanel.setMinimumSize(new Dimension(-1, -1));
+        mPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), "MvpAutoCodePlus"));
+        final JLabel label1 = new JLabel();
+        label1.setText("请输入完整的类名,支持M,V,P这样的泛型指定. 比如: com.longforus.IPresenter<V,M>,生成后将被替换为生成的接口类型.");
+        mPanel.add(label1,
+            new GridConstraints(0, 0, 1, 5, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null,
+                null, 0, false));
+        final Spacer spacer1 = new Spacer();
+        mPanel.add(spacer1,
+            new GridConstraints(0, 7, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
+        final Spacer spacer2 = new Spacer();
+        mPanel.add(spacer2,
+            new GridConstraints(11, 1, 1, 5, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        final JLabel label2 = new JLabel();
+        label2.setMinimumSize(new Dimension(-1, -1));
+        label2.setText("Super IView Name:  ");
+        label2.setToolTipText("");
+        mPanel.add(label2,
+            new GridConstraints(3, 0, 1, 2, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null,
+                new Dimension(186, 17), null, 0, false));
+        tv_v_name = new JTextField();
+        tv_v_name.setToolTipText("要生成的IView接口的父接口");
+        mPanel.add(tv_v_name,
+            new GridConstraints(3, 2, 1, 4, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED,
+                null, new Dimension(150, -1), null, 0, false));
+        btn_view_select = new JButton();
+        btn_view_select.setText("...");
+        mPanel.add(btn_view_select, new GridConstraints(3, 6, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+            GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final JLabel label3 = new JLabel();
+        label3.setText("Base View Activity:");
+        label3.setToolTipText("");
+        mPanel.add(label3,
+            new GridConstraints(4, 0, 1, 2, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null,
+                new Dimension(186, 17), null, 0, false));
+        tv_view_activity = new JTextField();
+        tv_view_activity.setToolTipText("View用Activity实现的父类");
+        mPanel.add(tv_view_activity,
+            new GridConstraints(4, 2, 1, 4, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED,
+                null, new Dimension(250, -1), null, 0, false));
+        btn_view_a_select = new JButton();
+        btn_view_a_select.setText("...");
+        mPanel.add(btn_view_a_select, new GridConstraints(4, 6, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+            GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final JLabel label4 = new JLabel();
+        label4.setText("Base View Fragment:");
+        label4.setToolTipText("");
+        mPanel.add(label4,
+            new GridConstraints(5, 0, 1, 2, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null,
+                new Dimension(186, 17), null, 0, false));
+        tv_view_fragment = new JTextField();
+        tv_view_fragment.setToolTipText("View用Fragment实现的父类");
+        mPanel.add(tv_view_fragment,
+            new GridConstraints(5, 2, 1, 4, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED,
+                null, new Dimension(250, -1), null, 0, false));
+        btn_view_f_select = new JButton();
+        btn_view_f_select.setText("...");
+        mPanel.add(btn_view_f_select, new GridConstraints(5, 6, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+            GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final JLabel label5 = new JLabel();
+        label5.setText("Super IPresenter Name:  ");
+        label5.setToolTipText("");
+        mPanel.add(label5,
+            new GridConstraints(6, 0, 1, 2, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null,
+                new Dimension(186, 17), null, 0, false));
+        tv_p_name = new JTextField();
+        tv_p_name.setToolTipText("要生成的IPresenter接口的父接口");
+        mPanel.add(tv_p_name,
+            new GridConstraints(6, 2, 1, 4, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED,
+                null, new Dimension(150, -1), null, 0, false));
+        btn_p_select = new JButton();
+        btn_p_select.setText("...");
+        mPanel.add(btn_p_select, new GridConstraints(6, 6, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+            GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final JLabel label6 = new JLabel();
+        label6.setText("Base Presenter Impl:");
+        label6.setToolTipText("");
+        label6.putClientProperty("html.disable", Boolean.FALSE);
+        mPanel.add(label6,
+            new GridConstraints(7, 0, 1, 2, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null,
+                new Dimension(186, 17), null, 0, false));
+        tv_presenter_impl = new JTextField();
+        tv_presenter_impl.setToolTipText("Presenter实现类的父类");
+        mPanel.add(tv_presenter_impl,
+            new GridConstraints(7, 2, 1, 4, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED,
+                null, new Dimension(150, -1), null, 0, false));
+        btn_pi_select = new JButton();
+        btn_pi_select.setText("...");
+        mPanel.add(btn_pi_select, new GridConstraints(7, 6, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+            GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final JLabel label7 = new JLabel();
+        label7.setText("Super IModel Name:   ");
+        label7.setToolTipText("");
+        mPanel.add(label7,
+            new GridConstraints(8, 0, 1, 2, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null,
+                new Dimension(186, 17), null, 0, false));
+        tv_m_name = new JTextField();
+        tv_m_name.setToolTipText("要生成的IModel接口的父接口");
+        mPanel.add(tv_m_name,
+            new GridConstraints(8, 2, 1, 4, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED,
+                null, new Dimension(150, -1), null, 0, false));
+        btn_m_select = new JButton();
+        btn_m_select.setText("...");
+        mPanel.add(btn_m_select, new GridConstraints(8, 6, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+            GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final JLabel label8 = new JLabel();
+        label8.setText("Base Model Impl:");
+        label8.setToolTipText("");
+        mPanel.add(label8,
+            new GridConstraints(9, 0, 1, 2, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null,
+                new Dimension(186, 17), null, 0, false));
+        tv_model_impl = new JTextField();
+        tv_model_impl.setToolTipText("IModel实现类的父类");
+        mPanel.add(tv_model_impl,
+            new GridConstraints(9, 2, 1, 4, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED,
+                null, new Dimension(150, -1), null, 0, false));
+        btn_mi_select = new JButton();
+        btn_mi_select.setText("...");
+        mPanel.add(btn_mi_select, new GridConstraints(9, 6, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL,
+            GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final JLabel label9 = new JLabel();
+        label9.setText("Comment author:");
+        label9.setToolTipText("");
+        mPanel.add(label9,
+            new GridConstraints(10, 0, 1, 2, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null,
+                new Dimension(186, 17), null, 0, false));
+        et_comment_author = new JTextField();
+        et_comment_author.setToolTipText("生成注释中的作者名字");
+        mPanel.add(et_comment_author,
+            new GridConstraints(10, 2, 1, 4, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED,
+                null, new Dimension(150, -1), null, 0, false));
+        final JLabel label10 = new JLabel();
+        label10.setText(" 实现类支持指定多个,用 ; 隔开. 如果需要泛型限定,选择Class后需要手动添加.");
+        mPanel.add(label10,
+            new GridConstraints(1, 2, 1, 2, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null,
+                null, 0, false));
+        lk_look_detail = new LinkLabel();
+        lk_look_detail.setText("查看详细用法");
+        mPanel.add(lk_look_detail,
+            new GridConstraints(1, 4, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+                GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        final JLabel label11 = new JLabel();
+        label11.setText("Settings Mode:");
+        mPanel.add(label11,
+            new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null,
+                null, 0, false));
+        mGlobalRadioButton = new JRadioButton();
+        mGlobalRadioButton.setSelected(true);
+        mGlobalRadioButton.setText("Global");
+        mPanel.add(mGlobalRadioButton,
+            new GridConstraints(2, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+                GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        mCurrentProjectRadioButton = new JRadioButton();
+        mCurrentProjectRadioButton.setText("Current Project");
+        mPanel.add(mCurrentProjectRadioButton,
+            new GridConstraints(2, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW,
+                GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        ButtonGroup buttonGroup;
+        buttonGroup = new ButtonGroup();
+        buttonGroup.add(mGlobalRadioButton);
+        buttonGroup.add(mCurrentProjectRadioButton);
     }
 
     /** @noinspection ALL */
-    public javax.swing.JComponent $$$getRootComponent$$$() {
+    public JComponent $$$getRootComponent$$$() {
         return mPanel;
     }
 }

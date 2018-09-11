@@ -1,6 +1,10 @@
 # Change Log
 
 
+## [v1.1](https://plugins.jetbrains.com/plugin/10907-mvpautocodeplus)(2018-9-11)
+
+- Support for not generating Model interfaces and corresponding implementation classes , is more flexible.
+
 ## [v1.0-183](https://plugins.jetbrains.com/plugin/10907-mvpautocodeplus)(2018-8-14)
 
 - 添加IDEA 2018.2 和 AndroidStudio 3.3的支持.
