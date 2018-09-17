@@ -41,8 +41,14 @@ class MainAction : AnAction("main", "auto make mvp code", PlatformIcons.CLASS_IC
             val textEditor = openFile[0] as TextEditor
             var clazz: PsiClass? = null
             if (psiFile is PsiJavaFile) {
+                if (psiFile.classes.isEmpty()) {
+                    return psiFile
+                }
                 clazz = psiFile.classes[0]
             } else if (psiFile is KtFile) {
+                if (psiFile.classes.isEmpty()) {
+                    return psiFile
+                }
                 clazz = psiFile.classes[0]
             }
             FeatureUsageTracker.getInstance().triggerFeatureUsed(ProductivityFeatureNames.CODEASSISTS_OVERRIDE_IMPLEMENT)

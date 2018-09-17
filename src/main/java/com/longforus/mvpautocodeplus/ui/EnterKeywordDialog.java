@@ -84,10 +84,13 @@ public class EnterKeywordDialog extends JDialog {
             }
             if (mGlobalRadioButton.isSelected()) {
                 mState = PropertiesComponent.getInstance();
-                PropertiesComponent.getInstance(mProject).setValue(ConsKt.USE_PROJECT_CONFIG, false);
+                PropertiesComponent instance = PropertiesComponent.getInstance(mProject);
+                instance.setValue(ConsKt.USE_PROJECT_CONFIG, false);
+                instance.setValue(ConsKt.GENERATE_MODEL_CONFIG, mcbModel.isSelected());
             } else {
                 mState = PropertiesComponent.getInstance(mProject);
                 mState.setValue(ConsKt.USE_PROJECT_CONFIG, true);
+                mState.setValue(ConsKt.GENERATE_MODEL_CONFIG, mcbModel.isSelected());
             }
             setSavedSuperClass(this, mState);
         });
@@ -110,6 +113,8 @@ public class EnterKeywordDialog extends JDialog {
             dialog.mState = PropertiesComponent.getInstance();
             setSavedSuperClass(dialog, dialog.mState);
         }
+        boolean generateModel = state.getBoolean(ConsKt.GENERATE_MODEL_CONFIG, true);
+        dialog.mcbModel.setSelected(generateModel);
         dialog.pack();
         dialog.setVisible(true);
         return dialog;
