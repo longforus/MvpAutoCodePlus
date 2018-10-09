@@ -31,11 +31,11 @@
     ]]></description>
 
 
-  <change-notes><![CDATA[
-      <h3>Add IModel interface and implementation class optional generation</h3>
-      <br/>
-      <a href="https://github.com/longforus/MvpAutoCodePlus/blob/master/CHANGELOG.md"><b>Full Changelog History</b></a>
-    ]]></change-notes>
+  <!--<change-notes><![CDATA[-->
+  <!--<h3>Add IModel interface and implementation class optional generation</h3>-->
+  <!--<br/>-->
+  <!--<a href="https://github.com/longforus/MvpAutoCodePlus/blob/master/CHANGELOG.md"><b>Full Changelog History</b></a>-->
+  <!--]]></change-notes>-->
 
   <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
   <idea-version since-build="171"/>

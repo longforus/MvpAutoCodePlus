@@ -57,6 +57,14 @@ intellij {
 //    plugins 'org.jetbrains.kotlin:1.2.61-release-IJ2017.3-1' //here
 }
 
+
+patchPluginXml {
+    changeNotes """
+     <h3>Add IModel interface and implementation class optional generation</h3>
+      <br/>
+      <a href="https://github.com/longforus/MvpAutoCodePlus/blob/master/CHANGELOG.md"><b>Full Changelog History</b></a>"""
+}
+
 publishPlugin {
     username publishUserName
     password publishPassword
