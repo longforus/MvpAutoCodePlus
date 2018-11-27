@@ -135,8 +135,10 @@ class MainAction : AnAction("main", "auto make mvp code", PlatformIcons.CLASS_IC
         }
     }
 
-    override fun update(e: AnActionEvent?) {
-        val dataContext = e!!.dataContext
+
+    override fun update(e: AnActionEvent) {
+        super.update(e)
+        val dataContext = e.dataContext
         val presentation = e.presentation
 
         val enabled = isAvailable(dataContext)

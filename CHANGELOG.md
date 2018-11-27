@@ -1,6 +1,13 @@
 # Change Log
 
 
+## [v1.2](https://plugins.jetbrains.com/plugin/10907-mvpautocodeplus)(2018-11-27)
+
+- Add generate model checkbox state save.
+- Change file template format.
+- Add Android Studio 3.4 support.
+- Fix bug.
+
 ## [v1.1](https://plugins.jetbrains.com/plugin/10907-mvpautocodeplus)(2018-9-11)
 
 - Support for not generating Model interfaces and corresponding implementation classes , is more flexible.
