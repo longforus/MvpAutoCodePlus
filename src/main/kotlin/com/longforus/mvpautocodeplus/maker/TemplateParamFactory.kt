@@ -28,6 +28,10 @@ object TemplateParamFactory {
                 liveTemplateParam["V"] = superVNameNoGeneric
                 liveTemplateParam["M"] = superMNameNoGeneric
                 liveTemplateParam["P"] = superPNameNoGeneric
+                liveTemplateParam["VN"] = superVNameNoGeneric?.substring(superVNameNoGeneric.lastIndexOf('.')+1..(superVNameNoGeneric.length-1))?: "IView"
+                liveTemplateParam["MN"] = superMNameNoGeneric?.substring(superMNameNoGeneric.lastIndexOf('.')+1..(superMNameNoGeneric.length-1))?: "IModel"
+                liveTemplateParam["PN"] = superPNameNoGeneric?.substring(superPNameNoGeneric.lastIndexOf('.')+1..(superPNameNoGeneric.length-1))?: "IPresenter"
+
                 liveTemplateParam["VG"] = superVGenericValue
                 liveTemplateParam["PG"] = superPGenericValue
                 liveTemplateParam["MG"] = superMGenericValue
@@ -102,14 +106,14 @@ object TemplateParamFactory {
             Messages.showErrorDialog("Super Interface name is null !", "Error")
             throw IllegalArgumentException("Super Interface name is null !")
         }
-        val indexOf = setValue?.indexOf("<") ?: -1
+        val indexOf = setValue.indexOf("<")
         var generic = ""
         var resultName = setValue
         if (indexOf > -1) {
-            resultName = setValue?.substring(0, indexOf)
-            val g = setValue?.substring(indexOf, setValue.length)
+            resultName = setValue.substring(0, indexOf)
+            val g = setValue.substring(indexOf, setValue.length)
             val sb = StringBuilder()
-            g?.forEach {
+            g.forEach {
                 when (it) {
                     "V"[0] -> sb.append(if (isContract) "View" else "${getContractName(enterName)}.View")
                     "P"[0] -> sb.append(if (isContract) "Presenter" else "${getContractName(enterName)}.Presenter")

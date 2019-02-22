@@ -77,7 +77,7 @@ class MainAction : AnAction("main", "auto make mvp code", PlatformIcons.CLASS_IC
             runWriteAction {
                 if (it.isJava) {
                     val contractJ = createFile(it.name, if (it.generateModel) CONTRACT_TP_NAME_JAVA else CONTRACT_TP_NO_MODEL_NAME_JAVA, getSubDir(dir, CONTRACT),
-                        "") as PsiJavaFile
+                        "")
                     if (!it.vImpl.isEmpty() && !it.vImpl.startsWith(IS_NOT_SET)) {
                         val sdV = getSubDir(dir, VIEW)
                         if (it.isActivity) {

@@ -1,6 +1,10 @@
 # Change Log
 
 
+## [v1.3](https://plugins.jetbrains.com/plugin/10907-mvpautocodeplus)(2018-11-27)
+- Fix bug.
+- Support custom super interface name..
+
 ## [v1.2](https://plugins.jetbrains.com/plugin/10907-mvpautocodeplus)(2018-11-27)
 
 - Add generate model checkbox state save.
