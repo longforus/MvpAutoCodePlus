@@ -71,6 +71,8 @@ MvpAutoCodePlus
 
    - 输入生成的代码主名,比如要做Login功能,就输入Login,生成结果是ILoginContract,LoginActivity,LoginPresenter,LoginModel
 
+   - 从1.4开始如果P的超接口以ViewModel结尾，那么生成的结果是ILoginContract,LoginActivity,LoginViewModel,LoginModel
+
    - 选择代码实现方式,可选Java或Kotlin
 
    - 选择View的实现方式,Activity或Fragment,如果配置了多个的话,可选择其中之一,不想生成的项去掉前面的复选框.如果没有输入P和M实现类的超类,那么生成的P和M的实现类只会实现对应的接口.
@@ -78,7 +80,7 @@ MvpAutoCodePlus
    - 从1.1开始支持不生成Model接口和对应的实现类,更加灵活.
 
    - 点击Ok,稍等一会儿,代码就生成了,生成的包结构如下:
-
+   
      ![use2](./images/use2.png)
 
 ## 关于父接口
