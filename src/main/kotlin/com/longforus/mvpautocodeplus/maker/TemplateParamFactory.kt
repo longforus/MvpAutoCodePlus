@@ -28,11 +28,16 @@ object TemplateParamFactory {
                 liveTemplateParam["V"] = superVNameNoGeneric
                 liveTemplateParam["M"] = superMNameNoGeneric
                 liveTemplateParam["P"] = superPNameNoGeneric
-                liveTemplateParam["VN"] = superVNameNoGeneric?.substring(superVNameNoGeneric.lastIndexOf('.')+1..(superVNameNoGeneric.length-1))?: "IView"
-                liveTemplateParam["MN"] = superMNameNoGeneric?.substring(superMNameNoGeneric.lastIndexOf('.')+1..(superMNameNoGeneric.length-1))?: "IModel"
-                liveTemplateParam["PN"] = superPNameNoGeneric?.substring(superPNameNoGeneric.lastIndexOf('.')+1..(superPNameNoGeneric.length-1))?: "IPresenter"
+                liveTemplateParam["VN"] = superVNameNoGeneric?.substring(superVNameNoGeneric.lastIndexOf('.')+1 until superVNameNoGeneric.length)?: "IView"
+                liveTemplateParam["MN"] = superMNameNoGeneric?.substring(superMNameNoGeneric.lastIndexOf('.')+1 until superMNameNoGeneric.length)?: "IModel"
+                liveTemplateParam["PN"] = superPNameNoGeneric?.substring(superPNameNoGeneric.lastIndexOf('.')+1 until superPNameNoGeneric.length)?: "IPresenter"
 
-                liveTemplateParam["VG"] = superVGenericValue
+                liveTemplateParam["P_OR_M"] = getPresenterOrViewModel(liveTemplateParam["PN"])
+                if (liveTemplateParam["P_OR_M"]=="ViewModel"&&superVGenericValue.contains("Presenter")) {
+                    liveTemplateParam["VG"] = superVGenericValue.replace("Presenter","ViewModel")
+                }else{
+                    liveTemplateParam["VG"] = superVGenericValue
+                }
                 liveTemplateParam["PG"] = superPGenericValue
                 liveTemplateParam["MG"] = superMGenericValue
             }
@@ -53,9 +58,9 @@ object TemplateParamFactory {
             PRESENTER_IMPL_TP_JAVA, PRESENTER_IMPL_TP_KOTLIN -> {
                 setCommonParam(enterName, superImplName, contract, liveTemplateParam, templateName)
                 if (templateName == PRESENTER_IMPL_TP_JAVA) {
-                    liveTemplateParam["IMPL_TYPE"] = "Presenter"
+                    liveTemplateParam["IMPL_TYPE"] = getPresenterOrViewModel(liveTemplateParam["IMPL"])
                 }
-                liveTemplateParam["TYPE"] = "Presenter"
+                liveTemplateParam["TYPE"] = getPresenterOrViewModel(liveTemplateParam["IMPL"])
             }
             MODEL_IMPL_TP_JAVA, MODEL_IMPL_TP_KOTLIN -> {
                 setCommonParam(enterName, superImplName, contract, liveTemplateParam, templateName)
@@ -67,6 +72,13 @@ object TemplateParamFactory {
 //                <I${NAME}Contract.View,I${NAME}Contract.Presenter>
         }
         return liveTemplateParam
+    }
+
+    fun getPresenterOrViewModel(superName: String?): String? {
+        if(superName.isNullOrEmpty()){
+            return null
+        }
+        return if(superName.endsWith("ViewModel")) "ViewModel" else "Presenter"
     }
 
 
@@ -125,6 +137,9 @@ object TemplateParamFactory {
         }
         return resultName to generic
     }
+
+
+
 
 }
 

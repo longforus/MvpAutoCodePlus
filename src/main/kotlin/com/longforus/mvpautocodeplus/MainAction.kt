@@ -110,7 +110,7 @@ class MainAction : AnAction("main", "auto make mvp code", PlatformIcons.CLASS_IC
                     }
                     if (!it.pImpl.isEmpty()) {
                         val sdP = getSubDir(dir, PRESENTER)
-                        createFile(it.name, PRESENTER_IMPL_TP_KOTLIN, sdP, it.pImpl, contractK, "${it.name}Presenter")
+                        createFile(it.name, PRESENTER_IMPL_TP_KOTLIN, sdP, it.pImpl, contractK, "${it.name}${TemplateParamFactory.getPresenterOrViewModel(it.pImpl)}")
                     }
                     if (!it.mImpl.isEmpty() && it.generateModel) {
                         val sdM = getSubDir(dir, MODEL)

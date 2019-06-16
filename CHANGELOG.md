@@ -1,6 +1,9 @@
 # Change Log
 
 
+## [v1.4](https://plugins.jetbrains.com/plugin/10907-mvpautocodeplus)(2019-6-16)
+- Add ViewModel name support,now if super Presenter interface name endsWith ViewModel,generated presenter name is also ViewModel.
+
 ## [v1.3](https://plugins.jetbrains.com/plugin/10907-mvpautocodeplus)(2018-11-27)
 - Fix bug.
 - Support custom super interface name..
