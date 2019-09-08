@@ -1,6 +1,9 @@
 # Change Log
 
 
+## [v1.4.1](https://plugins.jetbrains.com/plugin/10907-mvpautocodeplus)(2019-9-8)
+- Fix Android studio 3.5+ menu text.
+
 ## [v1.4](https://plugins.jetbrains.com/plugin/10907-mvpautocodeplus)(2019-6-16)
 - Add ViewModel name support,now if super Presenter interface name endsWith ViewModel,generated presenter name is also ViewModel.
 

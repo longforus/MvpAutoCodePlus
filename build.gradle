@@ -1,5 +1,5 @@
 buildscript {
-    ext.kotlin_version = '1.3.10'
+    ext.kotlin_version = '1.3.31'
 
     repositories {
 //        maven { url 'http://192.168.2.39:8908/repository/maven-public/' }
@@ -14,7 +14,7 @@ plugins {
     id 'org.jetbrains.intellij' version '0.3.4'
 }
 
-version '1.4'
+version '1.4.1'
 group 'com.longforus'
 
 
@@ -75,7 +75,7 @@ dependencies {
 }
 
 patchPluginXml {
-    changeNotes """<h3>Add ViewModel name support,now if super Presenter interface name endsWith ViewModel,generated presenter name is also ViewModel.</h3>
+    changeNotes """<h3>Fix Android studio 3.5+ menu text.</h3>
 <br/>
 <a href="https://github.com/longforus/MvpAutoCodePlus/blob/master/CHANGELOG.md"><b>Full Changelog History</b></a>"""
 }

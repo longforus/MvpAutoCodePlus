@@ -19,8 +19,8 @@ import com.longforus.mvpautocodeplus.maker.TemplateParamFactory
 import com.longforus.mvpautocodeplus.maker.createFileFromTemplate
 import com.longforus.mvpautocodeplus.maker.overrideOrImplementMethods
 import com.longforus.mvpautocodeplus.ui.EnterKeywordDialog
-import org.jetbrains.kotlin.idea.util.application.runWriteAction
 import org.jetbrains.kotlin.psi.KtFile
+import com.intellij.openapi.application.runWriteAction as runWriteAction1
 
 
 /**
@@ -28,7 +28,7 @@ import org.jetbrains.kotlin.psi.KtFile
  * Description :
  */
 
-class MainAction : AnAction("main", "auto make mvp code", PlatformIcons.CLASS_ICON), WriteActionAware {
+class MainAction : AnAction("Generate MVP Code", "auto make mvp code", PlatformIcons.CLASS_ICON), WriteActionAware {
     var project: Project? = null
     lateinit var mSelectedState: PropertiesComponent
     fun createFile(enterName: String, templateName: String, dir: PsiDirectory, superImplName: String, contract: PsiFile? = null, fileName: String = enterName):
@@ -74,7 +74,7 @@ class MainAction : AnAction("main", "auto make mvp code", PlatformIcons.CLASS_IC
 //        }
         EnterKeywordDialog.getDialog(project) {
             mSelectedState = it.state
-            runWriteAction {
+            runWriteAction1 {
                 if (it.isJava) {
                     val contractJ = createFile(it.name, if (it.generateModel) CONTRACT_TP_NAME_JAVA else CONTRACT_TP_NO_MODEL_NAME_JAVA, getSubDir(dir, CONTRACT),
                         "")
