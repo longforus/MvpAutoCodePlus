@@ -2,7 +2,6 @@ package com.longforus.mvpautocodeplus.config
 
 import com.intellij.ide.BrowserUtil
 import com.intellij.ide.util.PropertiesComponent
-import com.intellij.ide.util.TreeClassChooserFactory
 import com.intellij.openapi.options.SearchableConfigurable
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.project.ProjectManager

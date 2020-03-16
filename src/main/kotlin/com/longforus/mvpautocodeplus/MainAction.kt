@@ -2,7 +2,7 @@ package com.longforus.mvpautocodeplus
 
 import com.intellij.featureStatistics.FeatureUsageTracker
 import com.intellij.featureStatistics.ProductivityFeatureNames
-import com.intellij.ide.util.PackageUtil
+import com.intellij.ide.actions.CreateFileAction
 import com.intellij.ide.util.PropertiesComponent
 import com.intellij.openapi.actionSystem.*
 import com.intellij.openapi.application.WriteActionAware
@@ -128,10 +128,10 @@ class MainAction : AnAction("Generate MVP Code", "auto make mvp code", PlatformI
             if (dirName == CONTRACT) {
                 dir
             } else {
-                PackageUtil.findOrCreateSubdirectory(dir.parentDirectory!!, dirName)
+                CreateFileAction.findOrCreateSubdirectory(dir.parentDirectory!!, dirName)
             }
         } else {
-            PackageUtil.findOrCreateSubdirectory(dir, dirName)
+            CreateFileAction.findOrCreateSubdirectory(dir, dirName)
         }
     }
 
