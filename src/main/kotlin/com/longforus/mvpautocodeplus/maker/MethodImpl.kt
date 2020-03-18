@@ -46,6 +46,7 @@ fun kotlinDoMultiOverrideImplement(aClass: KtLightClass, project: Project, edito
 
     val chooserObjects = implementMembersHandler.collectMembersToGenerate(
         classOrObject).sortedBy { it.descriptor.name.asString() + " in " + it.immediateSuper.containingDeclaration.name.asString() }
+
     writeCommandAction(project, aClass.containingFile).run<Throwable> {
         OverrideImplementMembersHandler.generateMembers(editor, classOrObject, chooserObjects, false)
     }
