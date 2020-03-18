@@ -60,7 +60,7 @@ fun javaOverrideOrImplementMethods(project: Project,
     ApplicationManager.getApplication().assertReadAccessAllowed()
     val candidates = OverrideImplementExploreUtil.getMethodsToOverrideImplement(aClass, toImplement)
     val secondary = if (toImplement || aClass.isInterface)
-        ContainerUtil.newArrayList()
+        arrayListOf()
     else
         OverrideImplementExploreUtil.getMethodsToOverrideImplement(aClass, true)
 
@@ -121,7 +121,7 @@ fun overrideOrImplementMethodsInRightPlace(editor: Editor,
             resultMembers = GenerateMembersUtil.insertMembersAtOffset(aClass, offset, prototypes)
         }
 
-        if (!resultMembers.isEmpty()) {
+        if (resultMembers.isNotEmpty()) {
             resultMembers[0].positionCaret(editor, true)
         }
     } catch (e: IncorrectOperationException) {
