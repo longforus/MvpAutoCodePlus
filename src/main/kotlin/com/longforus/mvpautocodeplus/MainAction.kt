@@ -96,11 +96,11 @@ class MainAction : AnAction("Generate MVP Code", "auto make mvp code", PlatformI
             val sdV = getSubDir(dir, VIEW)
             if (it.isActivity) {
                 val activityKt = createFile(it.name, VIEW_IMPL_TP_ACTIVITY_KOTLIN, sdV, it.vImpl, contractK.first, "${it.name}Activity")
-                CompleteRegister.registerActivity(activityKt.second, JavaDirectoryService.getInstance().getPackage(dir), facet!!, "")
-                doCreateLayoutFile(activityKt.second, dir, facet, false)
+                ComponentRegister.registerActivity(project!!,activityKt.second, JavaDirectoryService.getInstance().getPackage(dir), facet!!, "")
+                doCreateLayoutFile(it,activityKt.second, project!!, facet, false)
             } else {
                 val fragmentKt = createFile(it.name, VIEW_IMPL_TP_FRAGMENT_KOTLIN, sdV, it.vImpl, contractK.first, "${it.name}Fragment")
-                doCreateLayoutFile(fragmentKt.second, dir, facet!!, false)
+                doCreateLayoutFile(it,fragmentKt.second, project!!, facet!!, false,false)
             }
         }
         if (it.pImpl.isNotEmpty()) {
@@ -120,11 +120,11 @@ class MainAction : AnAction("Generate MVP Code", "auto make mvp code", PlatformI
             val sdV = getSubDir(dir, VIEW)
             if (it.isActivity) {
                 val activityJava = createFile(it.name, VIEW_IMPL_TP_ACTIVITY_JAVA, sdV, it.vImpl, contractJ.first)
-                CompleteRegister.registerActivity(activityJava.second, JavaDirectoryService.getInstance().getPackage(dir), facet!!, "")
-                doCreateLayoutFile(activityJava.second, dir, facet, true)
+                ComponentRegister.registerActivity(project!!,activityJava.second, JavaDirectoryService.getInstance().getPackage(dir), facet!!, "")
+                doCreateLayoutFile(it,activityJava.second, project!!, facet, true)
             } else {
                 val fragmentJava = createFile(it.name, VIEW_IMPL_TP_FRAGMENT_JAVA, sdV, it.vImpl, contractJ.first)
-                doCreateLayoutFile(fragmentJava.second, dir, facet!!, true)
+                doCreateLayoutFile(it,fragmentJava.second, project!!, facet!!, true,false)
             }
         }
         if (it.pImpl.isNotEmpty()) {

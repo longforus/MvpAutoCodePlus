@@ -1,5 +1,7 @@
 package com.longforus.mvpautocodeplus.maker
 
+import com.intellij.openapi.command.WriteCommandAction
+import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.ReadonlyStatusHandler
 import com.intellij.psi.PsiClass
 import com.intellij.psi.PsiPackage
@@ -16,24 +18,27 @@ import org.jetbrains.android.util.AndroidUtils
  * @author  longforus
  * @date 2020/3/18  15:11
  */
-object CompleteRegister {
+object ComponentRegister {
 
-    fun registerActivity(aClass: PsiClass?, aPackage: PsiPackage?, facet: AndroidFacet, label: String?) {
+    fun registerActivity(project:Project,aClass: PsiClass?, aPackage: PsiPackage?, facet: AndroidFacet, label: String?) {
         val manifestFile = AndroidRootUtil.getManifestFile(facet)
-        if (manifestFile != null && ReadonlyStatusHandler.ensureFilesWritable(facet.module.project, *arrayOf(manifestFile))) {
+        if (manifestFile != null && ReadonlyStatusHandler.ensureFilesWritable(facet.module.project, manifestFile)) {
             val manifest = AndroidUtils.loadDomElement(facet.module, manifestFile,
                 Manifest::class.java)
             if (manifest != null) {
                 val packageName = manifest.getPackage().value
                 if (packageName == null || packageName.isEmpty()) {
-                    manifest.getPackage().setValue(aPackage?.qualifiedName)
+                    manifest.getPackage().value = aPackage?.qualifiedName
                 }
                 val application = manifest.application
                 if (application != null) {
-                    val component = addToManifest( aClass!!, application)
-                    if (component != null && !label.isNullOrEmpty()) {
-                        component.label.setValue(ResourceValue.literal(label))
+                    WriteCommandAction.writeCommandAction(project, aClass!!.containingFile).run<Throwable> {
+                        val component = addToManifest( aClass, application)
+                        if (component != null && !label.isNullOrEmpty()) {
+                            component.label.value = ResourceValue.literal(label)
+                        }
                     }
+
                 }
             }
         }
