@@ -14,6 +14,8 @@ import org.jetbrains.android.dom.manifest.Manifest
 import org.jetbrains.android.facet.AndroidFacet
 import org.jetbrains.android.facet.AndroidRootUtil
 import org.jetbrains.android.util.AndroidResourceUtil
+import org.jetbrains.android.util.AndroidUtils
+import org.jetbrains.kotlin.asJava.classes.KtUltraLightClass
 
 /**
  * @describe
@@ -25,7 +27,9 @@ fun doCreateLayoutFile(ic: ItemConfigBean,element: PsiClass?, project: Project, 
     return if (element == null) {
         null
     } else {
-        val manifest = Manifest.getMainManifest(facet)
+        val manifestFile = AndroidRootUtil.getManifestFile(facet) ?: return null
+        val manifest = AndroidUtils.loadDomElement(facet.module, manifestFile,Manifest::class.java)
+//        val manifest = Manifest.getMainManifest(facet)
         val appPackage = manifest?.getPackage()?.value
         if (appPackage != null && appPackage.isNotEmpty()) {
             ApplicationManager.getApplication().invokeLater {
@@ -54,19 +58,24 @@ fun createLayoutFileForActivityOrFragment(ic: ItemConfigBean,facet: AndroidFacet
                 "android.support.constraint.ConstraintLayout",
                 ResourceFolderType.LAYOUT.getName(), false)
             val layoutFileName = layoutFile?.name
-            if (layoutFileName != null) {
-                val onCreateMethods = activityClass.findMethodsByName("getLayoutId", false)//todo 生成viewBinding
-                if (onCreateMethods.size != 1) {
-                    return
-                }
-                val onCreateMethod = onCreateMethods[0]
-                val body = onCreateMethod.body
-                if (body != null) {
+            val onCreateMethods = activityClass.findMethodsByName("getLayoutId", false)//todo 生成viewBinding
+            if (onCreateMethods.size != 1) {
+                return
+            }
+            if (activityClass is KtUltraLightClass){
+//                activityClass.kotlinOrigin.findFunctionByName("getLayoutId")
+                activityClass.ownMethods.find {
+                    it.name=="getLayoutId"
+                }?.let {
                     val fieldName = AndroidResourceUtil.getRJavaFieldName(FileUtil.getNameWithoutExtension(layoutFileName))
                     val layoutFieldRef = "$appPackage.R.layout.$fieldName"
-                    addInflateStatement(body, layoutFieldRef, isJava)
+                    getKtStatement(it, layoutFieldRef, false)
                 }
             }
+//            val onCreateMethod = onCreateMethods[0]
+//            val fieldName = AndroidResourceUtil.getRJavaFieldName(FileUtil.getNameWithoutExtension(layoutFileName))
+//            val layoutFieldRef = "$appPackage.R.layout.$fieldName"
+//            getKtStatement(onCreateMethod, layoutFieldRef, isJava)
         }
     }
 }
@@ -84,6 +93,16 @@ fun addInflateStatement(body: PsiCodeBlock, layoutFieldRef: String, isJava: Bool
             JavaCodeStyleManager.getInstance(project).shortenClassReferences(body)
             CodeStyleManager.getInstance(project).reformat(body)
         }
+    }
+}
+fun getKtStatement(method: PsiMethod, layoutFieldRef: String, isJava: Boolean) {
+    val project = method.project
+    WriteCommandAction.writeCommandAction(project, method.containingFile).run<Throwable> {
+        val newStatement = PsiElementFactory.getInstance(project).createStatementFromText(
+            "return $layoutFieldRef${if (isJava) ";" else ""}", method)
+        method.add(newStatement)
+        JavaCodeStyleManager.getInstance(project).shortenClassReferences(method)
+        CodeStyleManager.getInstance(project).reformat(method)
     }
 }
 

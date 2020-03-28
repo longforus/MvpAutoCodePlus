@@ -64,7 +64,7 @@ intellij {
     //    version '2017.3'
     //    plugins 'org.jetbrains.kotlin:1.2.61-release-IJ2017.3-1' //here
     intellij.updateSinceUntilBuild false
-    intellij.localPath = project.hasProperty("StudioRunPath") ? StudioRunPath : StudioCompilePath
+//    intellij.localPath = project.hasProperty("StudioRunPath") ? StudioRunPath : StudioCompilePath
 }
 
 dependencies {
