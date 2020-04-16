@@ -1,6 +1,7 @@
 package com.longforus.mvpautocodeplus.maker
 
 import com.android.resources.ResourceFolderType
+import com.android.tools.idea.util.dependsOnAndroidx
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.command.WriteCommandAction
 import com.intellij.openapi.project.Project
@@ -16,6 +17,7 @@ import org.jetbrains.android.facet.AndroidRootUtil
 import org.jetbrains.android.util.AndroidResourceUtil
 import org.jetbrains.android.util.AndroidUtils
 import org.jetbrains.kotlin.asJava.classes.KtUltraLightClass
+import org.jetbrains.kotlin.psi.psiUtil.findFunctionByName
 
 /**
  * @describe
@@ -52,10 +54,21 @@ fun createLayoutFileForActivityOrFragment(ic: ItemConfigBean,facet: AndroidFacet
         if (className != null) {
 //            val layoutFile = CreateResourceFileAction.createFileResource(facet, ResourceFolderType.LAYOUT, "activity_auto", null, null, true, "Create Layout For '$className'",
 //                resDirectory, null, false)
+                val nameSb  = StringBuilder()
+                 ic.name.forEach {
+                     if (it >= "A"[0] && it <= "Z"[0]) {
+                         nameSb.append("_")
+                     }
+                     nameSb.append(it)
+                 }
+
+            val layoutFileOriginName = if (isActivity) "activity${nameSb.toString().toLowerCase()}" else "frag${nameSb.toString().toLowerCase()}"
+
+            val rootLayoutName = if (facet.module.dependsOnAndroidx()) "androidx.constraintlayout.widget.ConstraintLayout" else "android.support.constraint.ConstraintLayout"
 
             val layoutFile = AndroidResourceUtil.createFileResource(
-                if (isActivity) "activity_${ic.name.toLowerCase()}" else "frag_${ic.name.toLowerCase()}", resDirectory.findSubdirectory("layout")!!,
-                "android.support.constraint.ConstraintLayout",
+                layoutFileOriginName, resDirectory.findSubdirectory("layout")!!,
+                rootLayoutName,
                 ResourceFolderType.LAYOUT.getName(), false)
             val layoutFileName = layoutFile?.name
             val onCreateMethods = activityClass.findMethodsByName("getLayoutId", false)//todo 生成viewBinding
@@ -63,7 +76,7 @@ fun createLayoutFileForActivityOrFragment(ic: ItemConfigBean,facet: AndroidFacet
                 return
             }
             if (activityClass is KtUltraLightClass){
-//                activityClass.kotlinOrigin.findFunctionByName("getLayoutId")
+                activityClass.kotlinOrigin.findFunctionByName("getLayoutId")
                 activityClass.ownMethods.find {
                     it.name=="getLayoutId"
                 }?.let {
