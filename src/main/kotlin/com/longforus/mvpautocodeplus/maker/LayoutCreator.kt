@@ -5,7 +5,6 @@ import com.android.tools.idea.util.dependsOnAndroidx
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.command.WriteCommandAction
 import com.intellij.openapi.project.Project
-import com.intellij.openapi.util.io.FileUtil
 import com.intellij.openapi.vfs.LocalFileSystem
 import com.intellij.psi.*
 import com.intellij.psi.codeStyle.CodeStyleManager
@@ -16,8 +15,6 @@ import org.jetbrains.android.facet.AndroidFacet
 import org.jetbrains.android.facet.AndroidRootUtil
 import org.jetbrains.android.util.AndroidResourceUtil
 import org.jetbrains.android.util.AndroidUtils
-import org.jetbrains.kotlin.asJava.classes.KtUltraLightClass
-import org.jetbrains.kotlin.psi.psiUtil.findFunctionByName
 
 /**
  * @describe
@@ -70,21 +67,21 @@ fun createLayoutFileForActivityOrFragment(ic: ItemConfigBean,facet: AndroidFacet
                 layoutFileOriginName, resDirectory.findSubdirectory("layout")!!,
                 rootLayoutName,
                 ResourceFolderType.LAYOUT.getName(), false)
-            val layoutFileName = layoutFile?.name
-            val onCreateMethods = activityClass.findMethodsByName("getLayoutId", false)//todo 生成viewBinding
-            if (onCreateMethods.size != 1) {
-                return
-            }
-            if (activityClass is KtUltraLightClass){
-                activityClass.kotlinOrigin.findFunctionByName("getLayoutId")
-                activityClass.ownMethods.find {
-                    it.name=="getLayoutId"
-                }?.let {
-                    val fieldName = AndroidResourceUtil.getRJavaFieldName(FileUtil.getNameWithoutExtension(layoutFileName))
-                    val layoutFieldRef = "$appPackage.R.layout.$fieldName"
-                    getKtStatement(it, layoutFieldRef, false)
-                }
-            }
+
+//            val layoutFileName = layoutFile?.name
+//            val onCreateMethods = activityClass.findMethodsByName("getLayoutId", false)//todo 生成viewBinding
+//            if (onCreateMethods.size != 1) {
+//                return
+//            }
+//            if (activityClass is KtUltraLightClass){
+//
+//                val psiMethod = activityClass.kotlinOrigin.findFunctionByName("getLayoutId") as KtNamedFunction
+//
+//                val fieldName = AndroidResourceUtil.getRJavaFieldName(FileUtil.getNameWithoutExtension(layoutFileName))
+//                val layoutFieldRef = "$appPackage.R.layout.$fieldName"
+////                getKtStatement(psiMethod, layoutFieldRef, false)
+//
+//            }
 //            val onCreateMethod = onCreateMethods[0]
 //            val fieldName = AndroidResourceUtil.getRJavaFieldName(FileUtil.getNameWithoutExtension(layoutFileName))
 //            val layoutFieldRef = "$appPackage.R.layout.$fieldName"

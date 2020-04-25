@@ -15,7 +15,7 @@ plugins {
     id 'org.jetbrains.intellij' version '0.4.2'
 }
 
-version '1.4.1'
+version '1.4.2'
 group 'com.longforus'
 
 apply plugin: 'java'
@@ -84,14 +84,13 @@ dependencies {
 }
 
 patchPluginXml {
-    changeNotes """<h3>Fix Android studio 3.5+ menu text.</h3>
+    changeNotes """<h3>Add layout file create and activity auto manifest register.</h3>
 <br/>
 <a href="https://github.com/longforus/MvpAutoCodePlus/blob/master/CHANGELOG.md"><b>Full Changelog History</b></a>"""
 }
 
 publishPlugin {
-    username publishUserName
-    password publishPassword
+    token publishToken
 }
 
 //指定编译的编码

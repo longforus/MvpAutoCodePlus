@@ -1,6 +1,11 @@
 # Change Log
 
 
+## [v1.4.2](https://plugins.jetbrains.com/plugin/10907-mvpautocodeplus)(2020-4-25)
+- Add layout file create.
+- Add activity auto manifest register
+- We plan to add viewBinding support, but have not yet found a suitable implementation
+
 ## [v1.4.1](https://plugins.jetbrains.com/plugin/10907-mvpautocodeplus)(2019-9-8)
 - Fix Android studio 3.5+ menu text.
 
