@@ -21,7 +21,7 @@ import org.jetbrains.android.util.AndroidUtils
 object ComponentRegister {
 
     fun registerActivity(project:Project,aClass: PsiClass?, aPackage: PsiPackage?, facet: AndroidFacet, label: String?) {
-        val manifestFile = AndroidRootUtil.getManifestFile(facet)
+        val manifestFile = AndroidRootUtil.getPrimaryManifestFile(facet)
         if (manifestFile != null && ReadonlyStatusHandler.ensureFilesWritable(facet.module.project, manifestFile)) {
             val manifest = AndroidUtils.loadDomElement(facet.module, manifestFile,
                 Manifest::class.java)

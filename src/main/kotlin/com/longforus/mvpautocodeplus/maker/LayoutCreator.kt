@@ -26,7 +26,7 @@ fun doCreateLayoutFile(ic: ItemConfigBean,element: PsiClass?, project: Project, 
     return if (element == null) {
         null
     } else {
-        val manifestFile = AndroidRootUtil.getManifestFile(facet) ?: return null
+        val manifestFile = AndroidRootUtil.getManifestFileForCompiler(facet) ?: return null
         val manifest = AndroidUtils.loadDomElement(facet.module, manifestFile,Manifest::class.java)
 //        val manifest = Manifest.getMainManifest(facet)
         val appPackage = manifest?.getPackage()?.value
