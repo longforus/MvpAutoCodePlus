@@ -15,7 +15,10 @@ import com.intellij.util.PlatformIcons
 import com.longforus.mvpautocodeplus.config.ItemConfigBean
 import com.longforus.mvpautocodeplus.maker.*
 import com.longforus.mvpautocodeplus.ui.EnterKeywordDialog
+import org.jetbrains.android.dom.manifest.Manifest
 import org.jetbrains.android.facet.AndroidFacet
+import org.jetbrains.android.facet.AndroidRootUtil
+import org.jetbrains.android.util.AndroidUtils
 import org.jetbrains.kotlin.psi.KtFile
 import com.intellij.openapi.application.runWriteAction as runWriteAction1
 
@@ -25,14 +28,18 @@ import com.intellij.openapi.application.runWriteAction as runWriteAction1
  * Description :
  */
 
-class MainAction : AnAction("Generate MVP Code", "auto make mvp code", PlatformIcons.CLASS_ICON), WriteActionAware {
+open class MainAction : AnAction("Generate MVP Code", "auto make mvp code", PlatformIcons.CLASS_ICON), WriteActionAware {
     var project: Project? = null
-    lateinit var mSelectedState: PropertiesComponent
-    fun createFile(enterName: String, templateName: String, dir: PsiDirectory, superImplName: String, contract: PsiFile? = null, fileName: String = enterName): Pair<PsiFile?,
+    private lateinit var mSelectedState: PropertiesComponent
+    var curAppPackage:String? = null
+
+    private fun createFile(enterName: String, templateName: String, dir: PsiDirectory, superImplName: String, contract: PsiFile? = null, fileName: String = enterName): Pair<PsiFile?,
         PsiClass?> {
         var clazz: PsiClass? = null
         val template = TemplateMaker.getTemplate(templateName, project!!) ?: return null to null
-        val liveTemplateDefaultValues = TemplateParamFactory.getParam4TemplateName(templateName, enterName, superImplName, contract, mSelectedState)
+        val liveTemplateDefaultValues = TemplateParamFactory.getParam4TemplateName(templateName, enterName, superImplName, contract, mSelectedState).toMutableMap().also {
+            it["CUR_APP_PACKAGE"] = curAppPackage
+        }
         val psiFile = createFileFromTemplate(fileName, template, dir, null, false, liveTemplateDefaultValues, mSelectedState.getValue(COMMENT_AUTHOR))
         if (!templateName.contains("Contract")) {
             val openFile = FileEditorManager.getInstance(project!!).openFile(psiFile!!.virtualFile, false)
@@ -77,6 +84,13 @@ class MainAction : AnAction("Generate MVP Code", "auto make mvp code", PlatformI
             mSelectedState = it.state
             val module = ModuleUtil.findModuleForFile(dir.virtualFile, project!!)
             val facet = AndroidFacet.getInstance(module!!)
+            if (facet != null) {
+                AndroidRootUtil.getManifestFileForCompiler(facet)?.let {
+                    AndroidUtils.loadDomElement(facet.module, it, Manifest::class.java)?.let {
+                        curAppPackage = it.getPackage()?.value
+                    }
+                }
+            }
             runWriteAction1 {
                 if (it.isJava) {
                     doJavaCreate(it, dir, facet)
@@ -138,7 +152,7 @@ class MainAction : AnAction("Generate MVP Code", "auto make mvp code", PlatformI
     }
 
 
-    fun getSubDir(dir: PsiDirectory, dirName: String): PsiDirectory {
+    private fun getSubDir(dir: PsiDirectory, dirName: String): PsiDirectory {
         return if (dir.name == CONTRACT) {
             if (dirName == CONTRACT) {
                 dir
@@ -162,7 +176,7 @@ class MainAction : AnAction("Generate MVP Code", "auto make mvp code", PlatformI
         presentation.isEnabled = enabled
     }
 
-    protected fun isAvailable(dataContext: DataContext): Boolean {
+    private fun isAvailable(dataContext: DataContext): Boolean {
         val project = CommonDataKeys.PROJECT.getData(dataContext)
         val view = LangDataKeys.IDE_VIEW.getData(dataContext)
         return project != null && view != null && view.directories.isNotEmpty()

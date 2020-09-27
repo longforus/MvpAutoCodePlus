@@ -1,6 +1,9 @@
 # Change Log
 
 
+## [v1.4.4](https://plugins.jetbrains.com/plugin/10907-mvpautocodeplus)(2020-9-27)
+- Fix Bug: Import R File package name incorrect
+
 ## [v1.4.3](https://plugins.jetbrains.com/plugin/10907-mvpautocodeplus)(2020-6-4)
 - Adapte Android studio 4.0
 
