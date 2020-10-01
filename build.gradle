@@ -15,7 +15,7 @@ plugins {
     id 'org.jetbrains.intellij' version '0.4.2'
 }
 
-version '1.4.3'
+version '1.4.4'
 group 'com.longforus'
 
 apply plugin: 'java'
@@ -77,14 +77,15 @@ dependencies {
     testCompile fileTree(dir: "$StudioCompilePath/plugins/java/lib", include: ['*.jar'])
     testCompile fileTree(dir: "$StudioCompilePath/lib", include: ['*.jar'])
 //    compile "com.jetbrains.intellij.java:java-psi:192.7142.36"
-    compileOnly "com.android.tools.build:gradle:3.6.1"
+//    compileOnly "com.android.tools.build:gradle:3.6.1"
+    compileOnly "com.android.tools.build:gradle:4.0.1"
 //    compileOnly "com.jetbrains.intellij.java:java:192.7142.36"
     //    compile 'com.squareup:javapoet:1.11.0'
     //    testCompile group: 'junit', name: 'junit', version: '4.12'
 }
 
 patchPluginXml {
-    changeNotes """<h3>Adapte Android studio 4.0.</h3>
+    changeNotes """<h3>Fix Bug: Import R File package name incorrect</h3>
 <br/>
 <a href="https://github.com/longforus/MvpAutoCodePlus/blob/master/CHANGELOG.md"><b>Full Changelog History</b></a>"""
 }

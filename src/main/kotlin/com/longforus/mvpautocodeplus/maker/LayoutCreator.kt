@@ -21,6 +21,10 @@ import org.jetbrains.android.util.AndroidUtils
  * @author  longforus
  * @date 2020/3/18  16:07
  */
+
+
+
+
 @Throws(Exception::class)
 fun doCreateLayoutFile(ic: ItemConfigBean,element: PsiClass?, project: Project, facet: AndroidFacet, isJava: Boolean,isActivity:Boolean = true): PsiElement? {
     return if (element == null) {
@@ -67,9 +71,9 @@ fun createLayoutFileForActivityOrFragment(ic: ItemConfigBean,facet: AndroidFacet
                 layoutFileOriginName, resDirectory.findSubdirectory("layout")!!,
                 rootLayoutName,
                 ResourceFolderType.LAYOUT.getName(), false)
-
+            //生成布局返回代码,暂时无法解决kotlin代码编辑的问题
 //            val layoutFileName = layoutFile?.name
-//            val onCreateMethods = activityClass.findMethodsByName("getLayoutId", false)//todo 生成viewBinding
+//            val onCreateMethods = activityClass.findMethodsByName("getLayoutId", false)//viewBinding点不好用
 //            if (onCreateMethods.size != 1) {
 //                return
 //            }
