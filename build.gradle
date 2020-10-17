@@ -15,7 +15,7 @@ plugins {
     id 'org.jetbrains.intellij' version '0.4.2'
 }
 
-version '1.4.4'
+version '1.4.5'
 group 'com.longforus'
 
 apply plugin: 'java'
@@ -85,7 +85,7 @@ dependencies {
 }
 
 patchPluginXml {
-    changeNotes """<h3>Fix Bug: Import R File package name incorrect</h3>
+    changeNotes """<h3>Adapter Android studio 4.1,fix create layout file error.</h3>
 <br/>
 <a href="https://github.com/longforus/MvpAutoCodePlus/blob/master/CHANGELOG.md"><b>Full Changelog History</b></a>"""
 }

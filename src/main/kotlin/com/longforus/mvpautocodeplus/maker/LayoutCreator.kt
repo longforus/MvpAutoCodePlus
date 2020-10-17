@@ -1,20 +1,29 @@
 package com.longforus.mvpautocodeplus.maker
 
 import com.android.resources.ResourceFolderType
+import com.android.resources.ResourceType
 import com.android.tools.idea.util.dependsOnAndroidx
+import com.intellij.ide.fileTemplates.FileTemplate
+import com.intellij.ide.fileTemplates.FileTemplateManager
+import com.intellij.ide.fileTemplates.FileTemplateUtil
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.command.WriteCommandAction
+import com.intellij.openapi.module.ModuleUtilCore
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.LocalFileSystem
 import com.intellij.psi.*
 import com.intellij.psi.codeStyle.CodeStyleManager
 import com.intellij.psi.codeStyle.JavaCodeStyleManager
+import com.intellij.psi.xml.XmlFile
 import com.longforus.mvpautocodeplus.config.ItemConfigBean
 import org.jetbrains.android.dom.manifest.Manifest
 import org.jetbrains.android.facet.AndroidFacet
 import org.jetbrains.android.facet.AndroidRootUtil
-import org.jetbrains.android.util.AndroidResourceUtil
+import org.jetbrains.android.sdk.AndroidPlatform
 import org.jetbrains.android.util.AndroidUtils
+import org.jetbrains.annotations.NotNull
+import java.util.*
+
 
 /**
  * @describe
@@ -67,10 +76,11 @@ fun createLayoutFileForActivityOrFragment(ic: ItemConfigBean,facet: AndroidFacet
 
             val rootLayoutName = if (facet.module.dependsOnAndroidx()) "androidx.constraintlayout.widget.ConstraintLayout" else "android.support.constraint.ConstraintLayout"
 
-            val layoutFile = AndroidResourceUtil.createFileResource(
+            val layoutFile = createFileResource(
                 layoutFileOriginName, resDirectory.findSubdirectory("layout")!!,
                 rootLayoutName,
                 ResourceFolderType.LAYOUT.getName(), false)
+
             //生成布局返回代码,暂时无法解决kotlin代码编辑的问题
 //            val layoutFileName = layoutFile?.name
 //            val onCreateMethods = activityClass.findMethodsByName("getLayoutId", false)//viewBinding点不好用
@@ -93,6 +103,33 @@ fun createLayoutFileForActivityOrFragment(ic: ItemConfigBean,facet: AndroidFacet
         }
     }
 }
+
+
+@NotNull
+@Throws(java.lang.Exception::class)
+fun createFileResource(@NotNull fileName: String?, @NotNull resSubdir: PsiDirectory, @NotNull rootTagName: String?, @NotNull resourceType: String?,
+    valuesResourceFile: Boolean): XmlFile? {
+    val apiLevel: Int
+    val template: FileTemplate = FileTemplateManager.getInstance(resSubdir.project).getJ2eeTemplate(org.jetbrains.android.AndroidFileTemplateProvider.LAYOUT_RESOURCE_FILE_TEMPLATE)
+    val properties = Properties()
+    if (!valuesResourceFile) {
+        properties.setProperty("ROOT_TAG", rootTagName)
+    }
+    if (ResourceType.LAYOUT.getName().equals(resourceType)) {
+        val module: com.intellij.openapi.module.Module? = ModuleUtilCore.findModuleForPsiElement(resSubdir)
+        val platform: AndroidPlatform? = if (module != null) AndroidPlatform.getInstance(module) else null
+        apiLevel = platform?.apiLevel ?: -1
+        val value = if (apiLevel == -1 || apiLevel >= 8) "match_parent" else "fill_parent"
+        properties.setProperty("LAYOUT_WIDTH", value)
+        properties.setProperty("LAYOUT_HEIGHT", value)
+    }
+    val createdElement: PsiElement = FileTemplateUtil.createFromTemplate(template, fileName, properties, resSubdir)
+    if (createdElement is XmlFile) {
+        return createdElement
+    }
+    throw AssertionError()
+}
+
 
 
 fun addInflateStatement(body: PsiCodeBlock, layoutFieldRef: String, isJava: Boolean) {
