@@ -1,30 +1,32 @@
 buildscript {
-    ext.kotlin_version = '1.3.72'
+    ext.kotlin_version = '1.6.10'
     repositories {
         //        maven { url 'http://192.168.2.39:8908/repository/maven-public/' }
         maven { url 'https://maven.aliyun.com/repository/public' }
         google()
         mavenCentral()
     }
-    dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-    }
+//    dependencies {
+//        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+//    }
 }
 
 plugins {
-    id 'org.jetbrains.intellij' version '0.4.2'
+    id 'org.jetbrains.intellij' version '1.5.3'
+//    id 'java'
+    id 'org.jetbrains.kotlin.jvm' version "$kotlin_version"
 }
 
-version '1.4.5'
+version '1.4.6'
 group 'com.longforus'
 
-apply plugin: 'java'
-apply plugin: 'kotlin'
-apply plugin: 'kotlin-kapt'
-apply plugin: 'org.jetbrains.intellij'
+//apply plugin: 'java'
+//apply plugin: 'kotlin'
+//apply plugin: 'kotlin-kapt'
+//apply plugin: 'org.jetbrains.intellij'
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+sourceCompatibility = 11
+targetCompatibility = 11
 
 //sourceSets {
 //    main {
@@ -42,10 +44,10 @@ repositories {
 }
 
 compileKotlin {
-    kotlinOptions.jvmTarget = "1.8"
+    kotlinOptions.jvmTarget = "11"
 }
 compileTestKotlin {
-    kotlinOptions.jvmTarget = "1.8"
+    kotlinOptions.jvmTarget = "11"
 }
 
 if (!hasProperty('StudioCompilePath')) {
@@ -53,46 +55,42 @@ if (!hasProperty('StudioCompilePath')) {
 }
 
 intellij {
-    version '2019.3'
-    plugins 'java'
-    plugins 'org.jetbrains.kotlin:1.3.72-release-IJ2019.3-1' //here
-    //        plugins 'org.jetbrains.kotlin:1.3.21-release-IJ2018.2-1' //here
-    //    version '2018.2'
-    //    plugins 'org.jetbrains.kotlin:1.2.61-release-IJ2018.2-1' //here
-    //    version '2018.1'
-    //    plugins 'org.jetbrains.kotlin:1.2.60-release-IJ2018.1-1' //here
-    //    version '2017.3'
-    //    plugins 'org.jetbrains.kotlin:1.2.61-release-IJ2017.3-1' //here
-    intellij.updateSinceUntilBuild false
-//    intellij.localPath = project.hasProperty("StudioRunPath") ? StudioRunPath : StudioCompilePath
+    pluginName='MvpAutoCodePlus'
+//    version '2021.1.3'
+//    type 'IC'
+    plugins=['java','android']
+//    plugins 'org.jetbrains.kotlin:212-1.6.20-release-275-AS5457.46' //here
+    updateSinceUntilBuild=false
+    downloadSources=true
+    localPath = project.hasProperty("StudioRunPath") ? StudioRunPath : StudioCompilePath
 }
 
 dependencies {
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    compileOnly fileTree(dir: "$StudioCompilePath/plugins/android/lib", include: ['*.jar'])
-    compileOnly fileTree(dir: "$StudioCompilePath/plugins/java/lib", include: ['*.jar'])
-    compileOnly fileTree(dir: "$StudioCompilePath/lib", include: ['*.jar'])
-
-    testCompile fileTree(dir: "$StudioCompilePath/plugins/android/lib", include: ['*.jar'])
-    testCompile fileTree(dir: "$StudioCompilePath/plugins/java/lib", include: ['*.jar'])
-    testCompile fileTree(dir: "$StudioCompilePath/lib", include: ['*.jar'])
-//    compile "com.jetbrains.intellij.java:java-psi:192.7142.36"
+//    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+//    compileOnly fileTree(dir: "$StudioCompilePath/plugins/android/lib", include: ['*.jar'])
+//    compileOnly fileTree(dir: "$StudioCompilePath/plugins/java/lib", include: ['*.jar'])
+//    compileOnly fileTree(dir: "$StudioCompilePath/lib", include: ['*.jar'])
+//
+//    testImplementation fileTree(dir: "$StudioCompilePath/plugins/android/lib", include: ['*.jar'])
+//    testImplementation fileTree(dir: "$StudioCompilePath/plugins/java/lib", include: ['*.jar'])
+//    testImplementation fileTree(dir: "$StudioCompilePath/lib", include: ['*.jar'])
+//    implementation "com.jetbrains.intellij.java:java-psi:192.7142.36"
 //    compileOnly "com.android.tools.build:gradle:3.6.1"
-    compileOnly "com.android.tools.build:gradle:4.0.1"
+//    compileOnly "com.android.tools.build:gradle:4.2.2"
 //    compileOnly "com.jetbrains.intellij.java:java:192.7142.36"
-    //    compile 'com.squareup:javapoet:1.11.0'
-    //    testCompile group: 'junit', name: 'junit', version: '4.12'
+    //    Implementation 'com.squareup:javapoet:1.11.0'
+    //    testImplementation group: 'junit', name: 'junit', version: '4.12'
 }
 
 patchPluginXml {
-    changeNotes """<h3>Adapter Android studio 4.1,fix create layout file error.</h3>
+    changeNotes="""<h3>Adapter Android studio 2021.3.1 P1</h3>
 <br/>
 <a href="https://github.com/longforus/MvpAutoCodePlus/blob/master/CHANGELOG.md"><b>Full Changelog History</b></a>"""
 }
 
-publishPlugin {
-    token publishToken
-}
+//publishPlugin {
+//    token publishToken
+//}
 
 //指定编译的编码
 tasks.withType(JavaCompile) {

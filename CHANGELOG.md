@@ -1,6 +1,9 @@
 # Change Log
 
 
+## [v1.4.6](https://plugins.jetbrains.com/plugin/10907-mvpautocodeplus)(2022-11-24)
+- Adapter Android studio 2021.3.1 P1.
+
 ## [v1.4.5](https://plugins.jetbrains.com/plugin/10907-mvpautocodeplus)(2020-10-17)
 - Adapter Android studio 4.1,fix create layout file error.
 

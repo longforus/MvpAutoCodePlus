@@ -57,7 +57,6 @@
   </application-components>
   <actions>
     <!-- Add your actions here -->
-
     <group description="auto make mvp code" id="mvpMaker" text="Generate MVP Code">
       <add-to-group anchor="first" group-id="NewGroup"/>
       <action class="com.longforus.mvpautocodeplus.MainAction" description="auto make mvp code" id="mvpMaker.make" text="Generate MVP Code"/>

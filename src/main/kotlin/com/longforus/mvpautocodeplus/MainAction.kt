@@ -85,7 +85,7 @@ open class MainAction : AnAction("Generate MVP Code", "auto make mvp code", Plat
             val module = ModuleUtil.findModuleForFile(dir.virtualFile, project!!)
             val facet = AndroidFacet.getInstance(module!!)
             if (facet != null) {
-                AndroidRootUtil.getManifestFileForCompiler(facet)?.let {
+                AndroidRootUtil.getPrimaryManifestFile(facet)?.let {
                     AndroidUtils.loadDomElement(facet.module, it, Manifest::class.java)?.let {
                         curAppPackage = it.getPackage()?.value
                     }

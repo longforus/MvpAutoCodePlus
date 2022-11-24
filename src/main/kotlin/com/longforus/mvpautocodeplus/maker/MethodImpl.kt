@@ -9,15 +9,14 @@ import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.command.WriteCommandAction.writeCommandAction
 import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.project.Project
-import com.intellij.psi.JavaPsiFacade
-import com.intellij.psi.PsiClass
-import com.intellij.psi.PsiMethod
-import com.intellij.psi.PsiModifier
+import com.intellij.psi.*
 import com.intellij.util.IncorrectOperationException
 import com.intellij.util.containers.ContainerUtil
 import org.jetbrains.kotlin.asJava.classes.KtLightClass
+import org.jetbrains.kotlin.idea.core.overrideImplement.GenerateMembersHandler
 import org.jetbrains.kotlin.idea.core.overrideImplement.ImplementMembersHandler
-import org.jetbrains.kotlin.idea.core.overrideImplement.OverrideImplementMembersHandler
+import org.jetbrains.kotlin.idea.core.overrideImplement.OverrideMembersHandler
+import org.jetbrains.kotlin.psi.KtClassOrObject
 
 /**
  * Created by XQ Yang on 2018/7/2  15:53.
@@ -41,14 +40,12 @@ fun overrideOrImplementMethods(project: Project,
 fun kotlinDoMultiOverrideImplement(aClass: KtLightClass, project: Project, editor: Editor) {
 //    val classOrObject = PsiTreeUtil.getParentOfType(aClass, KtClassOrObject::class.java)
 //        ?: error("Caret should be inside class or object")
-    val classOrObject = aClass.kotlinOrigin ?: error("Caret should be inside class or object")
-
+    val classOrObject : KtClassOrObject = aClass.kotlinOrigin ?:  throw IllegalStateException("Caret should be inside class or object")
 
     val chooserObjects = implementMembersHandler.collectMembersToGenerate(
         classOrObject).sortedBy { it.descriptor.name.asString() + " in " + it.immediateSuper.containingDeclaration.name.asString() }
-
-    writeCommandAction(project, aClass.containingFile).run<Throwable> {
-        OverrideImplementMembersHandler.generateMembers(editor, classOrObject, chooserObjects, false)
+    writeCommandAction(project,classOrObject.containingKtFile as PsiFile).run<Throwable> {
+        GenerateMembersHandler.generateMembers(editor,classOrObject,chooserObjects,false)
     }
 }
 
