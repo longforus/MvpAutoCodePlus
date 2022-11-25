@@ -38,7 +38,7 @@
   <!--]]></change-notes>-->
 
   <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
-  <idea-version since-build="192"/>
+  <idea-version since-build="221"/>
   <!--<idea-version since-build="173.3727" until-build="182.*"/>-->
   <depends>com.intellij.modules.platform</depends>
   <depends>org.jetbrains.kotlin</depends>
